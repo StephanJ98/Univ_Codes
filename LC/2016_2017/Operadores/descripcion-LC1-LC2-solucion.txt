@@ -1,0 +1,28 @@
+:-op(100,xfy,[por]).
+:-op(200,xfx,[es]).
+:-op(300,fx,[conjunto]).
+:-op(400,fx,[del]).
+:-op(500,fx,[cartesiano]).
+:-op(600,fx,[producto]).
+:-op(700,fx,[el]).
+:-op(800,xf,[con]).
+:-op(900,xf,[toda]).
+:-op(100,xf,[seguridad]).
+
+el producto cartesiano del conjunto [] por _  por _ es [] con toda seguridad.
+el producto cartesiano del conjunto Conj1 por Conj2 por Conj3 es Resultado con toda seguridad :- 
+                 cartesiano(Conj2,Conj3,I),
+                 cartesiano(Conj1,I,Resultado).
+
+cartesiano([],_,[]).
+cartesiano([Car|Cdr], Conjunto, Resultado) :- 
+                     linea(Car,Conjunto,Linea),
+                     cartesiano(Cdr, Conjunto, Resto),
+                     concatenar(Linea,Resto,Resultado).
+
+linea(_,[],[]).
+linea(Elemento,[Car|Cdr],[[Elemento,Car]|Resto]) :- 
+                     linea(Elemento,Cdr,Resto).
+
+concatenar([],L,L).
+concatenar([Car|Cdr],L,[Car|R]) :- concatenar(Cdr,L,R).

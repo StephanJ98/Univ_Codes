@@ -1,0 +1,24 @@
+/* Solucion SIN diferencias de listas */
+
+prefijo(Pre,Cad):- name(Pre,PreCod),name(Cad,CadCod),
+                   append(PreCod,_,CadCod).
+
+/* Primera solucion CON diferencias de listas */
+
+pre(Pre,Cad) :- name(Pre,PreCod), name(Cad,CadCod), 
+                l2dl(PreCod,DPreCod),
+                l2dl(CadCod,DCadCod),
+                appendl(DPreCod,_,DCadCod).
+
+appendl(A-B,B-C,A-C).
+
+/* Segunda solucion CON diferencias de listas */
+
+pre2(Pre,Cad) :- name(Pre,PreCod), name(Cad,CadCod), 
+                 l2dl(PreCod,DPreCod-X),
+                 l2dl(CadCod,DPreCod-Y).
+
+/* l2dl([1,2,3],X), devuelve la diferencia de listas mas general para [1,2,3] */
+ 
+l2dl([],L-L).
+l2dl([Car|Cdr],[Car|Cdr1]-Cdr2) :- l2dl(Cdr,Cdr1-Cdr2).

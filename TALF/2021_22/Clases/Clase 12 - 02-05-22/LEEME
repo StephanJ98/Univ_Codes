@@ -1,0 +1,142 @@
+TEXTO DE REFERENCIA: 
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+INTRODUCCION
+============
+
+Comenzamos ahora a introducir los resultados fundamentales en
+lenguajes independientes del contexto.
+
+Nuestro objetivo en esta clase es introducir una metodología que, a
+imagen de lo visto en el caso de los más simples lenguajes regulares,
+nos permita simplificar su formalización y también caracterizar
+aquellos problemas abordables en este nuevo contexto lingüístico.
+
+Dado que, como veremos, este tipo de lenguajes es el mismo que los
+reconocidos por los autómatas de pila, de lo que se trata es de
+discernir cuando el problema a tratar requiere de la utilización de
+una memoria física (la pila), y si esta memoria (una sola pila) es
+suficiente para ello.
+
+Así, si el lenguaje que define el conjunto de potenciales soluciones
+al problema fuera independiente del contexto, sabremos que la máquina
+que ofrece las mejores prestaciones y menores costes de explotación
+será un autómata de pila. En otro caso, tendríamos que explorar otro
+tipo de máquinas (p.ej. un autómata de dos pilas o incluso una Máquina
+de Turing).
+
+En este punto, el Teorema de Iteración en lenguajes independientes del
+contexto introduce una condición necesaria (pero no suficiente) para
+ese tipo de lenguajes. En otras palabras, si un conjunto (lenguaje) no
+verifica dicho Teorema, entonces no puede ser independiente del
+contexto. En ninguna circunstancia (por no tratarse de una condición
+suficiente) podremos asegurar que si un conjunto verifica ese Teorema,
+entonces es independiente del contexto.
+
+En este marco, la aplicación del Teorema de Iteración para lenguajes
+independientes del contexto puede simplificarse notablemente si
+(previamente) aplicamos alguna de las propiedades de cierre de este
+tipo de lenguajes. De forma genérica, la estrategia sería la
+siguiente:
+
+i) Se plantea la cuestión de determinar si un conjunto L es
+   independiente del contexto.
+
+ii) La aplicación directa del Teorema de Iteración para lenguajes
+    independientes del contexto (por las razones que sea) al lenguaje
+    L, no resulta determinante.
+
+iii) Localizamos una propiedad "f" de cierre en los lenguajes
+     independientes del contexto tal que resulta sencillo demostrar
+     que f(L) no es independiente del contexto mediante el Teorema de
+     Iteración para esta clase de lenguajes (demostrando que no
+     verifica dicho Teorema).
+
+iv) Inmediatamente deduciríamos (ahora si) que L no es independiente
+    del contexto, dado que si lo fuera ... f(L) también lo sería y,
+    por tanto, f(L) verificaría el Teorema ... cosa que no ocurre. Por
+    tanto, L no puede ser independiente del contexto.
+
+Sin embargo, veremos que el Teorema de Iteración en lenguajes
+independientes del contexto provee no solo un criterio formal para
+determinar cuando un conjunto no es de ese tipo, sino que permitirá
+también resolver problemas esenciales de decibilidad: vacuacidad,
+finitud, unión, concatenación, inverso, intersección con lenguajes
+regulares.
+
+CONTEXTO
+========
+
+Una vez determinado el carácter independiente del contexto de un
+lenguaje (el conjunto de soluciones del problema que estamos
+estudiando) existen otro tipo de cuestiones a resolver que resultan
+fundamentales a nivel práctico. Una esencial es la gestión de
+versiones. En este contexto, la situación varía sustancialmente en el
+tratamiento del problema en relación a los lenguajes regulares, mucho
+más simples.
+
+Determinar si un autómata de pila amplia las capacidades de otro
+----------------------------------------------------------------
+
+Es un problema no decidible. Esto es, en general no solo no podremos
+resolverlo sino que tampoco podremos estimar si es o no resoluble. 
+
+Determinar si dos autómatas de pila poseen las mismas capacidades 
+-----------------------------------------------------------------
+
+También es un problema no decidible.
+
+CONSECUENCIAS INMEDIATAS
+------------------------
+
+La perdida de decidibilidad en relación a los lenguajes regulares, es
+extensible de forma inmediata a familias de lenguajes más complejos
+(lenguajes sensibles al contexto y lenguajes con estructura de frase)
+en la Jerarquía de Chomsky. 
+
+OBJETIVO DE LA CLASE
+====================
+
+En la clase de hoy nos centraremos en la introducción del Lema de
+Iteración para lenguajes independientes del contexto, más complejo que
+en el caso de los conjuntos regulares y con una metodología de
+aplicación menos sistemática que en aquel caso. Incluiremos además
+ejemplos ilustrativos de su aplicación.
+
+CONCLUSION
+==========
+
+El Teorema de Iteración en lenguajes independientes del contexto
+provee no solo un criterio formal para determinar cuando un conjunto
+no es regular, sino que permite resolver problemas esenciales de
+decibilidad, pero a un nivel mucho más limitado que en el caso
+regular.
+
+NOTAS HISTORICAS
+================
+
+El Teorema de Iteración para lenguajes independientes del contexto fue
+enunciado por primera vez por Y. Bar-Hillel, M. Perles y E. Shamir. Se
+trata de los mismos científicos que enunciaron el Teorema de Iteración
+para lenguajes regulares.
+
+Bar-Hillel fue un filósofo, matemático y lingüista israelí nacido en
+Viena. Durante la Segunda Guerra Mundial, sirvió en la Brigada Judía
+del Ejército británico. Luego lucho en la Guerra israelí de
+Independencia, donde perdió un ojo.
+
+Más tarde trabajo en el MIT, donde fue el primer académico que se
+dedicó en exclusiva al campo de la traducción automática. Fue también
+pionero en el campo de la recuperación de información. Posteriormente
+ejerció su actividad docente e investigadora en el Depto. de Filosofía
+de la Universidad Hebrea de Jerusalén. 
+
+Su nieta, Gili Bar-Hillel, es traductora al hebreo de la serie Harry
+Potter.
+

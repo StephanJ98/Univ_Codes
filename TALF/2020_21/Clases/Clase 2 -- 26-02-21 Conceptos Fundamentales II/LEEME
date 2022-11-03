@@ -1,0 +1,211 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Capítulo 1, subsección 1.5 (pag. 24)
+
+	Capítulo 5, subsección 5.1 (pag. 143)
+
+INTRODUCCION
+============
+
+Continuamos con la introducción del vocabulario y de las notaciones
+necesarias a la definición de conceptos básicos en teoría de autómatas
+y lenguajes formales, y que luego nos permitirán categorizar los
+algoritmos en función de su complejidad, facilitando de ese modo su
+resolución óptima en términos computacionales.
+
+CONTEXTO 
+========
+
+Partimos del concepto de "gramática", para introducir el de
+"lenguage". Pasamos pues de un enfoque estructural (las gramáticas) a
+otro generativo (los lenguages), como paso previo al computacional
+(los autómatas). En este sentido, el objetivo final será clasificar
+los autómatas en función de su potencia computacional, previa
+categorización de los niveles estructural y generativo.
+
+OBJETIVO DE LA CLASE
+====================
+
+Introducido el concepto de "derivación (directa e indirecta)" como
+mecanismo generativo primario a partir de las reglas gramaticales,
+podemos definir el de "lenguage generado a partir de una gramática"
+como el conjunto de cadenas derivables a partir del axioma de la
+gramática.
+
+Podemos entonces abordar la clasificación de gramáticas en función de
+la complejidad de sus reglas, que a su vez determinarán la riqueza de
+sus derivaciones y (en consecuencia y de forma inmediata) del lenguaje
+engendrado.
+
+Jerarquía de Chomsky
+--------------------
+
+La clasificación gramatical que introducimos se conoce como "Jerarquía
+de Chomsky" y no es en modo alguno una clasificación
+cerrada. Simplemente fija cual es el conjunto de algoritmos de mayor
+complejidad que podemos tratar (gramáticas con estructura de frase),
+el conjunto de los más simples (gramáticas regulares) y dos grupos (de
+los muchos) que podemos situar entre ambos (gramáticas independientes
+del contexto y gramáticas sensibles al contexto).
+
+La definición de esta jerarquía (en función del tipo de reglas
+aplicadas por la gramática) permite su diferenciación a simple vista,
+además de establecer una categorización paralela a nivel de los
+lenguajes generados: lenguajes regulares, lenguages independientes del
+contexto, lenguajes sensibles al contexto y lenguajes con estructura
+de frase.
+
+Ambigüedad gramatical
+---------------------
+
+Independientemente del nivel de la Jerarquía de Chomsky considerado,
+una gramática posee una característica esencial que determina su nivel
+de utilidad práctica: su grado de ambigüedad, esto es, su capacidad de
+interpretar de una única forma una entrada (frase).
+
+Una gramática sólo genera un lenguaje, pero cualquier lenguaje puede
+generarse a partir de una infinidad de gramáticas. Ello plantea el
+problema de escoger la más adecuada para describir/tratar el problema
+que nos ocupe en cada momento. Al respecto, la eficacia computacional
+es una característica contrapuesta a la simplicidad estructural, y a
+menudo relacionada con la noción de "ambigüedad gramatical".
+
+Así, fijado un lenguaje, cuanto más simple sea la gramática que lo
+genera, más probabilidad de generar ambigüedades habrá y (por tanto)
+menos interesante desde el punto de vista computacional será.
+
+Los lenguajes para los que no es posible encontrar una gramática no
+ambigua (o determinista) que lo genere, se denominan "lenguajes
+intrinsecamente ambiguos" o simplemente "lenguajes ambiguos". Esta
+clase de lenguajes no tiene ningún tipo de interés práctico.
+
+CONCLUSION
+==========
+
+En la práctica, fijado un problema a resolver, ya no se trata por
+tanto solo de determinar el nivel de complejidad gramatical en el que
+situarnos (gramática regular, ..., gramática con estructura de frase),
+sino de asegurarnos además de que la gramática que utilicemos para
+describirlo dentro de ese nivel ... nos asegure una interpretación
+determinista (esto es, no ambigua) de las expresiones.
+
+Dado que no existen (salvo en el caso de los lenguajes regulares)
+algoritmos que permitan eliminar automáticamente las ambigüedades
+presentes en las reglas gramaticales, sino solo algoritmos que
+permiten determinar si éstas son o no ambiguas en ciertas condiciones
+... la generación de analizadores de lenguajes es esencialmente
+creativa. En otras palabras, pura ingeniería. Ilustrémoslo con un
+ejemplo sencillo:
+
+EJEMPLO: Supongamos que deseo construir un analizador sintáctico para
+         el lenguaje de programación NOGO (lenguaje procedimental
+         básico). Los pasos a seguir serían los siguientes:
+
+         NOTA: Todos los ficheros referidos en este ejemplo son accesibles
+	       en el subdirectorio
+
+               Documentos y enlaces > Clases > El lenguaje NOGO
+
+               de la entrada Moovi de la asignatura de TALF.
+
+         i) Definir la estructura del lenguaje (léxico, sintaxis y
+            semántica) del lenguaje en un documento de especificaciones
+            funcionales, en nuestro caso en el fichero nogo.pdf
+
+         ii) A partir de ahí, hay que definir la gramática que define
+	     el léxico del lenguaje para que, mediante una herramienta
+	     apropiada podamos generar el analizador correspondiente.
+
+             La herramienta puede ser FLEX (la que usaréis en
+	     prácticas) y dado que el léxico de un lenguaje de
+	     programación es un lenguaje regular, aquí la propia
+	     herramienta (FLEX) podrá eliminar automáticamente
+	     ambigüedades para generar un analizador (autómata)
+	     determinista.
+
+             El código FLEX para nuestro lenguaje NOGO de ejemplo
+	     podéis verlo en el fichero lexnogo.l 
+
+         iii) Podremos entonces abordar la generación del analizador
+              sintáctico, que tomará en entrada las categorías léxicas
+              generadas a partir del autómata creado en ii).
+
+              Tendremos entonces que diseñar el conjunto de reglas de
+	      la gramática que definirá la forma de nuestros programas,
+	      y pasársela a una herramienta que genere el autómata que
+	      actuará como analizador sintáctico.
+
+              El problema aquí es que este tipo de gramáticas ya no es
+              regular, sino independiente del contexto. Eso implica
+              que no hay forma de eliminar automáticamente las
+              ambigüedades que (inevitablemente) hayamos podido
+              introducir en nuestra gramática.
+
+              En esta situación, tendremos que escoger una algoritmo
+	      de generación de autómatas a partir de una gramática
+	      independiente del contexto ... y ajustar la forma de la
+	      gramática para intentar que la herramienta genere un
+	      autómata determinista ... sabiendo que si no hacemos un
+	      estudio previo de la gramática a diseñar en relación al
+	      algoritmo que vayamos a usar, lo que puede ocurrir es
+	      que sea imposible tal objetivo.
+
+              Una posible herramienta es la que usaremos en prácticas
+              (BISON), que permite generar autómatas de pila
+              deterministas para la clase de lenguajes LALR(1). Por
+              tanto, si nuestro lenguaje no pertenece a esa clase,
+              nuestros esfuerzos serán inútiles.
+
+              En caso de que nuesro lenguaje no sea LALR(1), la única
+              alternativa es buscarse un generador para otro tipo de
+              gramáticas más amplio (ej. SLR(1)) y seguir probando
+              suerte.
+
+              El código BISON para nuestro lenguaje NOGO del ejemplo
+	      podéis verlo en el fichero yaccnogo.y
+
+              Observaréis que el número de reglas es relativamente
+	      elevado, en el orden del típico en un lenguaje
+	      procedimental clásico (C, C++, Java, ...).
+	      
+NOTAS HISTORICAS:
+=================
+
+Avram Noam Chomsky, es un lingüista, filósofo, politólogo y activista
+estadounidense de origen judío (él mismo se autodefine como sionista)
+... tan accesible como brillante en todas y cada una de las facetas
+comentadas, es un personaje de talla mundial que difícilmente genera
+indiferencia.
+
+Es profesor emérito de lingüística en el Instituto Tecnológico de
+Massachusetts (MIT) y una de las figuras más destacadas de la
+lingüística del siglo XX, gracias a sus trabajos en teoría lingüística
+y ciencia cognitiva. También es reconocido por su activismo político,
+caracterizado por una fuerte crítica del capitalismo contemporáneo y
+de la política exterior de los Estados Unidos. El New York Times lo ha
+señalado como «el más importante de los pensadores contemporáneos».
+
+Propuso el concepto de gramática transformacional y generativa,
+disciplina que situó la sintaxis en el centro de la investigación
+lingüística. A él se debe la así conocida como Jerarquía de Chomsky,
+una clasificación de lenguajes formales de gran importancia en teoría
+de la computación.
+
+Sus aportaciones a la teoría de autómatas y lenguajes formales han
+resultado en elementos indispensables para la construcción de
+compiladores y traductores que puedan servir de intérpretes válidos
+entre las órdenes que dan los seres humanos, y su correcta recepción y
+aplicación por máquinas automáticas.
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

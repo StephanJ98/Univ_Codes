@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Los alumnos pueden pensar que "vale todo" en la definicion de operadores,
+% que da igual usar una prioridad u otra, una asociatividad u otra, una
+% aridad u otra ... o una situacion del operador (prefijo, sufijo, postfijo)
+% u otra. Eso NO es asi.
+
+% Vamos a verlo ahora con la prioridad. Para ello, variaremos la asociatividad
+% del operador "x" (de xfy a xfx) en la ultima version que tenemos para el
+% problema del producto cartesiano.
+
+% IMPORTANTE: Para evitar sobrecargas del operador "x" que puedan "ocultar"
+% el error que queremos provocar, salir y entrar en el interprete para tener
+% una memoria "limpia" que evidencie el error.
+
+% IMPORTANTE: Por la misma razon, escribir este codigo en un fichero
+% aparte, solo.
+
+% Veremos que ya en el momento de cargar el fichero (mediante "consult"),
+% tenemos un ERROR del tipo
+%
+% ERROR: /home/vilares/administration/seminars/Grado-II/LC-LP/Codigos-clases/Operadores/ejemplo_error_asociatividad:39:40: Syntax error: Operator priority clash
+%
+% que no puede ser mas explicito.
+
+:-op(100,xfx,[x]).        % valor incorrecto de asociatividad        
+% :-op(100,xfy,[x]).      % valor correcto de asociatividad
+:-op(100,xfx,[por]).
+:-op(300,xfx,[es]).       
+:-op(350,fx,[conjunto]).
+:-op(400,fx,[del]).       
+:-op(450,fx,[cartesiano]).
+:-op(475,fx,[producto]).
+:-op(500,fx,[el]).        
+:-op(800,xf,[sin]).
+:-op(900,xf,[ninguna]).
+:-op(1000,xf,[duda]).
+
+el producto cartesiano del conjunto [] x _  x _ es [] sin ninguna duda.
+el producto cartesiano del conjunto Conj1 x Conj2 x Conj3 es Resultado sin ninguna duda :- 
+                 el cartesiano del Conj2 por Conj3 es I,
+                 el cartesiano del Conj1 por I es Resultado.
+
+el cartesiano del [] por _ es [].
+el cartesiano del [Car|Cdr] por Conjunto es Resultado :- 
+                     linea(Car,Conjunto,Linea),
+                     el cartesiano del Cdr por Conjunto es Resto,
+                     concatenar(Linea,Resto,Resultado).
+
+linea(_,[],[]).
+linea(Elemento,[Car|Cdr],[[Elemento,Car]|Resto]) :- 
+                     linea(Elemento,Cdr,Resto).
+
+concatenar([],L,L).
+concatenar([Car|Cdr],L,[Car|R]) :- concatenar(Cdr,L,R).
+
+% para el que una posible pregunta es
+% :- el producto cartesiano del conjunto [1,2,3] x [a,b] x ["A","B","C","D"] es X sin ninguna duda.
+

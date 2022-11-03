@@ -1,0 +1,18 @@
+main
+	__CC2DW
+	Lcd_Init
+		Delay_5500us
+		Delay_1us
+interrupt
+	ByteToStr
+		Div_8X8_U
+	Lcd_Out
+		Lcd_Cmd
+			Delay_1us
+			Delay_5500us
+			Delay_50us
+		Lcd_Chr_CP
+			Lcd_Cmd
+				Delay_1us
+				Delay_5500us
+				Delay_50us

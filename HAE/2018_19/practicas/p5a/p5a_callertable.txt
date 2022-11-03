@@ -1,0 +1,12 @@
+main
+	Lcd_Init
+		Delay_5500us
+		Delay_1us
+interrupt
+	tecla
+		Mul_16X16_U
+	Lcd_Chr
+		Lcd_Cmd
+			Delay_1us
+			Delay_5500us
+			Delay_50us

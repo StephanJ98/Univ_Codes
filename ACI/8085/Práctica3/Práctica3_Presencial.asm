@@ -1,0 +1,31 @@
+// DIVISION
+# ORG 0000H
+# BEGIN 0000H
+	   LXI H,FD00	//INICIALIZA PUNTERO HLD
+
+	   MVI C,00
+
+	   LDA FC01	//N
+	   MOV D,A
+
+	   LDA FC00	//V
+	   MOV E,A
+
+BUCLE:	   MOV A,C
+	   CMP D
+	   JZ FIN
+
+	  //ALMACENA VALOR
+	   MOV M,E
+	   INX H
+
+	   INR C
+	   JMP BUCLE
+
+FIN:	   HLT
+// V, N
+// A[25]
+# ORG FC00
+# DB 01H,10D
+# ORG FD00
+# DB FFH,FFH

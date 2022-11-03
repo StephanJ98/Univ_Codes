@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+borrar-repes(Lista,R):- repes(Lista,Repes),comp(Repes,Lista,R).
+
+repes([],[]).
+repes([H|T],[H|Y]):-miembro(H,T),!,repes(T,Y).
+repes([H|T],Y):-repes(T,Y).
+
+miembro(N,[N|_]).
+miembro(N,[_|T]):-miembro(N,T).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+get-asoc(_,[],[]).
+get-asoc(Llave,[[Llave,Valor]|_],Valor):-!.
+get-asoc(Llave,[_|Cdr],Valor):-get-asoc(Llave,Cdr,Valor).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+comp(_,[],[]).
+comp(Conj,[Car|Cdr],R) :- miembro(Car,Conj), !, comp(Conj,Cdr,R).
+comp(Conj,[Car|Cdr],[Car|R]):- comp(Conj,Cdr,R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+eliminar(L1,N,L2) :- eliminar(L1,N,L2,N).
+
+eliminar([],_,[],_).
+eliminar([_|Xs],N,Ys,1) :- eliminar(Xs,N,Ys,N).
+eliminar([X|Xs],N,[X|Ys],K) :- K > 1, K1 is K - 1, eliminar(Xs,N,Ys,K1).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+insert-ceros([],[]).
+insert-ceros([H|T],[H,0|Y]):-insert-ceros(T,Y).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+borrar-unicos(Lista,R):- borrar-repes(Lista,Unicos), comp(Unicos,Lista,R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+binario(arbol(Atom1,Atom2)):- atom(Atom1), atom(Atom2).
+binario(arbol(Atom,R)):- atom(Atom), binario(R).
+binario(arbol(L,Atom)):- binario(L), atom(Atom).
+binario(arbol(L,R)) :- binario(L), binario(R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+subarbol(arbol(L,R),arbol(L,R)).
+subarbol(S,arbol(S,_)):-!.
+subarbol(S,arbol(_,S)):-!.
+subarbol(S,arbol(L,R)):- subarbol(S,L);subarbol(S,R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+duplicar([],[]).
+duplicar([X|Xs],[X,X|Ys]) :- duplicar(Xs,Ys).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+

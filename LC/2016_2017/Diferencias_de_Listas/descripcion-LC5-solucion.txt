@@ -1,0 +1,5 @@
+posorden(Arbol,Posorden) :- posorden_dl(Arbol, Posorden-[]).
+posorden_dl(arbol(A,nil,nil),[A|X]-X) :-!.
+posorden_dl(arbol(A,I,nil),C-X) :- posorden_dl(I,C-[A|X]).
+posorden_dl(arbol(A,nil,D),C-X) :- posorden_dl(D,C-[A|X]).
+posorden_dl(arbol(A,I,D),C-F) :- posorden_dl(I,C-X),posorden_dl(D,X-[A|F]).

@@ -1,0 +1,24 @@
+En una calle hay cinco casas consecutivas, cada una con un COLOR y
+habitada por un inquilino con una NACIONALIDAD dada. Cada uno tiene una
+BEBIDA favorita, una MASCOTA y un COCHE. En concreto:
+
+1. El inglés vive en la casa roja.
+2. El español tiene un perro.
+3. En la casa verde se bebe cafe.
+4. El ucraniano bebe té.
+5. La casa verde se sitúa inmediatamente a la derecha de la casa color marfil.
+6. El propietario del Porsche tiene un caracol.
+7. El Masserati lo conduce el inquilino de la casa amarilla.
+8. Los de la casa de en medio beben leche.
+9. Un noruego vive en la primera casa a la izquierda.
+10. El conductor del Saab vive al lado del propietario del zorro.
+11. El conductor del Masserati vive al lado del propietario del caballo.
+12. El conductor del Honda bebe zumo de naranja.
+13. El japonés conduce un Jaguar.
+14. El noruego vive al lado de la casa azul.
+
+¿ cuál es el color de la casa del ucraniano ?
+
+¿ quién bebe café ?
+
+¿ cuál es el coche del noruego ?

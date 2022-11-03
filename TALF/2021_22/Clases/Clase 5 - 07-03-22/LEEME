@@ -1,0 +1,130 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Sección 2.3, (pag. 46)
+
+INTRODUCCION
+============
+
+Establecida la diferencia entre "AFs no deterministas" (AFNs) y "AFs
+deterministas" (AFDs), se trata ahora de formalizar las equivalencias
+entre unos y otros en relación a un lenguaje (por tanto,
+comportamiento) dado. Esto es, dado A un AFN
+
+¿ existe un AFD que acepta el mismo lenguaje T(A) ?
+
+NOTA: Si no especificamos explícitamente que un AF es determinista,
+      supondremos que puede ser un AFN. Esto es, una notación AF solo
+      indica que estamos frente a una máquina finita, determinista o
+      no.
+
+CONTEXTO 
+========
+
+Partimos de la idea (intuitivamente motivada por ejemplos en clase) de
+que el no determinismo (esto es, la ambigüedad) permite simplificar la
+formalización (tanto en gramáticas como en artilugios, lo que les
+otorga además una mayor legibilidad), pero que desde el punto de vista
+de la eficacia computacional el resultado es mucho más pobre en el
+caso ambiguo ... cuando no directamente desechable (por la
+imposibilidad de asegurar un comportamiento previsible).
+
+Así, es fácil visualizar (demostración formal también disponible en
+los apuntes) que para una cadena de instrucciones "x", el tiempo
+invertido por un AFD para reconocerla es O(|x|), mientras que en el
+caso de un AFN es O(|Q|.|x|), con Q el conjunto de estados del AFN.
+
+Dado que el número de estados suele ser en muy elevado aún para AFs
+simples, el interés en disponer de un mecanismo que determinice
+comportamientos es real. Al respecto hemos de recordar que muchos de
+los mecanismos que facilitan nuestra vida diaria ... desde
+electrodomésticos a sistemas críticos (como muchos de los sistemas
+embarcados en coches, barcos o aviones) pasando por algo tan de uso
+diario como un reloj digital ... se basan en este tipo de modelo
+computacional (AF).
+
+OBJETIVO DE LA CLASE
+====================
+
+Nuestro objetivo es mostrar y probar formalmente como se determiniza
+un AFN cualquiera, mejorando así su comportamiento computacional.
+
+Intuitivamente la idea es muy simple. Determinizar consiste en evitar
+la existencia de estados en el AF, a partir de los cuales mediante una
+misma etiqueta podamos movernos a dos o más estados diferentes
+... todo ello sin variar el comportamiento de la máquina. Esto es, el
+lenguaje aceptado por el AFD resultante debe ser el mismo del AF de
+partida.
+
+Para ello lo que haremos, recursivamente y comenzando por el estado
+inicial y sus transiciones, será unificar los estados de destino que
+comparten una misma transición desde un mismo origen.
+
+Intuitivamente, el resultado de estas unificaciones son nuevos estados
+cuya generación no puede alterar los caminos de reconocimiento en el
+AF original (esto es, las concatenaciones de transiciones que van
+desde el estado inicial a alguno final) ... dado que en caso contrario
+estaríamos modificando en la misma medida el comportamiento de ese AF
+original.
+
+En ese sentido, habrá que considerar transiciones de salida desde esos
+"nuevos" estados para cada etiqueta que asocie una salida en los
+estados del AF orginal que los componen. El destino de estas
+transiciones serán otros estados (posiblemente resultado de la
+unificación de estados en el AF original) bien nuevos bien ya
+existentes ... pero construidos en la misma forma que antes hemos
+relatado, repitiendo el proceso de forma recursiva. Dicho proceso será
+forzósamente finito, dado que el número de estados y de transiciones
+de dichos estados en el AF de partida era en ambos casos finito.
+
+NOTA: El procedimiento de determinización descrito es conceptualmente
+      simple, pero computacionalmente complejo. Esto es, lo que aquí
+      nos interesa no es tanto encontrar un proceso de determinización
+      rápido (se trata de un proceso que sólo se aplica una vez), sino
+      uno que nos permita generar una máquina (el AFD resultante) que
+      sea computacionalmente mucho más eficiente que el AFN de
+      partida.
+
+      Observar que ese AFD que generamos, si que se utilizará
+      (seguramente) en multitud de ocasiones, es por tanto aquí donde
+      necesitamos eficacia computacional ... y no tanto en el proceso
+      de su generación.
+
+CONCLUSION:
+==========
+
+En el caso de las máquinas finitas (AFs), siempre es posible encontrar
+un equivalente determinista, algo que indefectiblemente mejorará su
+eficacia computacional.
+
+Quedan pendientes, sin embargo, algunas cuestiones que habremos de
+resolver aún (en próximas clases):
+
+i) ¿ Hay un solo AFD que reconoce el mismo lenguaje que un AFN de partida ?
+
+   La respuesta será NO.
+
+ii) Dado que, por tanto, podemos tener multitud de AFDs asociados a un
+    AFN de partida ... ¿ cuál será entonces el mejor, esto es, el más
+    eficaz computacionalmente ?
+
+    La respuesta será lo que llamaremos "AFD minimal" y será el
+    resultado de eliminar en el AFN de partida los denominados estados
+    inútiles, inaccesibles y también los indistinguibles.
+
+NOTAS HISTORICAS  
+================
+
+No tenemos esta semana.
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

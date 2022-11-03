@@ -1,0 +1,11 @@
+elementos([],0) :- !.
+elementos(X,1) :- atomic(X).
+elementos([Car|Cdr],R) :- elementos(Car,M),
+                          elementos(Cdr,N),
+                          R is M+N.
+
+dividir([],[],[]).
+dividir([Car|Cdr],[Car|Pares],Impares) :- Car mod 2 =:= 0,
+                                          !,
+                                          dividir(Cdr,Pares,Impares).
+dividir([Car|Cdr],Pares,[Car|Impares]) :- dividir(Cdr,Pares,Impares).

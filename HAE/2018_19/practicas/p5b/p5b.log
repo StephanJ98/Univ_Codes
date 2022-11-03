@@ -1,0 +1,16 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP18F452 -RA -DL -O11111114 -fo8 -N"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\p5b\p5b.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" -SP"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\p5b\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" "p5b.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CString.mcl" "__Lib_Conversions.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl"	 
+hint: 0	1139	Available RAM: 1515 [bytes], Available ROM: 32768 [bytes]	 
+diagnostics: 0	122	Compilation Started	P18F452.c
+diagnostics: 1178	123	Compiled Successfully	P18F452.c
+diagnostics: 0	122	Compilation Started	__Lib_Delays.c
+diagnostics: 172	123	Compiled Successfully	__Lib_Delays.c
+diagnostics: 0	122	Compilation Started	tecla12int.h
+diagnostics: 54	123	Compiled Successfully	p5b.c
+hint: 28	1164	Variable 'aux2' has been eliminated by optimizer	p5b.c
+diagnostics: 0	127	All files Compiled in 78 ms	 
+hint: 0	1144	Used RAM (bytes): 15 (1%)  Free RAM (bytes): 1500 (99%)	Used RAM (bytes): 15 (1%)  Free RAM (bytes): 1500 (99%)
+hint: 0	1144	Used ROM (bytes): 732 (2%)  Free ROM (bytes): 32036 (98%)	Used ROM (bytes): 732 (2%)  Free ROM (bytes): 32036 (98%)
+diagnostics: 0	125	Project Linked Successfully	p5b.mcppi
+diagnostics: 0	128	Linked in 31 ms	 
+diagnostics: 0	129	Project 'p5b.mcppi' completed: 312 ms	 
+diagnostics: 0	103	Finished successfully: 27 feb. 2020, 10:25:17	p5b.mcppi

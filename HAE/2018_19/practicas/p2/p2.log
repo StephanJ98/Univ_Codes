@@ -1,0 +1,15 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP18F452 -RA -DL -O11111114 -fo8 -N"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\p2\p2.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" -SP"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\p2\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" "p2.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 1515 [bytes], Available ROM: 32768 [bytes]	 
+diagnostics: 0	122	Compilation Started	P18F452.c
+diagnostics: 1178	123	Compiled Successfully	P18F452.c
+diagnostics: 0	122	Compilation Started	__Lib_Delays.c
+diagnostics: 172	123	Compiled Successfully	__Lib_Delays.c
+diagnostics: 0	122	Compilation Started	p2.c
+diagnostics: 33	123	Compiled Successfully	p2.c
+diagnostics: 0	127	All files Compiled in 109 ms	 
+hint: 0	1144	Used RAM (bytes): 13 (1%)  Free RAM (bytes): 1502 (99%)	Used RAM (bytes): 13 (1%)  Free RAM (bytes): 1502 (99%)
+hint: 0	1144	Used ROM (bytes): 212 (1%)  Free ROM (bytes): 32556 (99%)	Used ROM (bytes): 212 (1%)  Free ROM (bytes): 32556 (99%)
+diagnostics: 0	125	Project Linked Successfully	p2.mcppi
+diagnostics: 0	128	Linked in 31 ms	 
+diagnostics: 0	129	Project 'p2.mcppi' completed: 421 ms	 
+diagnostics: 0	103	Finished successfully: 13 feb. 2020, 09:58:00	p2.mcppi

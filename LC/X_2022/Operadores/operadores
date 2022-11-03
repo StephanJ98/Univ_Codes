@@ -1,0 +1,283 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata de implementar el problema de la Analogia, tal y como se plantea
+% en el Ejemplo 71 de la pagina 30 de los apuntes "cortos". 
+
+% Declarativamente, el programa siguiente captura el problema planteado.
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+:- op(200,xfx,[dentro_de]).
+:- op(300,xfx,[es_a]).
+:- op(400,xfx,[como]).
+:- op(500,xfx,[mediante]).
+
+X es_a Y como Z es_a W mediante Relacion :- figura(X), figura(Y),
+                                            verifican(X, Y, Relacion), 
+                                            figura(Z), figura(W),
+                                            verifican(Z, W, Relacion).
+
+verifican(Figura_1 dentro_de Figura_2, 
+          Figura_1 dentro_de Figura_2,
+	  igualdad). 
+verifican(Figura_1 dentro_de Figura_2, 
+          Figura_2 dentro_de Figura_1,
+	  inversion). 
+verifican(Figura dentro_de _, 
+          Figura dentro_de _,
+	  interior). 
+verifican(_ dentro_de Figura,
+          _ dentro_de Figura,
+	  contorno). 
+
+figura(triangulo dentro_de circulo). 
+figura(circulo dentro_de triangulo). 
+figura(cuadrado dentro_de triangulo). 
+figura(circulo dentro_de cuadrado). 
+figura(cuadrado dentro_de circulo). 
+figura(triangulo dentro_de cuadrado). 
+figura(triangulo dentro_de triangulo). 
+figura(circulo dentro_de circulo). 
+
+% ... para el que un ejemplo de pregunta podria ser
+% :- X es_a triangulo dentro_de circulo como cuadrado dentro_de circulo es_a Y mediante Relacion.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata ahora de implementar el mismo problema anterior, pero
+% considerando operadores unarios "es" y "a" (resp. "dentro" y "de")
+% en lugar de "es_a" (resp. "dentro_de"), y "mediante" y "la" en lugar
+% de "mediante".
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+:- op(150,fx,[de]).
+:- op(200,xfx,[dentro]).
+:- op(250,fx,[a]).
+:- op(300,xfx,[es]).         
+%:- op(400,xfx,[como]).       % ya definido anteriormente
+:- op(475,fx,[la]).
+%:- op(500,xfx,[mediante]).   % ya definido anteriormente
+
+X es a Y como Z es a W mediante la Relacion :- es_figura(X), es_figura(Y),
+                                               verificando(X, Y, Relacion),
+                                               es_figura(Z), es_figura(W),
+                                               verificando(Z, W, Relacion).
+
+verificando(Figura_1 dentro de Figura_2, 
+            Figura_1 dentro de Figura_2,
+	    igualdad). 
+verificando(Figura_1 dentro de Figura_2, 
+            Figura_2 dentro de Figura_1,
+	    inversion). 
+verificando(Figura dentro de _, 
+            Figura dentro de _,
+	    interior). 
+verificando(_ dentro de Figura,
+            _ dentro de Figura,
+	    contorno). 
+
+es_figura(triangulo dentro de circulo). 
+es_figura(circulo dentro de triangulo). 
+es_figura(cuadrado dentro de triangulo). 
+es_figura(circulo dentro de cuadrado). 
+es_figura(cuadrado dentro de circulo). 
+es_figura(triangulo dentro de cuadrado). 
+es_figura(triangulo dentro de triangulo). 
+es_figura(circulo dentro de circulo). 
+
+% ... y a la que ahora podemos interrogar mediante la pregunta
+% :- X es a triangulo dentro de circulo como cuadrado dentro de circulo es a Y mediante la Relacion.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata de implementar un predicado de sintaxis:
+%
+% el cartesiano_del Conj_1 por Conj_2 es Conj_3
+%
+% tal que Conj_3 es es resultado de calcular el producto cartesiano de
+% los conjuntos Conj_1 y Conj_2.
+%
+% EJEMPLO: La respuesta a la pregunta
+%
+% :- el cartesiano_del [1,2] por [a,b] es X.
+%
+% es X = [[1, a], [1, b], [2, a], [2, b]]
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+:-op(100,xfx,[por]).
+%:-op(300,xfx,[es]).          % ya definido anteriormente
+:-op(400,fx,[cartesiano_del]).
+:-op(500,fx,[el]).
+
+el cartesiano_del [] por _ es [].
+el cartesiano_del [Car|Cdr] por Conjunto es Resultado :- 
+                     linea(Car,Conjunto,Linea),
+                     el cartesiano_del Cdr por Conjunto es Resto,
+                     concatenar(Linea,Resto,Resultado).
+
+linea(_,[],[]).
+linea(Elemento,[Car|Cdr],[[Elemento,Car]|Resto]) :- 
+                     linea(Elemento,Cdr,Resto).
+
+concatenar([],L,L).
+concatenar([Car|Cdr],L,[Car|R]) :- concatenar(Cdr,L,R).
+
+% para el que una posible pregunta es :- el cartesiano_del [1,2] por [a,b] es X.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata ahora de implementar el mismo problema anterior, pero
+% considerando operadores unarios "cartesiano" y "del" en lugar de
+% "cartesiano_del".
+%
+% EJEMPLO: La respuesta a la pregunta
+%
+% :- el cartesiano del [1,2] por [a,b] es X.
+%
+% es X = [[1, a], [1, b], [2, a], [2, b]]
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+% :-op(100,xfx,[por]).      % ya definido anteriormente
+% :-op(300,xfx,[es]).       % ya definido anteriormente
+:-op(400,fx,[del]).
+:-op(450,fx,[cartesiano]).
+% :-op(500,fx,[el]).        % ya definido anteriormente
+
+el cartesiano del [] por _ es [].
+el cartesiano del [Car|Cdr] por Conjunto es Resultado :- 
+                     linea(Car,Conjunto,Linea),
+                     el cartesiano del Cdr por Conjunto es Resto,
+                     concatenar(Linea,Resto,Resultado).
+
+% para el que una posible pregunta es :- el cartesiano del [1,2] por [a,b] es X.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata de implementar un predicado de sintaxis:
+%
+% el producto cartesiano del conjunto Conj_1 x Conj_2 x Conj_3
+% es Cartesiano sin ninguna duda.
+%
+% lo que supone no solo refinar la interfaz linguisticamente, sino que
+% obliga a definir una asociatividad en relacion al operador "x". Con objeto
+% de fijar el tipo de esta asociatividad, entenderemos que el enunciado exije
+% que A x B x C se evalue como A x (B x C), lo que requiere una asociatividad
+% derecha, esto es, del tipo "xfy".
+%
+% Si el enunciado espeficicase una evaluacion del tipo (A x B) x C, se 
+% requeriria una asociatividad izquierda, esto es, del tipo "yfx".
+
+:-op(100,xfy,[x]).
+% :-op(100,xfx,[por]).      % ya definido anteriormente
+% :-op(300,xfx,[es]).       % ya definido anteriormente
+:-op(350,fx,[conjunto]).
+% :-op(400,fx,[del]).       % ya definido anteriormente
+% :-op(450,fx,[cartesiano]).% ya definido anteriormente
+:-op(475,fx,[producto]).
+% :-op(500,fx,[el]).        % ya definido anteriormente
+:-op(800,xf,[sin]).
+:-op(900,xf,[ninguna]).
+:-op(1000,xf,[duda]).
+
+el producto cartesiano del conjunto [] x _  x _ es [] sin ninguna duda.
+el producto cartesiano del conjunto Conj1 x Conj2 x Conj3 es Resultado sin ninguna duda :- 
+                 el cartesiano del Conj2 por Conj3 es I,
+                 el cartesiano del Conj1 por I es Resultado.
+
+% para el que una posible pregunta es :- el producto cartesiano del conjunto [1,2,3] x [a,b] x ["A","B","C","D"] es X sin ninguna duda.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata de implementar un predicado de sintaxis:
+%
+% la union_del Conj_1 con Conj_2 es un Conj_3
+%
+% tal que Conj_3 es es resultado de unir los conjuntos Conj_1 y Conj_2. 
+%
+% EJEMPLO: La respuesta a la pregunta
+%
+% :- la union_del [1,2,3] con [3,4,5] es un X.
+%
+% es X = [4, 5, 1, 2, 3]
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+:-op(100,xfx,[con]).   
+:-op(200,fx,[un]).
+% :-op(300,xfx,[es]).      % ya definido anteriormente
+:-op(400,fx,[union_del]).
+% :-op(475,fx,[la]).       % ya definido anteriormente
+
+la union_del Conjunto con [] es un Conjunto.
+la union_del Conjunto con [Car|Cdr] es un Union_con_Cdr :- 
+                           miembro(Car,Conjunto),!,
+                           la union_del Conjunto con Cdr es un Union_con_Cdr.
+la union_del Conjunto con [Car|Cdr] es un [Car|Union_con_Cdr] :- 
+                           la union_del Conjunto con Cdr es un Union_con_Cdr.
+
+miembro(Elemento,[Elemento|_]).
+miembro(Elemento,[_|Cdr]) :- miembro(Elemento,Cdr).
+
+% para el que una posible pregunta es :- la union_del [1,2] con [2,3] es un X.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata ahora de implementar el mismo problema anterior, pero
+% considerando operadores unarios "union" y "del" en lugar de
+% "union_del".
+%
+% EJEMPLO: La respuesta a la pregunta
+%
+% :- la union del [1,2,3] con [3,4,5] es un X.
+%
+% es X = [4, 5, 1, 2, 3]
+
+% En este caso, al no requerir el problema una asociatividad concreta,
+% los operadores pueden definirse con cualquiera (asociatividad). Sin embargo,
+% hemos optado por especificaciones estrictas, indicando explicitamente
+% que los operadores NO son asociativos, esto es, usando especificaciones
+% "fx" para los prefijos unarios y "xfx" para los infijos binarios.
+
+% :-op(100,xfx,[con]).   % ya definido anteriormente
+% :-op(200,fx,[un]).     % ya definido anteriormente
+% :-op(300,xfx,[es]).    % ya definido anteriormente
+% :-op(400,fx,[del]).    % ya definido anteriormente
+:-op(450,fx,[union]).
+% :-op(475,fx,[la]).     % ya definido anteriormente
+
+la union del Conjunto con [] es un Conjunto.
+
+la union del Conjunto con [Car|Cdr] es un Union_con_Cdr :- 
+                           miembro(Car,Conjunto),!,
+                           la union del Conjunto con Cdr es un Union_con_Cdr.
+
+la union del Conjunto con [Car|Cdr] es un [Car|Union_con_Cdr] :- 
+                           la union del Conjunto con Cdr es un Union_con_Cdr.
+
+% para el que una posible pregunta es :- la union del [1,2] con [2,3] es un X.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -1,0 +1,6 @@
+% rotar([Car|Cdr],R) :- append(Cdr,[Car],R).
+
+rotar(L,R):- l2dl(L,DL),rotard(DL,R-[]).
+
+rotard(L-L,L-L):-!.
+rotard([Car|Cdr]-[Car|A],Cdr-A).

@@ -1,0 +1,234 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+INTRODUCCION
+============
+
+El último día abordamos el tema de qué son (fórmulas que representan a
+los conjuntos regulares) y para que sirven (simplifican la definición
+de conjuntos regulares) las expresiones regulares.
+
+En lo que se refiere a la generación de FAs a partir de expresiones
+regulares (p.ej. FLEX), la técnica mostrada pone en evidencia el
+interés de utilizar expresiones regulares lo más simples posibles:
+cuanto más simple sea la expresión regular de partida, más simple será
+el FA generado ... y más sencillo será también determinizarlo y
+minimizarlo, con la consiguiente reducción de costes
+espacio/temporales.
+
+Surge entonces el problema de la equivalencia de expresiones regulares
+(que mencionábamos muy brevemente el último día), evidenciando su
+complejidad ... dado que para un mismo conjunto regular hay infinitas
+expresiones regulares que lo describen. Se plantean varias cuestiones
+prácticas relacionadas con este tema:
+
+I) Cómo determinar que dos expresiones regulares son equivalentes o,
+   lo que es lo mismo, como determinar que dos FAs poseen las mismas
+   funcionalidades ... esto es, que hacen lo mismo.
+
+   Como veremos más adelante, es un problema decidible. Por tanto,
+   dados dos FAs, es siempre posible saber si poseen la misma
+   capacidad operativa o no.
+
+II) Cómo encontrar la expresión regular más simple que sea capaz de
+    describir el comportamiento que nos interesa (la FA que buscamos).
+    Esto es, cómo simplificar una expresión regular.
+
+    Este es un tema también decidible, pero que NO trataremos por
+    falta de tiempo.
+
+CONTEXTO
+========
+
+En la clase de hoy, continuaremos avanzando en el problema de cómo
+determinar si un conjunto es regular o no. Podéis también seguirlo,
+amén de por mis notas, en las Secciones 4.1 y 4.2 del texto de
+referencia indicado en la cabecera.
+
+Hasta el momento hemos descrito técnicas para decidir cuando un
+conjunto SI es regular: diseñando directamente un FA que lo reconozca,
+generando la gramatica regular que lo genera o formulando la expresión
+regular que lo identifica.
+
+Sin embargo, no hemos tocado aún el problema recíproco. Esto es, como
+concluir que un conjunto NO es regular. Obviamente, que no seamos
+capaces de diseñar un FA, una gramática regular o una expresión
+regular NO implica que el lenguaje que define la funcionalidad que
+pretendemos implantar, no sea regular ... si tenemos estas
+dificultades, puede significar simplemente que NO somos lo
+suficientemente diestros.
+
+OBJETIVO DE LA CLASE
+====================
+
+En este punto, vamos a distinguir dos niveles en el tratamiento de la
+cuestión (determinar cuando un conjunto NO es regular). El PRIMERO
+será meramente orientativo, sin ningún valor como respuesta en un
+examen, pero esencial para dirigir nuestros esfuerzos (bien para
+generar un FA que satisfaga nuestras necesidades, bien para desistir
+en ese propósito) en la dirección que probablemente sea la más
+indicada.
+
+La idea aquí (técnica orientativa) es la ya comentada en clase en
+numerosas ocasiones: si necesitamos una pila (o más) para
+"contabilizar" algún parámetro de nuestro conjunto, éste no sera
+regular. Como ejemplo, los conjuntos {a^n b c^n, n >= 0} y {a^n b^m
+c^n, tal que n, m >= 0} NO son regulares. Mucho menos el conjunto {a^n b^n c^n,
+tal que n, m >= 0}, para cuya identificación necesitaríamos ya no una
+sino dos pilas. Observar que os será imposible representarlos mediante
+expresiones regulares, porque éstas no son capaces de "contabilizar"
+que haya (por ejemplo) el mismo número de a's que de c's.
+
+El SEGUNDO será formal y (de facto) el método de referencia para
+demostrar que un conjunto NO es regular. Este acercamiento es conocido
+de diferentes formas: Teorema de Iteración en conjuntos regulares (hay
+otro Teorema de Iteración para lenguajes independientes del contexto, con
+el que no debemos confundirlo), Lema del Bombeo en conjuntos regulares
+... o por su denominación en inglés,"The Pumping Lemma" para conjuntos
+regulares. 
+
+El Teorema de Iteración en conjuntos regulares expresa una condición
+NECESARIA que debe cumplir cualquier conjunto regular. Esto tiene una
+lectura práctica importante:
+
+I) Que un conjunto verifique el Teorema de Iteración no prueba nada, ni
+   que sea ni que no sea regular.
+
+II) Que un conjunto NO verifique el Teorema de Iteración, implica
+    automáticamente que dicho conjunto NO es regular.
+
+NOTA: Al respecto, quiero llamar la atención sobre un problema del que
+      advierto siempre, y que indefectiblemente algunos alumnos obvian
+      ... con las consecuencias negativas en las calificaciones.
+
+      Grosso modo, sin entrar a calificar las fuentes donde tales
+      técnicas se pregonan, por regla general NUNCA se puede aplicar
+      una estrategia basada en el Teorema de Iteración utilizando un CASO
+      CONCRETO de cadena. La razón es muy simple, si mi razonamiento
+      se aplica sobre una cadena concreta "w" ... ésta tendrá una longitud
+      conocida, digamos "m".
+
+      Por otra parte, tal y como especifica el enunciado del Teorema de
+      Iteración, éste se aplica a cadenas cuya longitud es mayor o
+      igual que el número de estados del FA que supuestamente debería
+      reconocer al conjunto a estudiar.
+
+      En este contexto, si nuestro razonamiento nos llevase a concluir
+      que dicho conjunto no es regular (que es para lo que sirve el
+      Teorema de Iteración), dicho razonamiento se cae por su base.
+
+      En efecto, llegar a esa conclusión implicaría que NO existe un
+      FA que reconozca al conjunto ... pero si no hay FA, tampoco hay
+      conjunto de estados del FA, y si no hay conjunto de estados del
+      FA tampoco podemos hablar de su dimensión ... y entonces ¿ cómo
+      hemos podido escoger la cadena concreta "w" sobre la que hemos
+      razonado, de forma que su longitud "m" sea mayor que la
+      dimensión de un conjunto de estados que simplemente no existe ?
+
+      Simplemente es imposible. Luego, moraleja, no se puede intentar
+      razonar en base al Teorema de Iteración en conjuntos regulares,
+      usando una cadena concreta.
+
+      Aplicad, en consecuencia, la técnica ilustrada en el ejemplo de
+      clase. Más adelante os haré llegar nuevos ejemplos.
+
+NOTA: Respecto a la técnica que mostramos en el ejemplo de clase, para
+      ilustrar la aplicación del Teorema de Iteración en conjuntos
+      regulares (básicamente deducir que un conjunto NO es regular
+      porque NO verifica el Teorema de Iteración), una característica
+      fundamental es que se basa en una casuística acerca de la
+      naturaleza de la subcadena denotada por "y".
+
+      Dicha casuística debe ser EXHAUSTIVA en relación a la naturaleza
+      de "y" (esto es, debe cubrir todas los casos posibles) y, en
+      TODOS ESOS CASOS, debe llevarnos a la conclusión de que es
+      IMPOSIBLE bombear "y" (esto es, sustituir "y" por "y^k, k >=0")
+      de forma que podamos asegurar que "x y^k z" (con "k >= 0") siga
+      perteneciendo al conjunto estudiado. De esta forma aseguramos
+      que el Teorema de Iteración NO se verifica en ningún caso.
+
+      Esto es, aunque haya un solo caso en que tal conclusión (a
+      saber, que el Teorema de Iteración NO se verifica) no pueda
+      afirmarse taxativamente, no podemos asegurar nada.
+
+      Es, por ejemplo, el caso del conjunto L = {a^n b^m c^n tal que
+      n, m >= 0}, que claramente parece no regular, pero que si le
+      aplicamos el razonamiento basado en la casuística de la
+      subcadena "y" del ejemplo de los apuntes, no concluiremos
+      nada. Y no lo haremos porque uno de los casos a considerar es
+      que "y" sea una tira de "b's" (y \in b^+), y si en este caso la
+      bombeamos ... la cadena resultante seguira perteneciendo a L,
+      porque el número de "b's" es libre, no está ligado ni al número
+      de "a's" ni al de "c's".
+
+NOTA: Cuando esto ocurre (la aplicación del Teorema de Iteración no es
+      concluyente), una técnica alternativa consiste en sacar partido
+      de las propiedades de cierre de los conjuntos regulares para
+      "pre-cocinar" el conjunto a estudiar.
+
+      Como ejemplo, tomemos el conjunto L = {a^n b^m c^n, tal que n,m
+      >= 0}, para el que el Teorema de Iteración no es concluyente
+      aplicando la técnica ilustrada en los apuntes de clase (basada
+      en la casuística de la subcadena "y").
+
+      Entonces consideramos el lenguaje M generado por la expresión
+      regular a*bc*, trivialmente M es por tanto un conjunto regular y
+      (por ser los conjuntos regulares cerrados por la intersección)
+      también lo es la intersección de L y M.
+
+      Dicha intersección nos da como resultado el conjunto N= {a^n b c^n,
+      n >= 0}, para el que la técnica ilustrada en los apuntes sobre
+      el Teorema de Iteración nos permite (ahora si) ser taxativos y afirmar
+      que el conjunto N NO es regular.
+
+      Al no ser N regular, tampoco lo puede ser L ... porque si L lo
+      fuera (regular), al serlo también M (regular) ... también N, lo
+      que no es cierto. Por tanto, L NO no puede ser regular.
+
+      Más adelante veremos, en detalle, ejemplos de este tipo de
+      técnicas de "preparación" basada en la aplicación de propiedades
+      de cierre.
+
+CONCLUSION
+==========
+
+El Teorema de Iteración en conjuntos regulares, es una condición
+necesaria para ser conjunto regular (no suficiente). Por tanto puede
+ser usado para detectar conjuntos NO regulares, basándonos en un
+simple razonamiento por reducción al absurdo como el expuesto en el
+ejemplo de hoy de los apuntes.
+
+En ocasiones, sin embargo, ocurre que la técnica descrita no permite
+obtener resultados concluyentes. En ese caso podemos echar mano de las
+propiedades de cierre de los conjuntos regulares para una mejor
+adaptación a la resolución del problema.
+
+Hoy hemos visto algunas de estas propiedades de cierre, en la próxima
+clase continuaremos mostrando otras nuevas, descubriendo además
+funcionalidades prácticas alternativas a su uso.
+
+NOTAS HISTORICAS:
+=================
+
+Aunque resultado del trabajo de los matemáticos Michael Rabin and Dana
+Scott (1959), el Lema del Bombeo fue enunciado en el formato que
+conocemos por Y. Bar-Hillel, M. Perles y E. Shamir (1961).
+
+Bar-Hillel fue un filósofo y matemático (una combinación de
+capacidades muy habitual) austríaco de origen judío, huído a Palestina
+en los años 30 del pasado siglo ante el avance de la idelología nazi
+en su país. Al estallar la Segunda Guerra Mundial se alistó voluntario
+en la Brigada Judía del Ejército británico, y terminada ésta luchó en
+la Guerra de Independencia de Israel, perdiendo un ojo.
+
+Tras este largo paréntesis bélico, trabajó en el MIT, donde fue el
+primer investigador dedicado exclusivamente al problema de la
+traducción automática. Desde allí se trasladó a la Univ. Hebrea de
+Jerusalén, donde colaboró con los matemáticos Micha Perles y Eli
+Shamir.

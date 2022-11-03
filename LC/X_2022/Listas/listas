@@ -1,0 +1,179 @@
+:- op(600, xfy, [\]).
+
+% Incuimos aqui algunos ejercicios de listas, a mayores de los ya presentes
+% en los apuntes.
+
+% intercalar(L1,L2,R) es cierto sii R es la lista resultante de intercalar
+% los elementos de las listas L1 y L2.
+% Ej. La respuesta a la pregunta intercalar([1,2],[a],R) es R = [1, a, 2]
+% Ej. La respuesta a la pregunta intercalar([1],[a,b],R) es R = [1, a]
+% Ej. La respuesta a la pregunta intercalar([],[a],R) es R = []
+% Ej. La respuesta a la pregunta intercalar([1],[],R) es R = [1]
+
+intercalar([],_,[]).
+intercalar([Car|_], [], [Car]).
+intercalar([Car1|Cdr1],[Car2|Cdr2], [Car1,Car2|I]) :- intercalar(Cdr1,Cdr2,I).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% miembro(E,L) es cierto sii E es un elemento de la lista L.
+
+miembro(Car,[Car|_]).
+miembro(X,[_|Cdr]):-miembro(X,Cdr).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% concat(L1,L2,R) es cierto sii R es el resultado de concatenar las
+% listas L1 y L2.
+
+concat([],X,X).
+concat([Car|Cdr],L,[Car|T]):-concat(Cdr,L,T).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% inv(L,I) es cierto sii I es la lista inversa de la lista L.
+
+inv([],[]).
+inv([Car|Cdr],R):- inv(Cdr, T), concat(T,[Car],R).
+
+% tambien puede hacerse mediante el uso de diferencias de listas
+
+inverso(Lista, Inv) :- inv_dl(Lista, Inv\[]).
+
+inv_dl([],XX).
+inv_dl([Car|Cdr],X\Y):- inv_dl(Cdr, X\[Car|Y]).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% primero(L,E) es cierto sii E es el primer elemento de la lista L.
+
+primero([Car|_],Car).
+
+% segundo(L,E) es cierto sii E es el segundo elemento de la lista L.
+
+% alternativamente seg([_,Cadr|_],Cadr).
+seg([_|[Cadr|_]],Cadr).
+
+% ultimo(L,E) es cierto sii E es el ultimo elemento de la lista L.
+
+ultimo([Car],Car). 
+ultimo([_|Cdr],L):-ultimo(Cdr,L).
+
+% penultimo(L,E) es cierto sii E es el penultimo elemento de la lista L.
+
+penultimo([Car,_],Car). % alternativamente, penultimo([Car|[_|[]]],Car).
+penultimo([_|Cdr],L):-penultimo(Cdr,L).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% subconj(L1,L2) es cierto sii la lista L1 esta contenida en la lista L2.
+
+subconj([],_).
+subconj([Car|Cdr],C):-miembro(Car,C), subconj(Cdr,C).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% quicksort(Lista,Ordenada) es cierto sii Ordenada es la lista
+% resultante de ordenar (segun el algoritmp del quicksort) los elementos
+% (numericos) de la lista Lista.
+% Ej: quicksort([3,1,5,4,2],R) da como respuesta R = [1,2,3,4,5]
+
+quicksort([],[]).
+quicksort([Car|Cdr],R) :- partir(Car,Cdr,Izq,Der),
+                          quicksort(Izq,Izq_ordenada),
+                          quicksort(Der,Der_ordenada),
+                          concat(Izq_ordenada,[Car|Der_ordenada],R).
+
+% partir(Pivot,Lista,Menores,Mayores-o-iguales) es cierto sii Menores
+% (resp. Mayores-o-iguales) es la lista que contiene los elementos de
+% la lista Lista que son menores (resp. mayores o iguales) a Pivot.
+
+partir(_,[],[],[]).
+partir(Pivot,[Car|Cdr],[Car|Izq],Der) :- Car < Pivot,
+                                         !,
+                                         partir(Pivot,Cdr,Izq,Der).
+partir(Pivot,[Car|Cdr],Izq,[Car|Der]) :- partir(Pivot,Cdr,Izq,Der).
+
+% tambien podemos considerar una version usando diferencias de listas:
+
+quick(Lista, Lista_ordenada) :- quick_dl(Lista, Lista_ordenada - []).
+
+quick_dl([],X-X).
+quick_dl([Car|Cdr], X-Z) :- partir(Car,Cdr,Izq,Der),
+                            quick_dl(Izq, X-[Car|Y]),
+                            quick_dl(Der, Y-Z).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% aplanar(L, R) es cierto sii R es la lista resultande aplanar la lista L.
+% aplanar([1,[a,b,[c]],2,[3]], R) da como respuesta R = [1,a,b,c,2,3]
+
+aplanar([],[]).
+aplanar(Atomo,[Atomo]) :- atomic(Atomo), Atomo \== [].
+aplanar([Car|Cdr], R) :- aplanar(Car,Car_aplanado),
+                         aplanar(Cdr,Cdr_aplanado),
+	                 concat(Car_aplanado, Cdr_aplanado, R).
+
+% tambien podemos considerar una version usando diferencias de listas:
+
+apla(L,R) :- apla_dl(L, R-[]).
+
+apla_dl([],R-R).
+apla_dl(Atomo,[Atomo|Cdr]-Cdr) :- atomic(Atomo), Atomo \== [].
+apla_dl([Car|Cdr], Car_aplanado - Cdr_aplanado) :- apla_dl(Car,Car_aplanado-X),
+                                                   apla_dl(Cdr,X-Cdr_aplanado).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% cartesiano(C1,C2,R) es cierto sii R es la lista conteniendo los
+% pares del producto cartesiano de los conjuntos (listas sin elementos
+% repetidos) C1 y C2.
+% Ej: cartesiano([1,2],[a],R) da como respuesta R = [[1,a],[2.a]]
+% Ej: cartesiano([1,2],[],R) da como respuesta R = []
+
+cartesiano([],_,[]).
+cartesiano([Car|Cdr],Conjunto,Resultado) :- linea(Car,Conjunto,Linea),
+                                            cartesiano(Cdr,Conjunto,Resto),
+                                            concat(Linea,Resto,Resultado).
+
+linea(_,[],[]).
+linea(Elemento,[Car|Cdr],[[Elemento,Car]|Resto]) :- linea(Elemento,Cdr,Resto).
+
+% tambien podemos considerar una version usando diferencias de listas:
+
+cart(C1,C2,Cart) :- cart_dl(C1,C2,Cart-[]).
+
+cart_dl([],_,X-X).
+cart_dl([Car|Cdr],Conjunto,X-Z) :- linea_dl(Car,Conjunto,X-Y),
+                                   cart_dl(Cdr,Conjunto,Y-Z).
+
+linea_dl(_,[],X-X).
+linea_dl(Elemento,[Car|Cdr],[[Elemento,Car]|X]-Y) :- linea_dl(Elemento,Cdr,X-Y).
+
+%linea_dl(Elemento,[Car|Cdr],X-Y) :- linea_dl(Elemento,Cdr,X-[[Elemento,Car]|Y]).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% int(L1,L2,I) es cierto sii I es la interseccion de las listas L1 y
+% L2 (que supondremos no tienen elementos repetidos.
+
+int([],_,[]).
+int([Car|Cdr],C, [Car|T]):- miembro(Car,C),!,int(Cdr,C,T).
+int([_|Cdr],C,T):- int(Cdr,C,T).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% union(L1,L2,I) es cierto sii I es la union de las listas L1 y
+% L2 (que supondremos no tienen elementos repetidos.
+
+union([],C,C).
+union([Car|Cdr],C, T):- miembro(Car,C),!,union(Cdr,C,T).
+union([Car|Cdr],C,[Car|T]):- union(Cdr,C,T).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% conj(Lista) es cierto si la lista Lista no tiene elementos repetidos
+
+conj([]).
+conj([Car|Cdr]):-miembro(Car,Cdr),!,fail.
+conj([_|Cdr]):-conj(Cdr).

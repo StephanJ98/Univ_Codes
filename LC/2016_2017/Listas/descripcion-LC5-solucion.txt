@@ -1,0 +1,7 @@
+carl([[Car|Cdr]|_],[Car|Cdr]):-!.
+carl([_|Cdr], Carl) :- carl(Cdr, Carl).
+
+duplicar_pares([], []).
+duplicar_pares([Car], [Car]).
+duplicar_pares([Car,Cadr|Cdr], [Car,Cadr,Cadr|Dup]):- duplicar_pares(Cdr,Dup).
+

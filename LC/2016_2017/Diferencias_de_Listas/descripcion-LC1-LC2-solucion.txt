@@ -1,0 +1,11 @@
+%inorden(arbol(A,nil,nil),[A]):-!.
+%inorden(arbol(A,X,nil),S) :- inorden(X,C),append(C,[A],S).
+%inorden(arbol(A,nil,X),[A|S]) :- inorden(X,S).
+%inorden(arbol(A,X,Y),S) :- inorden(X,C),inorden(Y,F),append(C,[A],D),
+%			    append(D,F,S).
+
+inorden(Arbol,Inorden) :- inorden_dl(Arbol, Inorden-[]).
+inorden_dl(arbol(A,nil,nil),[A|X]-X) :-!.
+inorden_dl(arbol(A,I,nil),C-X) :- inorden_dl(I,C-[A|X]).
+inorden_dl(arbol(A,nil,D),[A|S]-X) :- inorden_dl(D,S-X).
+inorden_dl(arbol(A,I,D),C-F) :- inorden_dl(I,C-[A|X]),inorden_dl(D,X-F).

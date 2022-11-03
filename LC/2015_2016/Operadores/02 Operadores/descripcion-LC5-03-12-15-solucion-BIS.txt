@@ -1,0 +1,17 @@
+:-op(100,fx,[en]).
+:-op(200,fx,[incluido]).
+:-op(300,yfx,[esta]).
+:-op(400,xf,[que]).
+:-op(500,yf,[de]).
+:-op(600,xf,[verdad]).
+:-op(700,xf,[la]).
+:-op(800,xf,[buena]).
+
+X esta incluido en Y que esta incluido en Z de verdad de la buena :- inclusion(X,Y),inclusion(Y,Z).
+
+inclusion([],_).
+inclusion([Car|Cdr],C) :- miembro(Car,C),inclusion(Cdr,C).
+
+miembro(Elemento,[Elemento|_]):-!.
+miembro(Elemento,[_|Cdr]) :- miembro(Elemento,Cdr).
+

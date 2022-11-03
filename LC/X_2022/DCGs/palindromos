@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Version para un reconocedor de palindromos, sobre una base
+% de datos extensiva con posicionamiento explicito.
+%
+% La principal desventaja es que este tipo de analizadores solo
+% sirven para un fragmento particular de texto ... en el caso
+% que sigue, para el anaĺisis de "abba".
+%
+% El ejemplo, sin embargo, ilustra de forma sencilla la importancia
+% de la concatenatividad en los lenguajes, y una cierta dependencia
+% contextual.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Base de datos intensiva (actua como analizador sintactico)
+
+palindromo(p(C,P,C),X,W) :- caracter(C,X,Y),
+                            palindromo(P,Y,Z),
+                            caracter(C,Z,W).
+palindromo(p(nil),X,X).
+palindromo(p(C),X,Y) :- Y is X+1, caracter(C,X,Y).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base de datos extensiva (actua como analizador lexico)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+caracter(a,0,1).
+caracter(b,1,2).
+caracter(b,2,3).
+caracter(a,3,4).
+
+% Ejemplo de pregunta :- palindromo(Arbol,0,4).
+
+% Observar que en este ultimo caso la respuesta sera negativa, a pesar
+% de que "bb" es un palindromo. Para obtener una respuesta afirmativa
+% habria que actualizar la BD extensiva.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Version para un reconocedor de palindromos, sobre una base
+% de datos extensiva con posicionamiento implicito (usando 
+% diferencias de listas), con el alfabeto {a,b}.
+%
+% La principal ventaja es que este tipo de analizadores solo
+% es independiente del tipo de texto a analizador en el lenguaje
+% objetivo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Clausula de interfaz
+
+analiza(Arbol, F) :- palindromo_dl(Arbol,F-[]).
+
+% BD intensiva
+
+palindromo_dl(p(C,P,C),P0-P3) :- caracter_dl(C,P0-P1),
+                                 palindromo_dl(P,P1-P2),
+                                 caracter_dl(C,P2-P3).
+palindromo_dl(p(nil),P0-P0).
+palindromo_dl(p(C),P0-P1) :- caracter_dl(C,P0-P1).
+
+% BD extensiva
+
+caracter_dl(a,[a|X]-X).
+caracter_dl(b,[b|X]-X).
+
+% Ejemplo de pregunta :- analiza(Arbol,[a,b,b,a]).
+% Ejemplo de pregunta :- analiza(Arbol,[b,b]).

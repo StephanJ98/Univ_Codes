@@ -1,0 +1,6 @@
+ultimo([Car],Car) :- !.
+ultimo([_|Cdr],Res) :- ultimo(Cdr,Res).
+
+partir(L,0,[],L):-!.
+partir([Car|Cdr],N,[Car|P1],P2) :- N1 is N - 1, 
+                                   partir(Cdr,N1,P1,P2).

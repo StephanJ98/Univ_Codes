@@ -1,0 +1,5 @@
+partir([Elem|Cdr],Elem,[Elem],Cdr):-!.
+partir([Car|Cdr],Elem,[Car|P1],P2) :- partir(Cdr,Elem,P1,P2).
+
+ante-penultimo([Car,_,_],Car).
+ante-penultimo([_|Cdr],U) :- ante-penultimo(Cdr,U).

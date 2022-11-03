@@ -1,0 +1,293 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Capítulo 1, subsección 1.5 (pag. 24)
+
+	Capítulo 5 (pag. 143)
+
+INTRODUCCION
+============
+
+Abordaremos la introducción del vocabulario y de las notaciones
+necesarias a la definición de conceptos básicos en teoría de autómatas
+y lenguajes formales, y que luego nos permitirán categorizar los
+algoritmos en función de su complejidad, facilitando de ese modo su
+resolución óptima en términos computacionales.
+
+CONTEXTO 
+========
+
+Partimos de la "Hipótesis de Church" (también denominada "Hipótesis de
+Church-Turing" en honor al gran matemático Alain Turing, padre de
+la teoría formal en computación) que, en términos informales, viene a
+establecer:
+
+"Los conceptos función computable y Máquina de Turing son equivalentes"
+
+o, en otras palabras:
+
+"Los conceptos de algoritmo y Máquina de Turing son equivalentes"
+
+Dado que una Máquina de Turing puede caracterizarse formalmente como
+un artilugio lógico capaz de reconocer los denominados "lenguajes sin
+restricciones" (también conocidos como "lenguajes con estructura de
+frase"), el resultado es que la implementación de un algoritmo resulta
+ser equivalente a la resolución de un problema de análisis puramente
+lingüístico. 
+
+Computacionalmente se plantea un reto, dado que la complejidad
+asociada a una Máquina de Turing diseñada para la resolución de un
+problema puede resultar innecesariamente elevada. Surge entonces la
+pregunta de si podemos categorizar los algoritmos en función de su
+complejidad, y si esa clasificación nos permitiría simplificar el
+modelo de Máquina de Turing para obtener artilugios lógicos más
+simples pero también más efectivos en su nicho de aplicación. Dicho de
+otro modo,
+
+¿ es posible clasificar los lenguajes por la complejidad de su
+  estructura, y diseñar máquinas especializadas para su análisis en
+  cada caso ?
+
+Este será el objetivo de la asignatura de TALF que, desde un punto de
+vista práctico, podemos particularizar en el propio análisis de los
+lenguaje de programación. Recordemos al respecto que un lenguaje
+(natural o artificial) se despliega a tres niveles complementarios de
+análisis: léxico (cómo se forman las palabras), sintáctico (cómo se
+forman las frases a partir de palabras) y semántico (cómo se
+interpretan esas frases). Como veremos, cada uno de estos niveles se
+corresponderá al diseño de máquinas de tipología y complejidad bien
+diferenciadas.
+
+OBJETIVO DE LA CLASE
+====================
+
+Introducimos en primer lugar la noción de ALFABETO, como sinónimo de
+conjunto finito. A partir de ahí, considerando una sencilla operación
+interna sobre los alfabetos (la "concatenación") definimos formalmente
+el concepto de "palabra", considerando además un elemento neutro para
+dicho operación y que denominamos "palabra vacía". En este sentido, un
+"alfabeto" es (formalmente) un monoide para la concatenación (la
+concatenación de símbolos de un alfabeto verifica las propiedades
+asociativa y elemento neutro).
+
+Intuitivamente podemos establecer un paralelismo con el concepto
+habitualmente manejado (lease, en nuestro caso, el "alfabeto latino")
+para un alfabeto ... pero con matices. Consideremos un ejemplo bien
+conocido:
+
+i) El "alfabeto latino" es un conjunto finito y por tanto
+   (formalmente) un "alfabeto". En consecuencia, las "palabras" de dicho
+   alfabeto son cadenas formadas por sus letras (con o sin sentido).
+
+ii) Dicho esto, también las palabras de un diccionario (por ejemplo,
+    español) son un conjunto finito y por tanto también (formalmente)
+    constituyen otro "alfabeto". En este caso, sin embargo, las
+    "palabras" serían la concatenación de dichos elementos del
+    alfabeto ... lo que revendría a lo que comunmente conocemos como
+    frases (con o sin sentido) en español.
+
+Esto es, en el caso i) las nociones de "alfabeto" y "palabra" se
+corresponderían con lo que habitualmente entendemos (si prescindimos
+del hecho de que las cadenas de elementos del alfabeto tengan o no
+sentido) en las lenguas humanas. En el caso ii) resulta obvio que el
+nivel de complejidad es más elevado y, de hecho, las palabras de i) no
+son otra cosa que el alfabeto de ii).
+
+Ello pone de manifiesto de una forma muy simple algo que ya hemos
+comentado, y es que existe una categorización natural de los lenguajes
+(y por tanto de los algoritmos) en función de su complejidad
+estructural ... y por tanto cabe también esperar que esa
+categorización tenga su reflejo a nivel computacional. Esto es,
+lenguajes (algoritmos) simples deberían poder analizarse mediante
+artilugios simples, cuya complejidad medrará de forma proporcional a
+la de aquellos.
+
+A partir del concepto de "palabra" generada a partir de un "alfabeto",
+se plantea ahora en el diseño de cualquier lenguaje el ¿ cómo combinar
+dichas palabras ? Necesitaremos para ello de un conjunto de "reglas"
+que conforman una GRAMÁTICA. Siguiendo nuestro ejemplo, las
+"gramáticas" que combinan elementos de i) deberían ser más simples que
+las que combinan elementos de ii). De hecho parece natural pensar que,
+por tanto, las máquinas que permitan analizar gramaticalmente i) serán
+más simples que las asociadas a ii).
+
+Aprovechando nuestro conocimiento intuitivo de los lenguajes tanto
+artificiales como naturales, el ejemplo i) se correspondería a un
+problema de análisis léxico ... mientras que ii) se correspondería a
+uno de análisis sintáctico. 
+
+Introducido el concepto de "gramática", podemos ya establecer como
+aplicar sus "reglas" para (a partir de su "axioma") analizar una
+concatenación de "palabras" (cadenas formadas a partir de su
+"alfabeto") mediante descomposición recursiva del conjunto de
+"variables" que la definen. El mecanismo básico a este nivel es el de
+"derivación", entendido como la aplicación de una "regla" gramatical
+sobre una cadena de símbolos (terminales o no) que denominamos "forma
+sentencial", y que nos permite descomponerla hasta alcanzar (si así es
+nuestro empeño) una concatenación de palabras que denominamos
+"sentencia" o "frase". 
+
+A la aplicación de una de estas reglas sobre dichas formas sentenciales
+se le denomina "derivación directa", mientras que su concatenación se
+conoce por "derivación indirecta".
+
+Podemos entonces introducir el "lenguaje generado por una gramática"
+como el conjunto de "frases" analizables  mediante derivación (directa
+o indirecta) a partir del "axioma", usando las "reglas" de la "gramática".
+
+CONCLUSION
+==========
+
+Un "lenguaje" se define de forma natural a partir de una "gramática"
+mediante el conjunto de cadenas analizables por ésta. Intuitivamente,
+por tanto, una "gramática" no es otra cosa que un esqueleto formal que
+fija la estructura interna del "lenguaje" y, en consecuencia,
+reflejará la complejidad de aquél.
+
+Esto es, si lo que pretendemos es diseñar máquinas optimizadas para el
+análisis de lenguajes, tendremos que hacerlo a partir de una
+clasificación previa de las gramáticas que los generan ... teniendo en
+cuenta la complejidad estructural de éstas últimas.
+
+Dicho de otro modo y remitiéndonos a la Hipótesis de Church, si
+queremos implementar de forma óptima un algoritmo, tendremos que
+conocer primero cuál es su estructura lingüística. Esto es, tendremos
+que identificar cuál es el conjunto de reglas que conforman su
+comportamiento ... a saber, el conjunto de reglas que permiten generar
+una solución a partir de una entrada dada.
+
+NOTAS HISTORICAS:
+=================
+
+Algunas frases, de eminentes especialistas en "Computer Science",
+resumen bien el sentido de esta asignatura: identificación de
+algoritmia con análisis lingüístico y la necesidad práctica de
+categorizarlo:
+
+Donald E. Knuth:
+----------------
+
+"Un algoritmo debe ser visto para ser creído."
+
+Alan Jay Perlis:
+----------------
+
+"Un lenguaje que no afecta a nuestra forma de entender la
+ programación, no vale la pena de ser conocido."
+
+Edsger Dijkstra:
+---------------
+
+"Un lenguaje de programación, con su sintaxis formal y las reglas de
+ demostración que define su semántica, es un sistema formal para el
+ cual la ejecución del programa provee solamente un modelo."
+
+También el mundo de la literatura intuyó esta identificación. Atención
+a lo que han apuntado estos autores, simplemente a partir del puro
+sentido común, porque en no pocos casos se han adelantado (décadas) al
+enunciado de la "Hipótesis de Church-Turing" ... sin duda la piedra
+angular de la computación:
+
+José Martí:
+----------
+
+"El lenguaje ha de ser matemático, geométrico, escultórico. La idea ha
+ de encajar exactamente en la frase, tan exactamente que no pueda
+ quitarse nada de la frase sin quitar eso mismo de la idea."
+
+Samuel Johnson:
+---------------
+
+"El lenguaje es el vestido de los pensamientos."
+
+Miguel de Unamuno:
+------------------
+
+"La lengua no es la envoltura del pensamiento sino el pensamiento mismo."
+
+Fernando Lázaro Carreter:
+-------------------------
+
+"El lenguaje es el andamiaje del pensamiento".
+
+"Si se empobrece la lengua se empobrece el pensamiento".
+
+Paul Valery:
+------------
+
+"La sintaxis es una facultad del alma"
+
+Stendhal:
+---------
+
+"Quien posee otra lengua posee otra alma."
+
+Flora Lewis:
+------------
+
+"Aprender otro idioma no es solamente aprender palabras diferentes
+ para las mismas cosas, sino aprender otra manera de pensar acerca de
+ las cosas."
+
+Haruki Murakami:
+----------------
+
+"Aprender otro idioma es como convertirse en otra persona."
+
+Como cabía esperar, los filósofos tampoco se han quedado atrás:
+
+Ludwig Wittgenstein:
+--------------------
+
+"Los límites de mi lenguaje son los límites de mi mundo."
+
+Ralph W. Emerson:
+----------------
+
+"Emplea el lenguaje que quieras y nunca podrás expresar sino lo que eres."
+
+Ludwig Von Bertalanffy:
+----------------------
+
+"Las matemáticas significan esencialmente la existencia de un
+ algoritmo mucho más preciso que el del lenguaje ordinario. La
+ historia de la ciencia atestigua que la expresión en lenguaje
+ ordinario a menudo precedió a la formulación matemática, a la
+ invención de un algoritmo."
+
+Incluso algún que otro estadista/político ha dado en el clavo:
+
+Carlomagno:
+----------
+
+"Saber otro idioma es como poseer una segunda alma."
+
+Gandhi:
+-------
+
+"Nuestra lengua es el reflejo de nosotros mismos."
+
+Cesar Chavez:
+-------------
+
+"Un idioma es un reflejo exacto del carácter y el desarrollo de sus hablantes."
+
+Tampoco los artistas han sido ajenos a la identificación de
+pensamiento (algoritmo) y lenguaje:
+
+Federico Fellini:
+----------------
+
+"Un idioma diferente es una visión diferente de la vida."
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

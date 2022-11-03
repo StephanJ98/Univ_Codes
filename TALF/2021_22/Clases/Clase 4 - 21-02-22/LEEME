@@ -1,0 +1,175 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Capítulo 2, (pag. 31) (pag. 46)
+
+INTRODUCCION
+============
+
+Una vez finalizada la introducción de la Jerarquía (gramatical) de
+Chomsky, iniciamos la de la correspondiente de artilugios que permiten
+la implementación efectiva de los algoritmos antes categorizados.
+
+CONTEXTO 
+========
+
+Partimos del concepto de "autómata finito" (AF), una simplificación de
+magnitud del modelo computacional de Máquina de Turing, lo que nos
+permitirá (por un lado) mejorar la eficacia computacional, pero por
+otro nos llevará a perder capacidad de cálculo. Esto es, los AFs son
+máquinas muy eficaces, pero el conjunto de problemas al que son
+aplicables es teóricamente muy limitado ... si bien en la práctica hay
+infinidad de algoritmos de este tipo que nos facilitan nuestra vida
+diaria. 
+
+OBJETIVO DE LA CLASE
+====================
+
+Los objetivos a alcanzar no solo en ésta, sino también en las próximas
+semanas son los siguientes:
+
+i) Identificar el tipo de problemas resolubles a partir de AFs.
+
+ii) Demostrar formalmente que aquellos son los identificables con una
+    estructura de lenguaje regular. Esto es, los que se pueden describir
+    mediante una estructura gramatical regular.
+
+iii) Demostrar formalmente que la descripción gramatical puede
+     reducirse al concepto tradicional de "formula", mediante la
+     noción de "expresión regular".
+
+iv) Estudiar formalmente el conjunto de problemas decidibles en este
+    ámbito, mucho más amplio que en los correspondientes a estratos
+    superiores de la Jerarquía de Chomsky. 
+
+Ello nos permite tener la visión de conjunto necesaria para entender
+los contenidos y estructuración de las siguientes clases, y su
+proyección práctica. 
+
+CONCLUSION:
+==========
+
+AUTOMATAS FINITOS
+-----------------
+
+Comenzamos por introducir el concepto de AF, como una simplificación
+del de Máquina de Turing (MT) introducidas en el primer cuatrimestre,
+en la asignatura de Lógica para la Computación, como modelo
+computacional para el paradigma de programación imperativo. Se trata,
+esencialmente, de una MT sin estructuras de memoria. Ello implica, por
+ejemplo, que no podemos hacer otra cosa que leer la entrada (datos)
+facilitados y tratarlos en tiempo real. Esto es, una vez leído un dato
+no podemos volver a recuperarlo. Lo único que podemos hacer es
+procesarlo en el momento de leerlo.
+
+Como en el caso de las MTs, lo habitual es representar un AF no
+explícitamente por la tupla correspondiente, sino por un grafo o una
+tabla de transiciones, en los que identificamos explícitamente al
+estado inicial y al conjunto de estados finales (puede haber más de
+uno). También, como en las MTs, podemos extender naturalmente la
+función de transición (en principio dependiente del estado y carácter
+actual de entrada) al tratamiento de cadenas de caracteres. 
+
+Siguiendo con el paralelismo con las MTs, particularizamos de forma
+natural los conceptos de "configuración" y de "movimiento" entre
+configuraciones, este último determinado por la aplicación de una
+transición concreta. De entre las configuraciones posibles,
+singularizamos dos en concreto: las "configuración inicial" y las
+"configuraciones finales". La primera refiere a la configuración en la
+que arrancamos con toda la cadena de entrada desde el estado inicial,
+mientras las segundas determinan las configuraciones que incluyen un
+estado final.
+
+NOTA: Puede demostrarse que, dado cualquier AF, podemos considerar
+      otro con el mismo comportamiento en el que el número de estados
+      finales es uno, y que dicha configuración final se asocia a la cadena
+      vacía.
+
+CONJUNTOS REGULARES
+-------------------
+
+Podemos entonces introducir el "lenguaje aceptado por un AF" como el
+conjunto de cadenas que nos permiten llegar desde la configuración
+inicial a una final, encadenando los movimientos permitidos por su
+función de transición. Denominamos a cualquier conjunto de cadenas
+(instrucciones) aceptado por un AF como un "conjunto regular".
+
+NOTA: Que un conjunto sea "regular" no implica automáticamente que ese
+      conjunto sea un lenguaje "regular". Aunque ese sea uno de
+      nuestros objetivos, por ahora solo puede considerarse una
+      coincidncia nominal. Más adelante formalizaremos esa equivalencia.
+
+EJEMPLO: El conjunto L_1 = {a^i b^j, tal que i, j >= 0} es un conjunto
+         regular, dado que podemos construir fácilmente (ver apuntes)
+	 un AF que lo reconoce.
+
+         El conjunto L_2 = {a^i b^i, tal que i >= 0} NO es un conjunto
+         regular.
+
+         Esto es, no existe ningún AF que sea capaz de reconocerlo.
+
+         La demostración de esto último se ha hecho formalmente en
+         clase, y pone en evidencia que (como ya hemos dicho) un AF no
+         puede resolver problemas en los que es necesario contar con
+         algún tipo de estructura memorística (pila).
+
+         Observar que en el caso L_2, necesitariamos memorizar el
+         número de a's para luego verificar que tenemos el mismo
+         número de b's ... típicamente intoduciendo las a's
+         reconocidas en un pila, para sacarlas una u una conforme
+         comenzamos a leer b's.
+
+AFs DETERMINISTAS (AFDs) Y NO DETERMINISTAS (AFNs)
+--------------------------------------------------
+
+Decimos que un AF es "determinista" cuando una transición dada solo
+puede llevarnos (como mucho) a un estado. Esto es, sobre el grafo de
+transiciones, cuando desde un estado y para un símbolo del alfabeto
+dado ... solo tenemos una flecha de salida.
+
+Desde un punto de vista práctico el interés de disponer de un AFD es
+evidente, dado que la complejidad temporal en el reconocimiento de una
+entrada "x" es de magnitud O(|x|), mientras que en un AFN es de
+magnitud O(|Q|*|x|), donde Q es el conjunfto de estados del autómata
+... usualmente muy elevado.
+
+Al respecto, y al contrario de lo que ocurrirá en las máquinas que
+disponen de estructuras de memoria (pilas) asociadas, los AFNs pueden
+determinizarse siempre y de forma automática. Es más, siempre podremos
+asegurar la construcción automatizada de un AFD minimal.
+
+NOTAS HISTORICAS (resumen de la entrada en la Wikipedia para los AFs):
+=================
+
+El origen de los AFs probablemente se remonta a su uso implícito en
+máquinas electromecánicas, desde principios del siglo XX.
+
+Ya en 1907, el matemático ruso Andréi Márkov formalizó un proceso
+llamado "Cadena de Markov", donde la ocurrencia de cada evento depende
+con una cierta probabilidad del evento anterior. Esta capacidad de
+"recordar" es utilizada posteriormente por los AFs, que poseen una
+"memoria" primitiva similar, en que la activación de un estado también
+depende del estado anterior, así como del símbolo o palabra presente
+en la función de transición.
+
+Posteriormente, en 1943, surge una primera aproximación formal de los
+AFs con el "modelo neuronal" de McCulloch-Pitts. Durante la década de
+1950 prolifera su estudio, frecuentemente llamándoseles "máquinas de
+secuencia"; se establecen muchas de sus propiedades básicas, incluyendo
+su interpretación como lenguajes regulares y su equivalencia con las
+expresiones regulares.
+
+Al final de esta década, en 1959, surge el concepto de AFN en manos de
+los informáticos teóricos Michael O. Rabin y Dana Scott.
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

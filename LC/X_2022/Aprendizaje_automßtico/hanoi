@@ -1,0 +1,121 @@
+:- op(600,yfx,a).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Estas declaraciones permitiran usar predicados de aprendizaje sobre
+% reglas afectando a los predicados hanoi2/5 y hanoi3/5.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- dynamic hanoi2/5.
+:- dynamic hanoi3/5.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% El predicado de concatenacion de listas concat/3
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+concat([],L,L) :- !.
+concat([Car|Cdr],L,[Car|R]) :- concat(Cdr,L,R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Se trata ahora de implementar la resolucion del conocido problema de 
+% las Torres de Hanoi, tal y como se describe en el Ejemplo 81 de los
+% apuntes "cortos" (pag 33).
+%
+% Para ello utilizaremos el predicado hanoi(N, A, B, C, Movs), que
+% consideraremos cierto sii Movs es la serie de movimientos a
+% realizar para trasladar N discos desde el palo A al B, tomando
+% el palo C como paso intermedio.
+%
+% Con el fin de evidenciar la falta de aprendizaje automatico en este
+% caso, nos aseguraremos de que la memoria del interprete este "limpia"
+% antes de la ejecucion. Usaremos el predicado predefinido "listing" para
+% visualizar en cada momento el estado de la memoria del interprete, esto 
+% es, del universo del discurso que estamos manejando.
+%
+% Bastara con aplicar la siguiente secuencia de comandos Linux y predicados
+% Prolog:
+%
+% swipl                    % Entramos en el interprete Prolog desde Linux.
+% ?- consult(hanoi).       % Cargamos en el interprete nuestro programa.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, solo las reglas del programa hanoi.
+			   % porque aun no hemos aprendido nada.
+% ?- hanoi1(5,A,B,C,Movs). % Resolvemos el problema con 5 discos.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, las mismas de antes ... porque no hemos
+			   % aprendido nada.
+% ?- halt.                 % Salimos del interprete para dejar la memoria limpia
+                           % para el siguiente test.
+
+hanoi1(1,A,B,_,[A a B]).
+hanoi1(N,A,B,C,Movs) :- N > 1, N1 is N - 1,
+                       hanoi1(N1,A,C,B,Movs_1),
+                       hanoi1(N1,C,B,A,Movs_2),
+                       concat(Movs_1,[A a B|Movs_2],Movs).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Con el fin de evidenciar el aprendizaje derivado del uso de asserta/1,
+% nos aseguraremos de que la memoria del interprete este "limpia"
+% antes de la ejecucion. Usaremos el predicado predefinido "listing" para
+% visualizar en cada momento el estado de la memoria del interprete, esto 
+% es, del universo del discurso que estamos manejando.
+%
+% Bastara con aplicar la siguiente secuencia de comandos Linux y predicados
+% Prolog:
+%
+% swipl                    % Entramos en el interprete Prolog desde Linux.
+% ?- consult(hanoi).       % Cargamos en el interprete nuestro programa.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, solo las reglas del programa hanoi
+			   % porque aun no hemos aprendido nada.
+% ?- hanoi2(5,A,B,C,Movs). % Resolvemos el problema con 5 discos.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, las de antes y (a mayores) las aprendidas
+			   % durante la ejecucion mediante asserta/1.
+% ?- halt.                 % Salimos del interprete para dejar la memoria limpia
+                           % para el siguiente test.
+
+hanoi2(1,A,B,_,[A a B]).
+hanoi2(N,A,B,C,Movs):- N>1, N1 is N-1,
+                      hanoi2(N1,A,C,B,Movs_1),
+		      asserta((hanoi2(N1,A,C,B,Movs_1):-!)),
+                      hanoi2(N1,C,B,A,Movs_2),
+                      concat(Movs_1,[A a B|Movs_2],Movs).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Con el fin de evidenciar el aprendizaje derivado del uso de asserta/1
+% y retact/1 nos aseguraremos de que la memoria del interprete este "limpia"
+% antes de la ejecucion. Usaremos el predicado predefinido "listing" para
+% visualizar en cada momento el estado de la memoria del interprete, esto 
+% es, del universo del discurso que estamos manejando.
+%
+% Bastara con aplicar la siguiente secuencia de comandos Linux y predicados
+% Prolog:
+%
+% swipl                    % Entramos en el interprete Prolog desde Linux.
+% ?- consult(hanoi).       % Cargamos en el interprete nuestro programa.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, solo las reglas del programa hanoi
+			   % porque aun no hemos aprendido nada.
+% ?- hanoi3(5,A,B,C,Movs). % Resolvemos el problema con 5 discos.
+% ?- listing.              % Listamos el estado actual del universo del discurso,
+                           % esto es, las mismas de antes porque lo aprendido
+			   % con asserta/1 se ha eliminado mediante retract/1
+			   % una vez ha dejado de ser util para la resolucion
+			   % de la pregunta.
+% ?- halt.                 % Salimos del interprete para dejar la memoria limpia
+                           % para el siguiente test.
+hanoi3(1,A,B,_,[A a B]).
+hanoi3(N,A,B,C,Movs):- N>1, N1 is N-1,
+                      hanoi3(N1,A,C,B,Movs_1),
+		      asserta((hanoi3(N1,A,C,B,Movs_1):-!)),
+                      hanoi3(N1,C,B,A,Movs_2),
+		      retract((hanoi3(N1,A,C,B,Movs_1):-!)),
+                      concat(Movs_1,[A a B|Movs_2],Movs).
+		      

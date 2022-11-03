@@ -1,0 +1,76 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Sección 4.4, (pag. 129)
+
+INTRODUCCION
+============
+
+Una vez hemos demostrado que siempre es posible determinar un AF, y
+hemos comprobado que ello conlleva habitualmente estructuras más
+complicadas y menos intutitivas ... aunque más eficaces
+computacionalmente, se trata ahora de encontrar el AFD que menos
+recursos consuma. Esto es, el AFD MINIMAL.
+
+CONTEXTO 
+========
+
+Un AFD minimal se calcula mediante la eliminación (en cualquier orden)
+de los estados INUTILES e INACCESIBLES y la unificación de los estados
+INDISTINGUIBLES. Intuitivamente ello nos permite prescindir de estados
+(y por ende de las transiciones que los transitan) que no aportan nada
+al comportamiento (conjunto de caminos en el AF que permiten pasar del
+estado inicial a alguno de los estados finales) del AFD de partida. En
+concreto:
+
+i) Un estado INUTIL es áquel a partir del cuál es imposible alcanzar
+   un estado final.
+
+ii) Un estado INACCESIBLE es áquel QUE es imposible alcanzar desde el
+    estado inicial.
+
+iii) Dos estados con INDISTINGUIBLES cuando los sub-caminos que de ellos
+     parten no sirven para diferenciar comportamientos en el AF.
+
+OBJETIVO DE LA CLASE
+====================
+
+Una vez asumimos (sin formalizar la demostración) que, dado un AFD de
+partida, su equivalente minimal existe y es único ... queda por
+mostrar como determinar i) ii) y iii) en la practica.
+
+Para el caso i) basta recorrer el AFD de partida (ver pseudo-código en
+los apuntes) a través de todos los caminos que parten del estado
+inicial, marcando los estados que atravesamos (que serán los
+accesibles). En el caso de ii), el procedimiento es similar, pero
+recorriendo el AFD en sentido inverso desde los estados finales.
+
+Queda por determinar el método de cálculo para iii), más sutil que el
+empleado en i) y ii), y que en clase hemos ilustrado con un ejemplo en
+detalle. El pseudo-código también se incluye en los apuntes. Es
+inmedadiatamente deducible que la complejidad temporal del proceso es
+O(|\Sigma|.|Q|^2). 
+
+CONCLUSION:
+==========
+
+En el caso de las máquinas finitas (AFDs), siempre es posible
+encontrar un equivalente minimal, algo que indefectiblemente
+minimizará el consumo de recursos.
+
+NOTAS HISTORICAS  
+================
+
+No tenemos esta semana.
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

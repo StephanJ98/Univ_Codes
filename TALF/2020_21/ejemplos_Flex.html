@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<TITLE>Ejemplos de Flex</TITLE>
+</HEAD>
+<BODY>
+
+<h1>Actividad: Analizadores simples en Flex</h1>
+<hr>
+<i>Se presentar&aacute; el proceso  de generaci&oacute;n de analizadores l&eacute;xicos en C a partir de una especificaci&oacute;n FLEX. 
+Se realizar&aacute;n experimentos con patrones y acciones sencillas. </i>
+<hr>
+
+<h2> 1. Compilaci&oacute;n de una especificaci&oacute;n FLEX. </h2>
+<p>
+</p> Compilar las dos especificaciones FLEX siguientes y comprobar su funcionamiento. 
+
+<p>
+</p>
+<br> EJEMPLO 1
+<p>
+</p> Cuenta el n&uacute;mero de l&iacute;neas y caracteres que hay en el fichero de entrada.
+<pre>
+<tt>
+%{ 
+   int num_lineas = 0, num_caracteres = 0; 
+%} 
+
+%% 
+
+\n  num_lineas++; num_caracteres++; 
+.   num_caracteres++; 
+
+%% 
+
+int yywrap() 
+{ 
+    return 1; 
+} 
+
+main() 
+{ 
+    while (yylex()); 
+    printf("No. lineas = %d, No. caracteres = %d\n", num_lineas, num_caracteres); 
+} 
+</tt>
+</pre>
+<br> COMPILACI&Oacute;N
+<pre>
+<tt>
+  $ flex prueba1.l 
+  $ gcc -o prueba1 lex.yy.c 
+</tt>
+</pre>
+
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<br> EJEMPLO 2
+<p>
+</p> Genera una copia del fichero de entrada, en la que se han eliminado las l&iacute;neas en blanco, 
+los espacios al incio y al final de l&iacute;nea, dejando un &uacute;nico espacio entre palabras. 
+<pre>
+<tt>
+%{ 
+   #include &lt;stdio.h&gt;    /* Incluye el protopipo de la funcion putchar() */ 
+%} 
+
+%% 
+
+^\n        ;              /* Lineas en blanco */ 
+^" "+\n    ;              /* Lineas solo con espacios */ 
+^" "+      ;              /* Espacios al principio de la linea */ 
+" "+$      ;              /* Espacios al final de la linea */  
+" "+       putchar(' ');  /* Sustituir multiples espacios por uno solo */  
+
+%% 
+
+</tt>
+</pre>
+<br> COMPILACI&Oacute;N
+<pre>
+<tt>
+ $ flex prueba2.l 
+ $ gcc -o prueba2 lex.yy.c -lfl
+</tt>
+</pre>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<h2> 2. Ejercicios pr&aacute;cticos. </h2>
+<p>
+<ol>
+<li> Escribir un fuente flex  que lea un fichero de texto, realice las siguientes acciones 
+y presente los resultados por pantalla.
+<ul>
+<li> Contar el n&uacute;mero de secuencias de caracteres escritas completamente en may&uacute;sculas. </li>
+<li> Contar el n&uacute;mero de secuencias de caracteres escritas completamente en min&uacute;sculas. </li>
+<li> Contar el n&uacute;mero de secuencias de caracteres que mezclen may&uacute;sculas y min&uacute;sculas. </li>
+<li> Contar el n&uacute;mero de n&uacute;meros enteros. </li>
+<li> Contar el n&uacute;mero de n&uacute;meros reales.  (1) </li>
+<li> Calcular la suma de todos los n&uacute;meros enteros encontrados. (2) </li>
+<li> Calcular la suma de todos los n&uacute;meros reales encontrados. (2) </li>
+<br> NOTAS :
+<p>
+</p> (1) Deber&aacute; aceptar n&uacute;meros reales escritos con punto decimal (12.34, 1.00) y n&uacute;meros 
+con exponente (21.2E3, 3e-3, .7e1...)
+<p>
+</p> (2)  Las funciones atoi() y atof() transforman cadenas de texto en valores int o double..
+<p>
+<li> El nombre del fichero de entrada se pasar&aacute; como par&aacute;metro de l&iacute;nea de comandos.</li>
+</ul>
+<p></p>
+</li>
+
+<li> Escribir un preprocesador cutre para C, que tendr&aacute; las siguientes caracter&iacute;sticas:
+
+<ul>
+<li> Los nombres de los dos archivos de entrada y salida ser&aacute;n pasados a trav&eacute;s de la l&iacute;nea de comandos.</li>
+<li> Deber&aacute; suprimir espacios en blanco al final de l&iacute;nea y las l&iacute;neas en blanco superfluas. Esto es, si hay varias l&iacute;neas en blanco, se dejar&aacute; s&oacute;lo una. Si hay m&uacute;ltiples espacios en blanco entre tokens se sustituir&aacute;n por uno solo.</li>
+<li> Eliminar&aacute; todos los comentarios.</li>
+<ul>
+<li>Importante: Es posible que los tokens "//", "/*" o "*/" aparezcan dentro de
+una cadena. En ese caso, la cadena se dejar&aacute; tal como est&aacute;.</li>
+</ul>
+</li>
+<li> Se deber&aacute;n suprimir todos los #include y #define. Las ocurrencias de las constantes en el c&oacute;digo ser&aacute;n sustitu&iacute;das por su valor.
+<ul>
+<li>El nombre de una constante en C se define como un identificador. Un identificador en C est&aacute; formado por letras may&uacute;sculas o min&uacute;sculas pertenecientes al juego de caracteres ASCII, el car&aacute;cter '_' o d&iacute;gitos de 0 a 9, con la restricci&oacute;n de que el primer caracter del identificador s&oacute;lo puede ser una letra o '_'.</li>
+<li>Si el programa encuentra una constante con el mismo nombre que otra ya definida, deber&aacute; indicar en la consola que se ha producido un error y parar la ejecuci&oacute;n del programa.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+
+</BODY>
+</html>

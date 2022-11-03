@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Mejoras al ejemplo de la calculadora</TITLE>
+<META NAME="description" CONTENT="Mejoras al ejemplo de la calculadora">
+<META NAME="keywords" CONTENT="ejemplo-bison">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+</HEAD>
+
+<BODY >
+<H1 ALIGN="CENTER">Mejoras al ejemplo de la calculadora</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>TALF 2021/22</STRONG></P>
+</DIV>
+
+<P>
+Partiendo del ejemplo de implementaci&#243;n de una calculadora en Flex y Bison, que podeis encontrar al final de las transparencias de introducci&#243;n a Bison</A>, y cuyo c&#243;digo fuente podeis encontrar junto a este enunciado en Moovi, debeis modificar dicho c&#243;digo para incorporar las siguientes funcionalidades:
+
+<P>
+
+<UL>
+<LI>La posibilidad de agrupar subexpresiones mediante par&#233;ntesis.
+<PRE>
+(1+2)*5
+15.000000
+</PRE>
+
+<P>
+</LI>
+<LI>La potencia de numeros reales (usando el s&#237;mbolo <TT>^</TT>), el menos unario y las funciones seno, coseno y tangente.
+<PRE>
+5*cos(2^(-1))
+4.387913
+</PRE>
+Para usar las funciones de librer&#237;a matem&#225;tica de C, debeis inclu&#237;r la librer&#237;a <TT>math.h</TT>. Si usais <TT>gcc</TT>, compilad con la opci&#243;n <TT>-lm</TT>. 
+
+<P>
+</LI>
+<LI>La estructura de control if-then-else, usando la forma abreviada implementada en C y otros lenguajes de programaci&#243;n:
+<PRE>
+(condicion ? expresion1 : expresion2)
+</PRE>
+donde <TT>expresion1</TT> y <TT>expresion2</TT> son expresiones matem&#225;ticas admitidas por la calculadora. Si <TT>condicion</TT> se cumple, se escribir&#225; por la consola el resultado de <TT>expresion1</TT>. Si no, el de <TT>expresion2</TT>.
+
+<P>
+Respecto a <TT>condicion</TT>, se comparar&#225;n expresiones matem&#225;ticas admitidas por la calculadora (incluyendo variables previamente inicializadas). Los predicados de comparaci&#243;n usados ser&#225;n: <TT>==</TT>, <TT>!=</TT>, <TT>&lt;</TT>, <TT>&gt;</TT>, <TT>&lt;=</TT> y <TT>&gt;=</TT>. Adem&#225;s, se podr&#225;n combinar m&#250;ltiples comparaciones en una misma condici&#243;n con los operadores <TT>&amp;&amp;</TT> (and) y <TT>||</TT> (or). Tambi&#233;n ser&#225; posible agrupar comparaciones usando par&#233;ntesis.
+
+<P>
+<PRE>
+uno=5
+5.000000
+dos=10
+10.000000
+(dos-uno&lt;=7 &amp;&amp; dos+uno&lt;16 || uno==dos^(cos(-1)) ? uno^2 : dos^2)
+25.000000
+</PRE>
+
+<P>
+</LI>
+<LI><B>Importante:</B> No puede haber conflictos.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+En principio, hay dos formas de hacer esta pr&#225;ctica: escribiendo una gram&#225;tica ambigua, pero definiendo precedencias y asociatividades para los operadores, o escribiendo una gram&#225;tica <B>no</B> ambigua. Probad a hacerlo de la primera forma, y despu&#233;s de la segunda.
+
+<P>
+Adem&#225;s, recordad que:
+
+<UL>
+<LI><TT>==</TT>, <TT>!=</TT>, <TT>&lt;</TT>, <TT>&gt;</TT>, <TT>&lt;=</TT> y <TT>&gt;=</TT> tienen la misma precedencia, y mayor precedencia que <TT>&amp;&amp;</TT> y <TT>||</TT>.
+</LI>
+
+<LI>La asociatividad de los operadores anteriores es por la izquierda.
+</LI>
+
+<LI>De ser necesario, podeis definir el seno, coseno y tangente con mayor precedencia que la potencia, y esta con mayor precedencia que el producto y divisi&#243;n.
+</LI>
+
+<P>
+<BR><HR>
+<ADDRESS>
+Victor Darriba
+2018-03-05
+</ADDRESS>
+</BODY>
+</HTML>

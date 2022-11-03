@@ -1,0 +1,140 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <emmintrin.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
+#include <time.h>
+#include <pthread.h> /* POSIX Threads */
+
+//#define NTHREADS 2
+#define ALTOBLOQUE 16
+#define ANCHOBLOQUE 16
+
+int b_x,b_y; //NUMERO DE BLOQUES HOR Y VERT
+IplImage* Img1;
+IplImage* Img2;
+int NTHREADS;
+static uint64_t GetTickCount_us()
+{
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return (uint64_t)(ts.tv_nsec / 1000) + ((uint64_t)ts.tv_sec * 1000000ull);
+}
+void copiarBloqueSSE(int x0, int y0, IplImage* imagenOrigen, int x1, int y1,IplImage* imagenDestino){
+    for (int fila=0;fila<ALTOBLOQUE;fila++){
+                __m128i *pOrigen=(__m128i *)(imagenOrigen->imageData+((y0+fila)*imagenOrigen->widthStep)+(x0*imagenOrigen->nChannels));
+                __m128i *pDestino=(__m128i *)(imagenDestino->imageData+((y1+fila)*imagenDestino->widthStep)+(x1*imagenDestino->nChannels));
+                for (int columna=0;columna<ANCHOBLOQUE*imagenOrigen->nChannels;columna=columna+16){
+                        *pDestino++=*pOrigen++;
+                    }                    
+                }
+}     
+    
+int compararBloqueSSE(int x0, int y0, IplImage* imagenOrigen, int x1, int y1,IplImage* imagenDestino){
+    __m128i A,B,C,D,E,F;
+    D=_mm_set1_epi32(0);//ACUMULO SUMAS EN ESTE VECTOR
+        for (int fila=0;fila<ALTOBLOQUE;fila++){
+            __m128i *pOrigen=(__m128i *)(imagenOrigen->imageData+((y0+fila)*imagenOrigen->widthStep)+(x0*imagenOrigen->nChannels));
+            __m128i *pDestino=(__m128i *)(imagenDestino->imageData+((y1+fila)*imagenDestino->widthStep)+(x1*imagenDestino->nChannels));
+            for (int columna=0;columna<ANCHOBLOQUE*imagenOrigen->nChannels;columna=columna+16){
+                A=*pOrigen++;
+                B=*pDestino++;
+                C=_mm_sad_epu8(A, B);
+                D=_mm_add_epi32(D, C);
+            }                    
+        }
+    F= _mm_srli_si128(D, 8);
+    E = _mm_add_epi32(F, D);
+    return _mm_cvtsi128_si32(E);;
+}  
+ 
+
+void buscaParecido(int bloque_x0, int bloque_y0, IplImage* imagenOrigen,IplImage* imagenDestino, int* res_x, int* res_y){
+    int diferencia;
+    int last_diferencia=3*255*ALTOBLOQUE*ANCHOBLOQUE;
+    for (int _y=0;_y<b_y;_y++){
+        for (int _x=0;_x<b_x;_x++){
+            diferencia=compararBloqueSSE(bloque_x0*ANCHOBLOQUE,bloque_y0*ALTOBLOQUE,imagenOrigen,_x*ANCHOBLOQUE,_y*ALTOBLOQUE,imagenDestino);
+            if (diferencia<last_diferencia) {
+                *res_x=_x;
+                *res_y=_y;
+                last_diferencia=diferencia;
+            }
+        }
+    }
+}
+
+void mosaico_thread(void *ptr) {
+//ptr apunta a un entero que indica el mutiplo de la fila a sustituir
+int *fila_bloque_inicial = (int *) ptr;
+    int x_parecido,y_parecido;
+    for (int fila=*fila_bloque_inicial;fila<*fila_bloque_inicial+(b_y/NTHREADS);fila++){
+        for (int col=0;col<b_x;col++){
+            buscaParecido(col,fila,Img1,Img2,&x_parecido,&y_parecido);
+            copiarBloqueSSE(x_parecido*ANCHOBLOQUE,y_parecido*ALTOBLOQUE,Img2,col*ANCHOBLOQUE,fila*ALTOBLOQUE,Img1);
+        }
+    }
+}
+
+int main(int argc, char** argv) {
+    if (argc != 4) {
+        printf("Usage: %s image_file_name1 image_file_name2 numero_hilos\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+    Img1 = cvLoadImage(argv[1], CV_LOAD_IMAGE_COLOR);
+    if (!Img1) {
+        printf("Error: fichero %s no leido\n", argv[1]);
+        return EXIT_FAILURE;
+    }
+    
+    Img2 = cvLoadImage(argv[2], CV_LOAD_IMAGE_COLOR);
+    if (!Img2) {
+        printf("Error: fichero %s no leido\n", argv[1]);
+        return EXIT_FAILURE;
+    }
+    NTHREADS=atoi(argv[3]);
+    b_x=(Img1->width/ANCHOBLOQUE);//COLUMNAS
+    b_y=Img1->height/ALTOBLOQUE; //FILAS   
+    
+    pthread_t threads[NTHREADS];
+    int filas[NTHREADS];
+    uint64_t time_start=GetTickCount_us();
+    int rc;
+    for (int i = 0; i < NTHREADS; i++) {
+        filas[i] = i*(b_y/NTHREADS);
+        printf("\nEl thread %d sustituye las filas %d\r\n", i, filas[i]);
+        rc=pthread_create(&threads[i], NULL, (void *) &mosaico_thread, (void *) &filas[i]);
+        if (rc){
+            printf("ERORR; código de error %d\n", rc);
+            exit(EXIT_FAILURE);
+        }
+    }
+    
+    int ret;
+    for (int i = 0; i < NTHREADS; i++) {
+        void *retval;
+        ret=pthread_join(threads[i], &retval);
+        if (retval == PTHREAD_CANCELED)
+            printf("El hilo ha sido cancelado - \r\n");
+        else
+            printf("Valor devuelto %d - \r\n", (int)retval);
+    }
+
+    
+    uint64_t time_run=GetTickCount_us()-time_start;
+    printf("Tiempo transcurrido %.2f \r\n", (float)time_run/1000);   
+    
+    cvNamedWindow("original", CV_WINDOW_AUTOSIZE);
+    cvShowImage("original", Img1);
+    cvNamedWindow("destino", CV_WINDOW_AUTOSIZE);
+    cvShowImage("destino", Img2);
+    cvWaitKey(0);
+    
+    cvReleaseImage(&Img1);
+     cvReleaseImage(&Img2);
+    cvDestroyWindow("color");
+    cvDestroyWindow("azul");
+    pthread_exit(NULL);
+    return EXIT_SUCCESS;
+
+}

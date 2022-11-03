@@ -1,0 +1,15 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP18F452 -RA -DL -O11111114 -fo8 -N"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\P1b\P1b.mcppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" -SP"D:\Escritorio\HAE Archivos practicas 19-20\Jueves de 9 a 11\P1b\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for PIC\uses\P18\" "P1b.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 1515 [bytes], Available ROM: 32768 [bytes]	 
+diagnostics: 0	122	Compilation Started	P18F452.c
+diagnostics: 1178	123	Compiled Successfully	P18F452.c
+diagnostics: 0	122	Compilation Started	__Lib_Delays.c
+diagnostics: 172	123	Compiled Successfully	__Lib_Delays.c
+diagnostics: 0	122	Compilation Started	P1b.c
+diagnostics: 17	123	Compiled Successfully	P1b.c
+diagnostics: 0	127	All files Compiled in 78 ms	 
+hint: 0	1144	Used RAM (bytes): 1 (1%)  Free RAM (bytes): 1514 (99%)	Used RAM (bytes): 1 (1%)  Free RAM (bytes): 1514 (99%)
+hint: 0	1144	Used ROM (bytes): 138 (1%)  Free ROM (bytes): 32630 (99%)	Used ROM (bytes): 138 (1%)  Free ROM (bytes): 32630 (99%)
+diagnostics: 0	125	Project Linked Successfully	P1b.mcppi
+diagnostics: 0	128	Linked in 31 ms	 
+diagnostics: 0	129	Project 'P1b.mcppi' completed: 312 ms	 
+diagnostics: 0	103	Finished successfully: 06 feb. 2020, 10:56:41	P1b.mcppi

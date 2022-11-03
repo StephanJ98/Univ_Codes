@@ -1,0 +1,40 @@
+// 8 BIT DIVISION
+# ORG 0000H
+# BEGIN 0000H
+	   LDA FC00
+	   MOV C,A
+	   LXI H,FC01
+	   MOV D,M
+	   MOV E,M
+	   DCR C
+	   INX H
+
+BUCLE:	   JZ FIN
+	   MOV A,M
+	   CMP D
+	   JM MIN
+	   CMP E
+	   JM SIG
+	   MOV E,M
+
+SIG:	   DCR C
+	   INX H
+	   JMP BUCLE
+
+MIN:	   MOV D,M
+	   JMP SIG
+
+FIN:	   MOV A,D
+	   STA FD00
+	   MOV A,E
+	   STA FD01
+	   HLT
+// ANSWER
+// AT ADDRESS 2504 - F2H, QUOTIENT
+// AT ADDRESS 2505 - 07H, REMAINDER
+# ORG FC00
+# DB 6
+# ORG FC01
+# DB 2,2,4,5,1,3
+# ORG FD00
+# DB FFH,FFH

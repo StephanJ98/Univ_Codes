@@ -1,0 +1,43 @@
+// PRÁCTICA 5 - Roy Covelo Vázquez
+# ORG 0000H
+# BEGIN 0000H
+
+INICIO:	   LDA FD01
+	   MOV C,A
+	   MVI B,00
+	   LXI H,FD02
+
+BUCLE:	   MOV A,C
+	   CPI 00
+	   JZ FIN
+
+FASE1:	   MOV A,M
+	   ANI 80
+	   CPI 80
+	   JM SIG
+
+FASE2:	   MOV A,M
+	   ANI 60
+	   RLC
+	   RLC
+	   RLC
+	   CPI 03
+	   JM SIG
+
+FASE3:	   MOV A,M
+	   ANI 1F
+	   CPI 05
+	   JM SIG
+	   INR B
+
+SIG:	   INX H
+	   DCR C
+	   JMP BUCLE
+
+FIN:	   MOV A,B
+	   STA FD00
+	   HLT
+# ORG FD01
+# DB 06H
+# ORG FD02
+# DB 11101100B, 11101100B, 11000110B, 10100101B, 10101000B, 10001100B

@@ -1,0 +1,23 @@
+/* version SIN diferencias de listas */
+
+meter_pre(Pre,Cad,R) :- name(Pre,PreCod),name(Cad,CadCod),
+  	                append(PreCod,CadCod,RCod),
+		        name(R,RCod).
+
+/* Primera version CON diferencias de listas */
+
+meter_pre(Pre,Cad,R) :- name(Pre,PreCod),name(Cad,CadCod),
+                        l2dl(PreCod,DPreCod),
+                        l2dl(CadCod,DCadCod),
+		        appendl(DPreCod,DCadCod,DRCod-[]),
+		        name(R,DRCod).
+
+/* Segunda version CON diferencias de listas */
+
+meter_pre2(Pre,Cad,R) :- name(Pre,PreCod),name(Cad,CadCod),
+                         l2dl(PreCod,DRCod-DCadCod),
+                         l2dl(CadCod,DCadCod-[]),
+		         name(R,DRCod).
+
+l2dl([],L-L).
+l2dl([Car|Cdr],[Car|Cdr1]-Cdr2) :- l2dl(Cdr,Cdr1-Cdr2).

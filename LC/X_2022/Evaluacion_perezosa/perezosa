@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata de implementar el concepto de "humano" en función de la existencia
+% de un individuo humano que actúe como madre.
+
+% Declarativamente, el programa siguiente captura esa idea.
+
+humano(X) :- humano(Y), madre(X,Y).
+humano(elena).
+madre(juan,elena).
+
+% ... pero presenta problemas de terminación debido a la recursividad
+% izqda, p.ej. para la pregunta :- humano(juan).
+
+% Una posible solucion pasa por el uso de freeze/2, ahora no hay
+% problemas cuando preguntamos :- es_humano(juan).
+
+es_humano(X) :- freeze(Y, es_humano(Y)), madre(X,Y).
+es_humano(elena).
+
+% Alternativamente podemos usar el predicado when/2, tampoco
+% hay problemas cuando preguntamos :- esHumano(juan).
+
+esHumano(X) :- when(nonvar(Y), esHumano(Y)), madre(X,Y).
+esHumano(elena).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata ahora de implementar un programa que defina la compra de un
+% coche siempre y cuando su marca no sea europea.
+
+% Declarativamente, el programa siguiente captura esa idea.
+
+coche(dodge,caliber).
+coche(opel,corsa).
+coche(toyota,prius).
+europea(opel).
+comprar(Marca, Modelo) :- not(europea(Marca)), coche(Marca,Modelo).
+
+% ... pero presenta incongruencias declarativo-procedurales ante
+% la pregunta :- comprar(X,Y)., debido a que se evalua la negacion
+% con variables sin instanciar.
+
+% Una posible solucion pasa por el uso de when/2, ahora no hay
+% problemas cuando preguntamos :- puedo_comprar(X,Y).
+
+puedo_comprar(Marca, Modelo) :- when(nonvar(Marca), not(europea(Marca))),
+                                coche(Marca,Modelo).
+
+% Alternativamente podemos usar el predicado freeze/2, tampoco
+% hay problemas cuando preguntamos :- puedoComprar(X,Y).
+
+puedoComprar(Marca, Modelo) :- freeze(Marca,not(europea(Marca))),
+                               coche(Marca,Modelo).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Se trata ahora de implementar un programa que defina el estado "soltero"
+% de una persona, si esta no esta casada.
+
+% Declarativamente, el programa siguiente captura esa idea.
+
+soltero(Persona) :- not(casado(Persona)), varon(Persona).
+casado(juan).
+varon(juan).
+varon(pepe).
+
+% ... pero presenta incongruencias declarativo-procedurales ante
+% la pregunta :- soltero(X). debido a que se evalua la negacion
+% con variables sin instanciar.
+
+% Una posible solucion pasa por el uso de when/2, ahora no hay
+% problemas cuando preguntamos :- es_soltero(X).
+
+es_soltero(Persona) :- when(nonvar(Persona), not(casado(Persona))),
+                       varon(Persona).
+
+% Alternativamente podemos usar el predicado freeze/2, tampoco
+% hay problemas cuando preguntamos :- esSoltero(X).
+
+esSoltero(Persona) :- freeze(Persona, not(casado(Persona))),
+                       varon(Persona).

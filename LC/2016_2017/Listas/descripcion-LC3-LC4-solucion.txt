@@ -1,0 +1,6 @@
+get_iasoc([[Clave,Valor]|_],Valor,Clave):-!.
+get_iasoc([_|Cdr],Valor, Clave):- get_iasoc(Cdr, Valor, Clave).
+
+intercalar([Car1],[Car2|Cdr],[Car1,Car2|Cdr]) :- !.
+intercalar([Car1|Cdr],[Car2],[Car1,Car2|Cdr]) :- !.
+intercalar([Car1|Cdr1],[Car2|Cdr2],[Car1,Car2|Cdr]) :- intercalar(Cdr1,Cdr2,Cdr).

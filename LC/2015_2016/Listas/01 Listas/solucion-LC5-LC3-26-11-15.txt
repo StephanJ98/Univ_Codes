@@ -1,0 +1,8 @@
+suma([],[],[]).
+suma([Car1|Cdr1],[Car2|Cdr2],[Suma|Resto]) :- Suma is Car1+Car2, suma(Cdr1,Cdr2,Resto).
+
+comunes([],_,[]).
+comunes([Car|Cdr],L,[Car|N]) :- not(member(Car,Cdr)),
+                                member(Car,L),!,
+                                comunes(Cdr,L,N).
+comunes([_|Cdr],L,N) :- comunes(Cdr,L,N).

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<banco>
+    <nombreBanco>banconuevo</nombreBanco>
+    <clientes>
+        <cliente>
+            <dni>45</dni>
+            <domicilio>josecasa</domicilio>
+            <nombre>joser</nombre>
+            <cuentas>
+                <ahorro>
+                    <numeroCuenta>4</numeroCuenta>
+                    <fechaApertura>
+                        <dia>4</dia>
+                        <mes>4</mes>
+                        <anho>2004</anho>
+                    </fechaApertura>
+                    <interes>8.0</interes>
+                </ahorro>
+            </cuentas>
+        </cliente>
+        <cliente>
+            <dni>8</dni>
+            <domicilio>casapepe</domicilio>
+            <nombre>pepe</nombre>
+            <cuentas>
+                <corriente>
+                    <numeroCuenta>C</numeroCuenta>
+                    <fechaApertura>
+                        <dia>5</dia>
+                        <mes>5</mes>
+                        <anho>2005</anho>
+                    </fechaApertura>
+                    <numeroTarjeta>9</numeroTarjeta>
+                    <fechaCaducidad>
+                        <dia>9</dia>
+                        <mes>9</mes>
+                        <anho>2009</anho>
+                    </fechaCaducidad>
+                </corriente>
+            </cuentas>
+        </cliente>
+    </clientes>
+</banco>

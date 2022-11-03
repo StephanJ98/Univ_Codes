@@ -1,0 +1,12 @@
+%preorden(arbol(A,nil,nil),[A]) :-!.
+%preorden(arbol(A,X,nil),[A|S]) :- preorden(X,S),!.
+%preorden(arbol(A,nil,X),[A|S]) :- preorden(X,S),!.
+%preorden(arbol(A,X,Y),[A|S]) :- preorden(X,T),preorden(Y,O),!,
+%			         append(T,O,S).
+
+preorden(Arbol,Preorden) :- preorden_dl(Arbol,Preorden-[]).
+preorden_dl(arbol(A,nil,nil),[A|X]-X):-!.
+preorden_dl(arbol(A,I,nil),[A|S]-X) :- preorden_dl(I,S-X),!.
+preorden_dl(arbol(A,nil,D),[A|S]-X) :- preorden_dl(D,S-X),!.
+preorden_dl(arbol(A,I,D),[A|T]-O) :- preorden_dl(I,T-X), preorden_dl(D,X-O).
+

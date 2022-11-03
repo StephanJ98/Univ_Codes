@@ -1,0 +1,30 @@
+/* Version SIN diferencias de listas */
+
+meter_suf(Suf,Cad,R):-	name(Suf,SufCode),name(Cad,CadCode),
+			append(CadCode,SufCode,RCode),A
+			name(R,RCode).
+
+/* Primera version CON diferencias de listas */
+
+meter_suf(Suf,Cad,R):-	name(Suf,SufCod),name(Cad,CadCod),
+                        l2dl(SufCod,DSufCod),
+                        l2dl(CadCod,DCadCod),
+			appendl(DCadCod,DSufCod,DRCod-[]),
+			name(R,DRCod).
+
+/* Segunda version CON diferencias de listas */
+
+meter_suf2(Suf,Cad,R):-	name(Suf,SufCod),name(Cad,CadCod),
+                        l2dl(CadCod,DRCod-DSufCod),
+                        l2dl(SufCod,DSufCod-[]),
+			name(R,DRCod).
+
+/* Tercera version CON diferencias de listas */
+
+meter_suf3(Suf,Cad,R):-	name(Suf,SufCod),name(Cad,CadCod),
+                        l2dl(CadCod,DRCod-SufCod),
+			name(R,DRCod).
+			
+l2dl([],L-L).
+l2dl([Car|Cdr],[Car|Cdr1]-Cdr2) :- l2dl(Cdr,Cdr1-Cdr2).
+

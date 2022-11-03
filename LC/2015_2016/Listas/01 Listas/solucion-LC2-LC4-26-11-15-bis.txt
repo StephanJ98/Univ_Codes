@@ -1,0 +1,13 @@
+elementos([],0).
+elementos([Car|Cdr],Res) :- atomic(Car),
+                            Car \== [],
+                            !,
+                            elementos(Cdr,Res1),
+                            Res is Res1+1.
+elementos([_|Cdr],Res) :- elementos(Cdr,Res).
+
+dividir([],[],[]).
+dividir([Car|Cdr],[Car|Pares],Impares) :- Car mod 2 =:= 0,
+                                          !,
+                                          dividir(Cdr,Pares,Impares).
+dividir([Car|Cdr],Pares,[Car|Impares]) :- dividir(Cdr,Pares,Impares).

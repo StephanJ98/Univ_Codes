@@ -1,0 +1,9 @@
+/* l2dl([1,2,3],X) */
+ 
+l2dl([],L-L).
+l2dl([Car|Cdr],[Car|Cdr1]-Cdr2) :- l2dl(Cdr,Cdr1-Cdr2).
+
+/* dl2l([1,2,3|[]]-[],X). De hecho, puede usarse el mismo l2dl */
+
+dl2l(L-L,[]).
+dl2l([Car|Cdr1]-Cdr2,[Car|Cdr]):- dl2l(Cdr1-Cdr2,Cdr).

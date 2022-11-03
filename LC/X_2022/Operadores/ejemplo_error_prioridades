@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Los alumnos pueden pensar que "vale todo" en la definicion de operadores,
+% que da igual usar una prioridad u otra, una asociatividad u otra, una
+% aridad u otra ... o una situacion del operador (prefijo, sufijo, postfijo)
+% u otra. Eso NO es asi.
+
+% Vamos a verlo ahora con la prioridad. Para ello, variaremos la prioridad
+% del operador "de" (de 150 a 500) en la ultima version que tenemos para el
+% problema de la Analogia.
+
+% IMPORTANTE: Para evitar sobrecargas del operador "de" que puedan "ocultar"
+% el error que queremos provocar, salir y entrar en el interprete para tener
+% una memoria "limpia" que evidencie el error.
+
+% IMPORTANTE: Por la misma razon, escribir este codigo en un fichero
+% aparte, solo.
+
+% Veremos que ya en el momento de cargar el fichero (mediante "consult"),
+% tenemos un ERROR del tipo
+%
+% ERROR: /home/vilares/administration/seminars/Grado-II/LC-LP/Codigos-clases/Operadores/ejemplo_error_prioridades:39:27: Syntax error: Operator priority clash
+%
+% que no puede ser mas explicito.
+
+% :- op(150,fx,[de]).        % este era el valor correcto
+:- op(500,fx,[de]).          % nuevo valor incorrecto
+:- op(200,xfx,[dentro]).
+:- op(300,fx,[a]).
+:- op(350,xfx,[es]).          
+:- op(400,xfx,[como]).       % ya esta definido en el programa anterior
+:- op(450,fx,[la]).
+:- op(500,xfx,[mediante]).   % ya esta definido en el programa anterior
+
+X es a Y como Z es a W mediante la Relacion :- es_figura(X), es_figura(Y),
+                                               verificando(X, Y, Relacion),
+                                               es_figura(Z), es_figura(W),
+                                               verificando(Z, W, Relacion).
+
+verificando(Figura_1 dentro de Figura_2, 
+            Figura_1 dentro de Figura_2,
+	    igualdad). 
+verificando(Figura_1 dentro de Figura_2, 
+            Figura_2 dentro de Figura_1,
+	    inversion). 
+verificando(Figura dentro de _, 
+            Figura dentro de _,
+	    interior). 
+verificando(_ dentro de Figura,
+            _ dentro de Figura,
+	    contorno). 
+
+es_figura(triangulo dentro de circulo). 
+es_figura(circulo dentro de triangulo). 
+es_figura(cuadrado dentro de triangulo). 
+es_figura(circulo dentro de cuadrado). 
+es_figura(cuadrado dentro de circulo). 
+es_figura(triangulo dentro de cuadrado). 
+es_figura(triangulo dentro de triangulo). 
+es_figura(circulo dentro de circulo). 
+
+% ... y a la que ahora podemos interrogar mediante la pregunta
+% :- X es a triangulo dentro de circulo como cuadrado dentro de circulo es a Y mediante la Relacion.

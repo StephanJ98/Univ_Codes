@@ -1,0 +1,11 @@
+penultimo([Car,_],Car) :- !.
+penultimo([_|Cdr],Res) :- penultimo(Cdr,Res).
+
+
+rodaja([Car|_],1,1,[Car]) :- !.
+rodaja([Car|Cdr1],1,F,[Car|Cdr2]) :-!,
+                                    F1 is F-1,
+                                    rodaja(Cdr1,1,F1,Cdr2).
+rodaja([_|Cdr1],I,F,Cdr2) :- I1 is I - 1, 
+                             F1 is F-1,
+                             rodaja(Cdr1,I1,F1,Cdr2).
