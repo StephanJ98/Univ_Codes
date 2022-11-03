@@ -24,5 +24,5 @@ Esta medida es para evitar al máximo el empleo de Git LFS que es el que provoca
 </a>
 
 ---
-###### <p align='right'> Tamaño actual 1473 ficheros. 1,45GB </p>
+###### <p align='right'> Tamaño actual 3052 ficheros. 2,22GB </p>
 ###### <p align='right'> Dov Ver. 0.0.4 (02/11/2022) </p>
