@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="datostest.js"></script>
+	<script defer type="text/javascript" src="testpeticiones.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<title>IU</title>
+
+	<style>
+		:root {
+			--green: #00d600;
+			--red: #d60000;
+		}
+
+		.equal {
+			background-color: var(--green);
+		}
+
+		.notEqual {
+			background-color: var(--red);
+		}
+
+		#tablaresultados {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body onload="realizarTestPeticiones();">
+	<table id='tablaresultados' border='1'>
+		<thead id='tituloresultados'></thead>
+		<tbody id='datosresultados'></tbody>
+	</table>
+</body>
+
+</html>
