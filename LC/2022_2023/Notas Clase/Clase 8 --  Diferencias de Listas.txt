@@ -1,0 +1,228 @@
+Objetivo
+========
+
+Introducir las ESTRUCTURAS DE DATOS INCOMPLETAS como técnica de
+programación orientada a la unificación, centrándonos como caso de
+estudio en las DIFERENCIAS DE LISTAS.
+
+El objetivo es rebajar la carga computacional asociada a operaciones
+de concatenación sobre listas (clásicas), reduciendo un procedimiento
+típicamente recursivo a una simple unificación.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+IV. Programación Lógica (pag. 145).
+
+11. Técnicas de Programación (pag. 165)
+
+    11.2 Estructuras de datos incompletas (pag. 171)
+
+         11.2.1 Diferencias de listas (pag. 172)
+
+                Se trata de una técnica basada en unificación, y que
+		permite un uso inteligente de la notación. Para
+		introducir ésta, supongamos por ejemplo la lista
+
+                [1,2,3]
+
+                ya habíamos visto que podíamos representarla de muchas
+                formas diferentes, dependiendo del tipo de información
+                que deseáramos localizar y recuperar vía unificación
+
+                [1|[2,3]]  [1,2|[3]]  [1|[2|[3]]]  [1|[2|[3|[]]]]
+
+                pera también podríamos expresarla como la diferencia de
+		dos listas
+
+                [1,2,3]\[]  [1,2,3|[4]]\[4]  [1,2,3|[4,5]]\[4,5] ...
+
+                ... o de forma más general como
+
+                [1,2,3|X]\X
+
+                donde X podría ser un valor arbitrario de lista, de hecho
+		cualquiera que en un momento dado, por una u otra razón
+		nos interesase instanciar.
+
+                El principio básico, congruente con la notación expuesta,
+		es que (en términos de concatenación de listas)
+
+                X\Y + Y\Z = X\Z
+
+                algo que gráficamente suele representarse como
+
+                X --------------------------------------------
+
+                                Y ----------------------------
+
+                                              Z --------------
+                \_____  ______/ \_____  ______/
+		      \/              \/
+		      
+                     X\Y             Y\Z
+
+                \_____________  ______________/
+		              \/
+			     X\Z
+
+                y que es congruente con la idea de que las variables en
+		programación lógica son siempre punteros.
+
+                De este modo, en una diferencia de listas X\Y
+		podríamos intérpretar que X apunta al inicio de la
+		lista que nos interesa, mientras Y lo hace al final.
+
+                Desde un punto de vista práctico hay un conjunto de
+		situaciones tipificadas para el uso de esta técnica, y
+		cuyo tratamiento hemos ilustrado en programas
+		accesibles en la entrada Moovi de la asignatura de LC,
+		y más concretamente en el fichero:
+
+                Documentos y Enlaces > Material de prácticas >
+		                     > Prolog > Listas > listas
+              
+                en los que están disponibles tanto las versiones con
+		listas clásicas como con diferencia de listas de los
+		siguientes predicados:
+
+                inv/2         --> ilustra la inserción de un elemento
+		                  al final de una lista.
+
+                aplanar/2     --> ilustra la concatenación de dos listas
+		                  propias.
+
+                cartesiano/2 --> ilustra la concatenación de dos
+		                 listas propias y, además, de un
+		                 elemento al principio de una
+		                 diferencia de listas (ver definición
+		                 del predicado auxiliar linea/3)
+
+                quicksort/2 --> ilustra la concatenación de dos listas
+		                propias y, además, de un elemento en
+		                una zona intermedia de las listas
+		                concatenadas.
+
+                NOTA: El operador "\" tradicionalmente usado para
+                      representar las diferencias de listas, no está
+                      predefinido en Prolog. Para hacerlo disponible,
+                      el programador debe incluir (preferentemente,
+                      por cuestiones de claridad) en la cabecera del
+                      programa mediante la regla
+
+		      	 	:- op(600,xfy,[\]).
+
+                      cuya interpretación se describirá en detalle
+                      cuando abordemos la definición de operadores.
+
+                NOTA: Aunque, por tradición y herencia de la teoría de
+		      conjuntos, se asocia esta técnica con el
+		      operador "\", lo cierto es que el uso de este u 
+                      otro operador es absolutamente irrelevante. Así,
+                      por ejemplo, la versión con diferencias de listas del
+                      predicado inv/2 puede escribirse:
+
+                      		:-op(600,xfy,[\]).
+
+                      		inverso(Lista, Inv) :- inv_dl(Lista, Inv\[]).
+
+                      		inv_dl([],X\X).
+                      		inv_dl([Car|Cdr],X\Y):- inv_dl(Cdr, X\[Car|Y]).
+
+                      pero también podríamos usar
+
+                      	   	inverso(Lista, Inv) :- inv_dl(Lista, Inv-[]).
+
+                      		inv_dl([],X-X).
+				inv_dl([Car|Cdr],X-Y):- inv_dl(Cdr, X-[Car|Y]).
+
+                      o incluso 
+                       
+				inverso(Lista, Inv) :- inv_dl(Lista, Inv+[]).
+
+                      		inv_dl([],X+X).
+                      		inv_dl([Car|Cdr],X+Y):- inv_dl(Cdr, X+[Car|Y]).
+                     
+                      y, por qué no, también 
+
+                      	     	inverso(Lista, Inv) :- inv_dl(Lista, Inv*[]).
+
+                      		inv_dl([],X*X).
+                      		inv_dl([Car|Cdr],X*Y):- inv_dl(Cdr, X*[Car|Y]).
+
+                      o aún
+
+                      	     	inverso(Lista, Inv) :- inv_dl(Lista, Inv/[]).
+
+                      		inv_dl([],X/X).
+                      		inv_dl([Car|Cdr],X/Y):- inv_dl(Cdr, X/[Car|Y]).
+                     
+                      dado que, a efectos de unificación usar un "\" o
+		      cualquiera de los otros operadores (-,+,*, /, ...) es
+		      indiferente. Simplemente son útiles como referencias
+		      estructurales para la unificación, etiquetando el árbol
+		      de la diferencia.
+
+                      De hecho, observar que en el caso de "-", "+",
+                      "*" ó "/", no ha sido necesario definir el operador,
+		      porque esta ya estaba predefinido en el intérprete, algo
+		      que no ocurre con "\".
+
+Objetivos de la próxima clase
+=============================
+
+Abordaremos el concepto de "operador" como mecanismo de
+enriquecimiento dinámico de la expresividad del lenguaje. Su
+definición nos permitirá mejorar de forma sustancial la declaratividad
+de nuestros programas, acercándolos al lenguaje natural utilizado por
+los humanos. Podremos incluso prescindir de las pocas palabras
+reservadas del lenguaje, tales los paréntesis o las comas.
+
+Introduciremos también predicados de "aprendizaje automático", algo
+que nos permitirá construir programas que se modifican de forma
+dinámica durante el mismo proceso de resolución, añadiendo o
+eliminando cláusulas. Hablamos de un proceso que podríamos asimilar al
+del aprendizaje humano, de ahí su nombre.
+
+Notas históricas
+================
+
+Las "diferencias de estructuras" en general, y las "diferencias de
+listas" en particular forman parte del mundo Prolog desde sus
+inicios. Sterling y Shapiro atribuyen en su libro
+
+Leon Sterling and Ehud Shapiro. The Art of Prolog. The MIT Press,
+Cambridge, Massachusetts, 2nd edition edition, 1994.
+
+la primera descripción publicada a
+
+K.L. Clark and S.-A. Tärnlund. A first order theory of data and
+programs. In B. Gilchrist, editor, Proceedings of the IFIP Congress,
+pages 939–944, Toronto, Canada, 1977. North Holland.
+
+K.L. Clark es un matemático y Prof. Emérito del Departamento de
+Computación del Imperial College London. Son notorios sus trabajos en
+relación al tratamiento de la negación por fallo y la programación
+concurrente en lógica, estos últimos al origen del conocido proyecto
+japonés de los años 80 para el desarrollo de sistemas de quinta
+generación en el procesamiento de conocimiento. Ha sido consultor de
+multinacionales de la entidad, entre otras, de IBM, Hewlett-Packard o
+Fujitsu.
+
+Tärnlund es Prof. de la Univ. de Uppsala (Suecia).
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

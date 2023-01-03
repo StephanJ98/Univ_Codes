@@ -1,0 +1,142 @@
+Objetivo
+========
+
+Introducimos una popular familia de predicados extralógicos, los
+denominados PREDICADOS DE MEMORIZACIÓN (o APRENDIZAJE), que nos
+permitirán simular la generación (resp. borrado) de conocimiento
+de nuestro universo del discurso, mediante la introducción
+(resp. eliminación) dinámica de cláusulas en tiempo de ejecución.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+      Documentos y Enlaces > Material de estudio > Prolog 
+
+recuperar el texto PrologIA.pdf, al que nos referiremos en la parte del
+texto:
+
+8 Aprendizaje automático
+
+  Centraremos nuestra atención en tres predicados: asserta/1,
+  assertz/1 y retract/1. Todos ellos se verifican siempre (devuelven
+  "true") y todos ellos toman una cláusula como argumento. Sus efectos
+  colaterales impactan, también en todos los casos, a la integridad
+  del universo del discurso considerado:
+
+  asserta(C) incluye la cláusula C al comienzo del universo del discurso.
+
+  assertz(C) incluye la cláusula C al final del universo del discurso.
+
+  retract(C) retira del universo del discurso la primera de las cláusulas que
+             unifique con C.
+
+  Para ilustrar su funcionamiento, hemos considerado dos ejemplos
+  prácticos:
+
+  i)   La resolución del problema de las Torres de Hanoi, que se
+       describe totalmente en el Ejemplo 81 del texto antes indicado, y
+       también en
+
+       Documentos y Enlaces > Material de prácticas > Prolog >
+                            > Aprendizaje_automático > hanoi
+
+       de la entrada Moovi de la asignatura.
+
+  ii)  La implementación de la función de Fibonacci, también accesible
+       y comentada en
+
+       Documentos y Enlaces > Material de prácticas > Prolog >
+                            > Aprendizaje_automático > fibonacci
+
+       de la entrada Moovi de la asignatura.
+
+  En ambos casos, hacemos referencia a predicados con recursividad
+  múltiple (en concreto, doble) en los que las términos
+  correspondientes a las llamadas recursivas se asocian claramente a
+  problemas cuya resolución es análoga (basta ver que dichos términos
+  unifican entre sí) y que, por tanto, son susceptibles de aprovechar
+  en la segunda llamada recursiva, la experiencia de resolución
+  generada en la primera.
+
+  De modo análogo, en ambos ejemplos es sencillo (por la propia
+  naturaleza del problema tratado en cada caso) determinar cuando esa
+  "experiencia" de resolución de la primera llamada recursiva, deja de
+  sernos útil. En definitiva, somos capaces de determinar:
+
+  i)  Cuando hemos de introducir (mediante assert/1) la cláusula que
+      nos permitirá aprovechar la experiencia de resolución de la
+      primera llamada recursiva.
+
+  ii) Cuando hemos de eliminar (mediante retract/1) la cláusula que
+      nos permitía aprovechar la experiencia de resolución de la
+      primera llamada recursiva, porque ya no volveremos a
+      necesitarla.
+
+  NOTA: Cualquier predicado que vaya a ser usado como argumento de un
+        predicado de aprendizaje (asserta/1, assertz/1 y retract/1), ha
+	de ser previamente declarado como "dinámico" mediante el
+	predicado dynamic/1.
+
+        EJEMPLO: Es el caso de los predicados, hanoi2/1 y hanoi3/1
+	         en
+
+                 Documentos y Enlaces > Material de prácticas > Prolog >
+                                      > Aprendizaje_automático > hanoi
+
+                 de la entrada Moovi de la asignatura, incluyendo las
+                 declaraciones siguientes al principio del fichero:
+
+                 :- dynamic hanoi2/5.
+                 :- dynamic hanoi3/5.
+
+        EJEMPLO: Es el caso de los predicados, fib2/1 y fib3/1
+	         en
+
+                 Documentos y Enlaces > Material de prácticas > Prolog >
+                                      > Aprendizaje_automático > fibonacci
+
+                 de la entrada Moovi de la asignatura, incluyendo las
+                 declaraciones siguientes al principio del fichero:
+
+                 :- dynamic fib2/2.
+                 :- dynamic fib3/2.
+
+  NOTA: En términos prácticos, ha de tenerse en cuenta que la
+        inclusión de un elevado número de cláusulas en un programa
+        puede llegar a ser contraproducente, por cuanto la resolución
+        explora en un orden determinado el universo del discurso
+        (en el caso de SWI Prolog, de forma descendente).
+
+        Obviamente, el punto en el cual la acumulación de nuevo
+	conocimiento deja de ser útil para convertirse en un
+	inconveniente, es algo que dependerá de las características
+	propias de cada problema a tratar.
+
+        
+Objetivos de la próxima clase
+=============================
+
+Introduciremos el concepto de Máquina de Turing, como modelo
+computacional básico asociado al paradigma de programación imperativo
+(o procedural). Ello nos permitirá, basándonos en la denominada
+Hipótesis de Church, definir formalmente la noción de "algoritmo" o lo
+que es lo mismo de "función computable" (o "función recursivamente
+enumerable").
+
+En base a ello introduciremos la noción de "decidibilidad de un
+problema", esto es, saber si un planteamiento es "decidible"
+(resoluble o no) o "no decidible". En este último caso nos estaremos
+enfrentando al peor escenario posible, dado que un problema no
+decidible es aquel para el que resulta formalmente imposible saber si
+hay o no solución ... y su número es infinito. 
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

@@ -1,0 +1,318 @@
+Objetivo
+========
+
+Comenzamos por ilustrar el impacto de la aplicación del "occurrence
+test" en el algoritmo de unificación de Robinson, ya explicado.
+
+Introducimos luego formalmente los conceptos de "retroceso",
+"resolución SLD" y "significado" de un programa lógico ... situando su
+utilización sobre ejemplos prácticos. Definimos los conceptos de
+programa lógico "correcto" y "completo", algo esencial en un paradigma
+de programación donde la capacidad computacional supera a menudo con
+creces las expectativas del programador (novato).
+
+Mostramos el impacto de los matices introducidos en la resolución SLD
+por las implementaciones (las más comunes) del mismo tipo de la usada
+por SWI Prolog en lo que se refiere tanto al orden de tratamiento
+de los objetivos de la resolvente como de las cláusulas del programa.
+
+Insistimos una vez más en las ventajas y desventajas del uso de la
+construcción en profundidad (depth-first) del árbol de resolución. En
+particular, introducimos vía ejemplos los conceptos de "solución
+sesgada" y "dominio de terminación" de un programa lógico.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+III. El Intérprete Lógico (pag. 79).
+
+6. Conceptos fundamentales (pag 81)
+
+   6.3 Concepto de unificación: sustituciones e instancias
+
+       UNIFICACIÓN
+       -----------
+ 
+       A partir del programa Prolog que implementa la unificación de
+       Robinson (Ej. 6.3.3):
+
+       igual(X,X).
+
+       se ilustran los efectos de la aplicación (respuesta "fail") o no
+       (entrada en un ciclo de unificación) del "occurrence test", cuando
+       se interroga con la pregunta
+
+       igual(Y, f(Y)).
+
+       Se recuerda que la versión actualmente usada de SWI Prolog implementa
+       integramente la unificación de Robinson, esto es, aplica el "occurrence
+       test" y por tanto renuncia al tratamiento de estructuras cíclicas en
+       unificación.
+
+   6.4 Un intérprete lógico simple (pag. 89)
+
+       Describimos formalmente el algoritmo de resolución SLD.
+
+       Al respecto, hacemos particular hincapié en los matices que la
+       implementación de SWI Prolog (común a otros intérpretes Prolog)
+       introduce en la definición (formal) de resolución SLD:
+
+       i) La resolvente se trata como un LIFO, esto es, como una pila
+          o lo que es lo mismo una lista. Los objetivos se introducen
+          así por la izquierda, en el mismo orden en el que aparecen
+          en la cola de las reglas aplicadas, para luego irlos eliminando
+          también por la izquiera en el orden en el que aparecen en
+          dicha resolvente.
+
+       ii) Dado un objetivo de la resolvente, la búsqueda de la
+           cláusula aplicable a su resolución en el programa, se hace en
+	   orden descendente. Esto es, de arriba hacia abajo.
+
+       Ello supone una limitación importante en relación al
+       planteamiento teórico del algoritmo SLD, que aseguraba la
+       corrección (todas las respuestas que se encuentran son
+       correctas) y completud (se encuentran todas las respuestas) de
+       la resolución.
+
+   6.5 El concepto de retroceso (pag. 94)
+
+       También conocido como "backtracking", refiere el mecanismo de
+       reinicio de búsqueda en un árbol de resolución, una vez hemos
+       alcanzado una hoja. En SLD, se traduce en la búsqueda
+       (depth-first) del siguiente nodo sin explorar.
+
+       El retroceso se ejecuta de forma automática una vez se produce
+       un "fail", o de forma controlada por el usuario mediante un ";"
+       (esto es, un operador lógico OR).
+
+       La mecánica del retroceso pretende asegurar la exploración
+       sistemática del espacio de soluciones a una pregunta dada. Sin
+       embargo, la consideración de los matices de implementación i) y
+       ii) comentados en 6.4 puede llegar a impedirlo. Ilustramos esta
+       situación en el Ej. 6.6.1 (pag. 101), donde transformamos el 
+       programa lógico de la suma de números naturales:
+
+       		suma(0,Numero,Numero).
+       		suma(siguiente(Numero_1),Numero_2,siguiente(Numero_3)) :-
+                    suma(Numero_1,Numero_2,Numero_3).
+
+       en uno nuevo, declarativamnete equivalente:
+
+       	        numero_natural(0).
+                numero_natural(siguiente(Numero)) :- numero_natural(Numero).
+
+       		suma(0,Numero,Numero) :- numero_natural(Numero).
+       		suma(siguiente(Numero_1),Numero_2,siguiente(Numero_3)) :-
+                    suma(Numero_1,Numero_2,Numero_3).
+
+       pero con un funcionamiento procedural muy diferente frente a la
+       pregunta
+
+		:- suma(X,Y,Z)
+
+       En el primer caso exploramos todo el espacio de soluciones,
+       aunque "sin terminar". Esto es, alcanzamos cualquier solución
+       en tiempo finito, si bien no podemos acabar de construir un
+       árbol de resolución que es de talla infinita.
+
+       En el segundo caso, no solo no terminamos de construir un árbol
+       de resolución que es de talla infinita, sino que además solo
+       podemos generar un "conjunto sesgado de soluciones" que corresponde
+       a la resolución de la ecuación
+
+                0 + X = X
+
+       esto es, aun caso particular de resolución de la ecuación
+
+                X + Y = Z
+
+       que era el objetivo de la pregunta.
+
+       Ello nos sirve de base para evidenciar la necesidad de estudiar
+       el comportamiento de un programa lógico antes de ponerlo a
+       disposición del potencial usuario. En concreto será necesario
+
+
+       iii) Identificar lo que denominamos "dominio de terminación", esto
+            es, el conjunto de preguntas para el cual es posible la
+            exploración completa del espacio de soluciones en tiempo finito.
+
+       iv)  Identificar cualquier situación de generación sesgada de
+            respuestas.
+
+       En este punto, cabe señalar que las situaciones de "no
+       terminación" comentadas en iii) no son achacables a un mal
+       funcionamiento del algoritmo de resolución, sino a las
+       limitaciones formales para la representación (no siempre
+       posible) de un conjunto infinito de soluciones.
+
+       En cuanto a iv), son consecuencias de los matices de implementación
+       i) y ii) comentados en 6.4.
+
+   6.6 Significado de un programa lógico
+
+       Podemos ahora definir los conceptos de "significado" de un
+       programa lógico P (en relación a un algoritmo de resolución
+       dado, p.ej. el SLD) y de "significado deseado" de dicho
+       programa P ... denotados respectivamente como S(P) y D(P). El
+       primero recoge el conjunto de respuestas deducibles de P
+       mediante el algoritmo de resolución considerado y el segundo
+       recoge el conjunto de respuestas que desearíamos fuesen
+       deducibles.
+
+       Introducimos entonces las nociones de "corrección" y
+       "completud" de un programa P en relación a un algoritmo de
+       resolución dado (p.ej. SLD):
+
+           P es correcto si S(P) es un subconjunto de D(P)
+
+           P es completo si D(P) es un subconjunto de S(P)
+
+       Lo deseable es que un programa P sea correcto y completo, pero
+       como mínimo es exigible la corrección. Los problemas de no
+       completud suelen asociarse a fenómenos de no terminación de los
+       programas, siempre ligados a decisiones de implementación en
+       los algoritmos de resolución (p.ej. SLD) ... a menudo con el
+       objetivo de rebajar los costes espacio-temporales de este tipo
+       de procesos, en extremo exigentes en recursos tanto de memoria
+       como CPU.
+
+       Estas limitaciones se traducen en "incoherencias
+       declarativo/procedurales" en las interpretaciones de los
+       programas. Esto es, en situaciones en las que declarativamente
+       un programa debiera tener un comportamiento que luego no
+       refleja en la práctica. Como cabía esperar, el origen de dichas
+       incongruencias son los ítems i) y ii) antes comentados en 6.4,
+       que abordaremos por separado (6.6.1 y 6.6.2, respectivamente).
+
+       NOTA: También podéis verlo en el texto PrologIA.pdf (3.3) de
+             la carpeta
+
+             Documentos y Enlaces > Material de estudio > Prolog
+
+       6.6.1 El orden de tratamiento de los objetivos
+
+             Se ilustra mediante un ejemplo totalmente comentado en el
+             apartado, que nos sirve de excusa para evidenciar un
+             principio bien conocido en Teoría de Compiladores e
+             Intérpretes, la incompatibilidad de las arquitecturas
+             descendentes de análisis (resolución SLD) con las reglas
+             (cláusulas) recursivas por la izquierda en la definición
+             de la gramática (predicado) que sustenta la definición de
+             un lenguaje de programación (programa lógico).
+
+             El ejemplo hace hincapié en que, en el caso expuesto, los
+             problemas de no terminación en la versión inicial del
+             predicado persona/1 descrito
+
+                 persona(Persona) :- persona(Madre), madre(Persona, Madre).
+
+                 persona(’Rosa’).
+                 persona(’Maria’).
+                 persona(’Nuria’).
+
+             ante la pregunta
+
+                 :- persona(’Juan’).
+
+             se pueden solucionar simplemente eliminando su
+             recursividad izquierda. Basta para ello con alterar el
+             orden de los dos términos de la cola de la regla
+             recursiva, que así pasaría a ser
+
+                 persona(Persona) :- madre(Persona, Madre), persona(Madre).
+
+             de forma que el término "madre(Persona, Madre)" permita
+             aportar un "plus" de información (por instanciación de la
+             variable "Madre") a la posterior resolución del término
+             "persona(Madre)". Ello elimina el ciclo en la
+             construcción del árbol de resolución (SLD) generado en la
+             versión inicial, resolviendo el problema de no
+             terminación planteado.
+
+             NOTA: Es importante subrayar que en este apartado (6.6.1)
+	           no pretendemos otra cosa más que evidenciar el
+	           posible impacto en el proceso de resolución (en
+	           este caso SLD) del orden de tratamiento de los
+	           objetivos en la resolvente (en este caso, el
+	           aplicado por SWI Prolog). La razón es que existen
+	           otros mecanismos de prevención adecuados, como el
+	           que exponemos en la siguiente sección 6.6.2 o las
+	           estrategias de "evaluación perezosa" (o "lazy
+	           evaluation") que veremos más adelante.
+
+       6.6.2 El orden de aplicación de las cláusulas
+
+             Se ilustra usando el mismo ejemplo del apartado anterior
+             (6.6.1), a partir del cuál concluímos que una medida
+             fundamental para prevenir este tipo de incoherencias
+             asociadas al orden de aplicación de las cláusulas en
+             algunos algoritmos de exploración descendentes (como la
+             implementación SLD de SWI Prolog) pasa por situar
+             sistemáticamente los axiomas antes de las reglas
+             recursivas en la definición de un predicado dado ... en
+             el caso que nos ocupa, el predicado persona/1. Ello
+             debería evitar en la mayor parte de los casos los
+             problemas de no terminación asociados a ciclos de
+             resolución, sin por ello renunciar al uso de la
+             recursividad izquierda en las cláusulas.
+
+             También tal y como adelantamos en el apartado anterior
+             (6.6.1), los mecanismos de "evaluación perezosa" serán
+             buenos aliados para solventar este tipo de problemas, si
+             bien en este caso si se insiste en la conveniencia de
+             ordenar adecuadamente las cláusulas cuando sea posible
+             determinar a priori el tipo de exploración del árbol de
+             resolución del intérprete utilizado. 
+
+Objetivos de la próxima clase
+=============================
+
+Introduciremos el concepto de "corte" (cut) en programación
+lógica, un mecanismo que mediante la poda de árboles de resolución nos
+permitirá ejercer el control del proceso de interpretación a
+diferentes niveles: determinización de la búsqueda de respuestas e
+implementación de mecanismos de control semafórico.
+
+También introduciremos el predicado "fail", que nos permitirá forzar
+el retroceso en un momento dado de la resolución, cortándolo de este
+modo en la rama actualmente en construcción.
+
+Reseñas históricas
+==================
+
+El nombre "resolución SLD" fue dado por Maarten van Emden para la
+regla de inferencia sin nombre introducida por Robert Kowalski.
+
+Maarten van Emden es un matemático holandés, uno de los padres de
+Prolog. Junto con Robert Kowalski, desarrolló el concepto de
+"semántica de punto fijo", que sustenta la formalización de la noción
+de significado en el paradigma lógico. Ha trabajado en las más
+prestigiosas universidades y centros de investigación en el ámbito de
+las Ciencias de la Computación: Univ. de Amsterdam, Univ. de Waterloo,
+Univ. de Edimburgo, Univ. de Victoria, Laboratorio T.J. Watson (IBM),
+...
+
+Robert Kowalski es un matemático norteamericano, especializado en
+lógica. Su investigación se centra en el estudio de modelos de
+razonamiento computacional inspirados en el comportamiento humano. Ha
+recibido algunos de los más prestigiosos premios en el ámbito de la
+IA, y trabajado en alguna de las universidades más prestigiosas como
+la Univ. de Edimburgo y el Imperial College de Londres.
+
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

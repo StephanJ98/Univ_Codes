@@ -1,0 +1,206 @@
+Descargo de responsabilidad
+===========================
+
+Querría primero pediros nuevamente disculpas por las pérdidas de
+tiempo y problemas logísticos de la clase de hoy (equipos y red
+eléctrica desconectados, malfuncionamiento de la pantalla de base y,
+sobre todo, la desaparición de dos encerados). Simplemente deciros que
+he presentado la queja correspondiente, y espero que no vuelvan a
+repetirse estas carencias que hacen imposible del todo impartir
+normalmente una clase de una materia como LC, y que en ningún caso
+puede atribuirse al profesorado de la asignatura.
+
+Objetivo
+========
+
+La clase de hoy inicia una introducción a los conceptos más simples
+del Paradigma de Programación Lógico, a partir de los ya descritos en
+Lógica Computacional, en particular en lo relativo al Cálculo de
+Predicados.
+
+Para ello, lo primero que hemos hecho es generalizar al Cálculo de
+Predicados (expresiones lógicas con variables de cualquier tipo) la
+Regla de Resolución que ya habíamos probado en el ámbito del de
+Proposiciones (expresiones lógicas que solo usan variables booleanas).
+
+A continuación, aplicaremos la nueva Regla de Resolución junto a las
+de Sustitución y Transitividad, trivialmente generalizables desde el
+Cálculo de Proposiciones al de Predicados, para ilustrar como funciona
+el motor computacional del paradigma que nos ocupa e introducir de
+forma natural los mecanismos operativos que lo caracterizan:
+sustitución, unificación y resolución.
+
+Pretendemos con ello facilitar los mecanismos primarios para iniciar
+las clases prácticas de laboratorio.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+II. Lógica: Conceptos Fundamentales (pag. 23).
+
+4. Cálculo de Predicados (pag 43)
+
+   4.3.5 Cuantificación sobre rangos infinitos (pag 53)
+
+         Se consigue simplemente cambiando la condición de intervalo
+         numérico, por una condición lógica expresada por un
+         predicado. Los elementos que veriquen esa condición, forman
+         parte del rango.
+
+         Ello permite cuantificar conjuntos finitos de variables (caso
+         del Ej. 4.3.4) de forma simple y efectiva, pero también
+         conjuntos infinitos (caso de los números reales en el
+         Ej. 4.3.5).
+
+         Se recalca que las variables introducidas por un
+         cuantificador, son locales a dicho cuantificador. Dado que
+         nuestros programas lógicos estarán constituídos por fórmulas
+         (también denominadas Reglas o Cláusulas) que están
+         cuantificadas universalmente, la consecuencia es que las
+         variables de un programa lógico son locales a la regla
+         concreta en la que aparecen. Observar, al respecto, el
+         paralelismo total con las fórmulas aritméticas.
+
+5. Prolog y Cálculo de Predicados (pag 61)
+
+   5.1 Regla de Resolución.
+
+       Un razonamiento simple, basado en la concatenación de
+       cuantificadores y la aplicación de la Regla de
+       Particularización (derivada trivialmente del concepto de
+       cuantificador universal), nos permite extrapolar esta regla al
+       Cálculo de Predicados.
+
+       Aprovechamos para introducir intuitivamente el concepto de
+       Unificación de dos términos mediante una Sustitución, esto es,
+       que valores podemos dar a las variables presentes en uno y otro
+       término para que éstos se hagan iguales (esto es, que
+       unifiquen). Una noción que formalizaremos más tarde.
+
+    5.2 El proceso de resolución
+
+        Se introduce informalmente a partir del conocido entimema:
+
+        "Todo hombre es mortal, Socrates es hombre, luego Sócrates es mortal"
+
+        cambiando, eso sí, a Sócrates por Adán.
+
+        Usamos para ello dos predicados ya introducidos previamente
+        (Ej. 4.3.4, pag 53) que capturan los conceptos en juego:
+        hombre y mortal.
+
+        Además construimos las reglas que relacionan estos conceptos
+        conforme al entimema, conformando así nuestro primer programa
+        lógico (Prolog):
+
+        hombre('Adan').
+        mortal(Persona) :− hombre(Persona).
+
+        lo que nos permitirá recabar información deducible a partir del
+        Universo del Discurso descrito por la relación plasmada.
+
+        La forma de recabar esas informaciones es a través de un tipo
+        específico de cláusulas denominado Pregunta, formalmente una
+        expresión que (formalmente) niega aquello que pretendemos
+        obtener. Distinguiremos dos tipos de preguntas:
+
+        a) Las que incluyen variables:
+
+             false <= mortal(Individuo)
+
+           expresable (por simplificación notacional Prolog) como
+
+             :- mortal(Individuo).
+
+           y que declarativamente se lee como
+
+           "¿ cuáles son los valores de Individuo para los que
+              mortal(Individuo) es cierto ?"
+
+           o, si se quiere,
+
+           " ¿ cuáles son los Individuos mortales ?"
+
+        b) Las que las que no incluyen variables:
+
+             false <= mortal('Adan')
+
+           expresable (por simplificación notacional Prolog) como
+
+             :- mortal('Adan').
+
+           y que declarativamente se lee como
+
+           "¿ es mortal('Adán') cierto ?"
+
+           o, si se quiere,
+
+           "¿ es 'Adán' mortal ?
+
+        NOTA: Observar el "punto" que marca el final de las cláusulas Prolog.
+
+        En cualquier caso, la respuesta a estos dos tipos de preguntas
+        se plantea como un proceso de deducción automática, que toma
+        la forma de una demostración por reducción al absurdo.
+
+        Por esa razón, formalmente la pregunta a) no es mas que la
+        afirmación de que Adán no es mortal, mientras que en b) se afirma
+        formalmente que no existen Individuos mortales. A saber, comenzamos
+        negando justamente lo que queremos deducir.
+ 
+        A partir de esas dos hipótesis (preguntas), el proceso de
+        resolución nos lleva a una incongruencia, que es directa en a)
+        (llegando a deducirse lo contrario de lo que se afirma en la
+        pregunta, esto es, que Adán es mortal) y en b) mediante un
+        contra-ejemplo que prueba que sí existe al menos un Individuo
+        <-- Adán que es mortal ... también en contra de lo que se
+        afirmaba en la pregunta.
+
+        La respuesta para a) será entonces "true" y para b) Adán.
+
+        NOTA: Se hace notar que en Prolog, cualquier identificador que
+              comience por una mayúscula, será una variable. Es algo
+              que, a menudo, contradice las notaciones formales en
+              Lógica Computacional, pero que es un uso extendido y que
+              le lector debe tener en cuenta cuando se enfrente a un
+              texto en la materia.
+        
+Objetivos de la próxima clase
+=============================
+
+Obviamente, programar en Prolog no implica realizar todo un desarrollo
+como el visto en nuestro ejemplo de hoy, sino tan solo introducir las
+cláusulas del programa y las preguntas que deseemos realizar. Sin
+embargo, es necesario conocer al detalle como funciona el motor
+computacional, esto es, el proceso de resolución.
+
+Aún así, la descripción exhaustiva de la aplicación de las reglas de
+inferencia y su concatenación complica de forma notable la
+comprensión, si bien describe exactamente la tarea del motor
+computacional lógico. 
+
+Dado que necesitaremos conocer y representar este proceso de
+resolución para introducir y comprender técnicas específicas de
+programación, urge disponer de una herramienta que simplifique esta
+tarea. Es lo que denominaremos Árboles de Resolución, el primer
+objetivo de la próxima clase.
+
+A ello seguirá la formalización de los conceptos hoy introducidos
+informalmente (objetos y programas en Prolog, sustitución, unificación
+y resolución).
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

@@ -1,0 +1,170 @@
+Objetivo
+========
+
+Insistir en el concepto intuitivo (que formalizaremos más adelante) de
+"programa lógico", retomando el problema de su "resolución", o lo que
+es lo mismo, de como se responde/interpreta una pregunta en el
+"universo del discurso" definido.
+
+Describir los "objetos" (técnicamente "términos") manejados en
+programación lógica, con una atención especial al concepto de "término
+compuesto".
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+II. Lógica: Conceptos Fundamentales (pag. 23).
+
+5.2 El proceso de resolución (pag. 63)
+
+    5.2.1 Un ejemplo simple (pag. 64)
+
+          Partiendo del conocido entinema, ya utilizado en la última clase,
+
+          "Todo hombre es mortal, Socrates es hombre, luego Sócrates
+          es mortal"
+
+          (cambiando a Sócrates por Adán) y de su implementación en
+          Prolog, hemos introducido de forma intuiviva (sobre el
+          ejemplo) el concepto de "árbol de resolución", como una
+          representación condensada del "proceso de
+          resolución/interpretación". En este contexto, hemos
+          ilustrado el concepto de "sustitución", que permite la
+          aplicación de una cláusula (esto es, una fórmula lóica) a
+          una pregunta concreta. El mecanismo es exactamente el mismo
+          que el usado cuando aplicamos una fórmula aritmética a la
+          resolución de un problema matemático concreto.
+
+          Brevemente, un árbol de sucesión es una estructura cuyos
+          nodos denominamos "resolventes" y que agrupan el conjunto de
+          problemas (técnicamente "objetivos") pendientes de resolver
+          en relación a una pregunta inicial. El paso de un nodo al
+          siguiente viene marcado por la aplicación de una de las
+          cláusulas del programa a uno de los objetivos de la
+          resolvente actual. Ello planteará varias cuestiones:
+
+          i) Determinar el orden en el que resolvemos los objetivos de
+             una resolvente.
+
+          ii) Determinar el orden en el que introducimos los objetivos
+              en las resolventes.
+
+          iii) Determinar el orden en el que aplicamos las cláusulas a
+               un objetivo dado en una resolvente, caso de haber
+               varias aplicables.
+
+          iv) Determinar la estrategia de construcción del árbol de
+              resolución (depth-first, breath-first, ...) en función
+              de los parámetros anteriores.
+
+          En nuestro caso, optaremos por las alternativas provistas
+          por el intérprete SWI Prolog que usamos en prácticas, y que
+          coinciden con la estrategia de resolución más común y
+          eficiente computacionalmente, aunque no con las de mayor
+          potencia de cálculo. A saber:
+
+          i) Se resuelve primero el situado más a la izquierda.
+
+          ii) Por la izquierda, en el orden en que se presentan en la
+              cola de la cláusula aplicada.
+
+          iii) En orden descendente.
+
+          iv) Depth-first, esto es, en profundidad.
+
+          Observar que i) y ii) implican que una resolvente es
+          gestionable como un LIFO, esto es, como una simple lista. En
+          conjunto definen lo que denominaremos y formalizaremos más
+          adelante como el "algoritmo de resolución SLD".
+
+          NOTA: Cualesquiera otras alternativas a i), ii), iii) y iv)
+                serían perfectamente válidas y combinables entre
+                sí. Simplemente definirían otro "algoritmo de
+                resolución" diferente.
+
+III. El Intérprete Lógico (pag. 79).
+
+6. Conceptos fundamentales (pag 81)
+
+   6.1 Objetos en programación lógica (pag 81)
+
+       Un término compuesto no es sino un árbol (o sea, un "tipo" en
+       sentido estricto, tal y como ocurre también en programación
+       imperativa y funcional), representable por tanto mediante una
+       "firma" que refleja la raíz del árbol (denominado "funtor") y
+       el número de sus argumentos (denominado "aridad"). En este
+       sentido, una constante no es más que un término compuesto de
+       aridad 0, esto es, sin hijos.
+
+       Un término compuesto puede representar bien un "predicado"
+       (cuando asocia un significado lógico) o una "función" (cuando
+       no es más que una argucia para agrupar otros objetos como
+       argumentos), algo perfectamente identificable por el contexto
+       en el que se sitúa en lo que denominaremos "programa lógico".
+
+   6.2 Programas lógicos, cláusulas y preguntas (pag. 83)
+
+       Los términos compuestos (predicados y/o funciones) definen
+       "atomos", esto es, los componentes más simples de lo que será
+       un programa lógico. Un "literal" es un átomo o su negación, y
+       las combinaciones de literales mediante operadores lógicos se
+       denominan "cláusulas" (también denominadas "reglas",
+       "producciones", "fórmulas", "tautologías", ...). Un conjunto de
+       cláusulas conforman un "programa lógico".
+
+       Hemos de recordar que las fórmulas lógicas (esto es, las
+       cláusulas) están siempre cuantificadas universalmente en lo que
+       a sus variables se refiere, esto es, las variables de una
+       cláusula son locales a la propia cláusula ... siempre.
+
+       En este punto, un programa lógico tendría (puede demostrarse
+       formalmente) la potencia de una Máquina de Turing (supuesta
+       disponible una memoria infinita), pero los costes de
+       tratamiento e interpretación son inasumibles a día de hoy. La
+       alternativa es limitar de alguna manera la estructura de las
+       cláusulas. Así, nos contentaremos con la consideración de lo
+       que denominamos "cláusulas de Horn", grosso modo reglas que
+       separan una "cabeza" y una "cola" mediante una implicación. La
+       cabeza es un (solo) literal positivo (átomo) siempre, y la cola
+       está formada por un conjunto de literales conectados por
+       operadores conjuntivos o disyuntivos. Si la cabeza es un
+       "false", la cláusula se denomina pregunta. Si la cola es un
+       "true", la cláusula se denomina "hecho" (o "axioma", o "caso
+       trivial").
+
+       Ello limitará nuestra expresividad, forzándo la consideración
+       de argucias para solventar esta reducción de capacidades, pero
+       en compensación permitirá un tratamiento extremadamente
+       efectivo del "proceso de resolución" de una pregunta en un
+       programa dado.
+
+Objetivos de la próxima clase
+=============================
+
+Formalizaremos los conceptos de "sustitución", "instancia",
+"unificación", "retroceso" y "resolución" que hemos introducido y/o
+usado de forma natural en las últimas clases. Abordaremos además
+situaciones novedosas, como la construcción de árboles con resolventes
+conteniendo más de un objetivo.
+
+Podremos entonces formalizar también las nociones de "significado de
+un programa lógico" y determinar cuando un programa es "correcto" y/o
+"completo", algo determinante en un paradigma de programación en el
+que los programadores no avezados a menudo implementan programas con
+una capacidad de cálculo no prevista (por exceso o por defecto).
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

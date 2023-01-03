@@ -1,0 +1,204 @@
+Objetivo
+========
+
+Introducir la definición dinámica de operadores como estrategia para
+mejorar la declaratividad del lenguaje. Para ello necesitaremos
+identificar los parámetros que determinan de forma efectiva su
+comportamiento y uso. 
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+IV. Programación Lógica (pag. 145).
+
+13. Los operadores (pag. 197)
+
+    Trataremos el caso de los operadores binarios infijos, y el de los
+    unarios prefijos e infijos.
+
+    13.1 Definición de operadores (pag. 198)
+
+         Intuitivamente, un OPERADOR no es otra cosa que una
+         estructura que liga dos sintagmas en un lenguaje dado
+         (natural o artificial). Ejemplos de operadores son los
+         aritméticos (que ligan expresiones aritméticas), pero también
+         las "key-words" de los lenguajes artificiales.
+
+         En los lenguajes naturales (o humanos) los operadores serían
+         los determinantes, artículos, conjunciones, disyunciones y
+         preposiciones. Frente a la nula atención que muchos sistemas
+         de recuperación de información prestan a este tipo de
+         estructuras (técnicas Bag-of-Words, BoWs), consideremos las siguientes
+	 frases:
+
+               El presidente de la república
+
+               La república del presidente
+
+         cuyo significado es distinto, pero que se reducen al mismo
+	 BoWs si eliminamos estos operadores naturales.
+
+         Para fijar el comportamiento de un nuevo operador, es necesario
+	 fijar tres parámetros:
+
+               i) Su NOTACIÓN, esto es, su representación física.
+
+               ii) Su PRIORIDAD, esto es, el orden de evaluación del
+	           subárbol que etiqueta, frente a otros subárboles
+	           etiquetados por otros OPERADORES DIFERENTES dentro
+	           de la estructura sintáctica global que estamos
+	           analizando.
+
+               iii) Su PRIORIDAD, esto es, el orden de evaluación del
+	           subárbol que etiqueta, frente a otros subárboles
+	           etiquetados por el MISMO OPERADOR dentro de la
+	           estructura sintáctica global que estamos
+	           analizando.
+
+         PRIORIDAD
+	 ---------
+
+         Es un número en el intervalo [1, 200]. Cuanto más bajo el
+	 número, mayor la prioridad del operador respecto a otros
+	 OPERADORES DIFERENTES.
+
+         ASOCIATIVIDAD
+	 -------------
+
+         Distinguiremos entre asociatividad por la izquierda y por la
+         derecha, según la evaluación de expresiones en las que haya
+         secuencias del MISMO OPERADOR se realice desde la izquierda o
+         desde la derecha.
+
+         Para definir esta asociatividad, seguiremos un sencillo
+         protocolo de representación, en el que:
+
+              f indicará la posición del operador respecto a sus operandos.
+
+              x indicará un operando cuyo operador principal (el
+	        situado en la raíz del árbol sintáctico del operador)
+	        tiene, estrictamente, MENOR PRIORIDAD que la del
+	        operador indicado por f.
+
+              y indicará un operando cuyo operador principal (el
+	        situado en la raíz del árbol sintáctico del operador)
+	        tiene MENOR o IGUAL PRIORIDAD que la del operador
+	        indicado por f.
+
+         de este modo tendremos que, en el caso BINARIO:
+
+              xfy indicará que f es asociativo por la derecha.
+
+              yfx indicará que f es asociativo por la izquierda.
+
+              xfx indicará que f no es asociativo.
+
+         mientras que en el caso UNARIO, tendremos que:
+
+              fx se refiere a la no asociatividad de un operador
+	         unario prefijo.
+
+              fy se refiere a la asociatividad derecha de un operador
+	         unario prefijo.
+
+              xf se refiere a la no asociatividad de un operador
+	         unario postfijo.
+
+              yf se refiere a la asociatividad izquierda de un operador
+	         unario postfijo.
+
+         Formalmente, la definición de un nuevo operador se realiza
+         mediante la cláusula:
+
+              :- op(Prioridad, Asociatividad, Notación).
+
+         donde la Notación puede expresarse de forma individual (entre
+         comillas) o bien en forma de lista cuando nos referimos a un
+	 conjunto de operadores compartiendo asociatividad y prioridad.
+
+         Ejemplo:
+         -------
+
+         La declaración siguiente
+
+              :- op(600, xfy, "\").
+
+         define el operador que hemos usado en clases anteriores para 
+         representar las diferencias de listas, pero también podríamos
+         haber usado
+
+              :- op(600, xfy, [\]).
+
+         En caso de utilizar una declración del tipo
+
+              :- op(600, xfy, [\, @]).         
+              
+         los operadores "\" y "@" compartirían asociatividad y prioridad ...
+         razón por la cual deberíamos estar seguros de no compartir el
+	 mismo espacio expresivo. Esto es, no deberían ser contiguos en una
+	 misma cláusula.
+
+    13.2 Operadores y potencia expresiva (pag. 202)
+
+         Ilustramos el impacto de la definición de operadores en el
+         lenguaje mediante el conocido problema de la Analogía,
+         descrito en detalle en el Ej. 13.2.1 del texto indicado, pero
+         también en el Ej. 71 (pag. 30) del texto complementario
+
+         Documentos y Enlaces > Material de estudio > Prolog > PrologIA.pdf
+
+         de la entrada MOOVI de la asignatura.
+
+         El problema de la Analogía es elegantemente resuelto mediante
+	 el uso de operadores que permiten tanto mejorar su
+	 mantenabilidad, deduciendo de forma automática las relaciones
+	 entre figuras a partir de sus denominaciones, como su
+	 comprensión por parte del lector inexperto.
+
+         NOTA: Con los elementos considerados, formados por 2 figuras
+               concéntricas, el operador "dentro_de" puede definirse
+               como no asociativo (xfx) ... pero si los elementos
+               estuviesen formados por 3 figuras concéntricas, si
+               sería necesario definirlo bien como "xfy" (asociativo
+               derecha) bien como "yfx" (asociativo izquierda).
+
+         NOTA: Si un operador no necesita ser asociativo, debería
+               identificarse como "xfx", pero una definición "xfy" o
+               "yfx" no afectaría negativamente a su interpretación
+               ... simplemente porque si no necesita ser asociativo,
+               su consideración como asociativo derecha o izquierda
+               simplemente no tendrá oportunidad de aplicarse en la
+               práctica.
+
+               Al respecto, todos los operadores de este ejemplo, si
+	       los elementos son 2 figuras concéntricas, podrían
+	       definirse como "xfx" ... esto es, como no asociativos.
+         
+Objetivos de la próxima clase
+=============================
+
+Abordaremos el tratamiento de Gramáticas de Cláusulas Definidas (en
+inglés Definite Clause Grammars, DCGs). Se trata de un formalismo
+gramatical funcionamente operativo. En otras palabras, permiten
+implementar gramáticas que no solo describen un lenguaje, sino que
+además pueden usarse directamente como herramienta operativa para su
+análisis.
+
+Desde un punto de vista práctico, pueden entenderse como una
+aplicación inmediata del concepto de diferencias de listas.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

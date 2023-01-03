@@ -1,0 +1,160 @@
+Objetivo
+========
+
+La clase de hoy ha sido una rápida introducción a los conceptos
+fundamentales de la Lógica Computacional, concretamente en lo que se
+refiere al Cálculo de Proposiciones y también al más potente Cálculo
+de Predicados. La mayoría de estos conceptos son ya conocidos de forma
+bien explícita o bien implícita por los alumnos, y se trata de
+identificarlos formalmente como recursos en la construcción del motor
+computacional que define al Paradigma de Programación Lógico. Estamos,
+por tanto, fijando un vocabulario minimal para abordar su descripción.
+
+La temática (Paradigma de Programación Lógico) es totalmente novedosa
+para los estudiantes y, sobre todo, no guarda ningún tipo de relación
+con el Paradigma de Programación Imperativo (o Procedural) que han
+conocido hasta ahora (Java, C++, Ada, Perl, ...). Es por ello
+necesario, antes de iniciar las prácticas e incluso la definición del
+propio paradigma, cubrir el objetivo fijado. En consecuencia, la
+simplicidad de la tarea no debe distraernos de su importancia.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+II. Lógica: Conceptos Fundamentales (pag. 23).
+
+3. Cálculo de Proposiciones (pag 25)
+
+  Recuerda el concepto de proposición como fórmula lógica en la que
+  las variables solo pueden ser booleanas (True ó False). De este
+  modo, manejamos expresiones formadas por la combinación de este tipo
+  de variables ligadas por los operadores lógicos tradicionales (Tabla
+  3.1), sobre los que podemos aplicar las prioridades de evaluación de
+  todos conocidas (ítem 2., pag. 31).
+
+  En tanto que fórmulas, como en el caso aritmético, solo nos
+  interesan aquellas cuya evaluación es siempre True,
+  independientemente del valor de las variables manejadas (ver Tabla
+  3.4). Esto es, estamos interesados en Tautologías.
+
+  Como veremos más adelante, un Programa Lógico, no es sino un
+  conjunto de tautologías que definen las propiedades que deben
+  cumplir las soluciones del problema a resolver. Ello supone una
+  diferencia notoria con el Paradigma de Programación Procedimental (o
+  Imperativo) donde, en contraposición, el programador ha de detallar
+  cada una de las acciones a realizar para encontrar esas
+  soluciones. Obviamente, es mucho más sencillo lo primero que lo
+  segundo, dado que será el motor computacional lógico el que se
+  encargará de encontrar esas soluciones a partir de las propiedades
+  descritas. Es esa la razón por la cual la mayoría de los textos de
+  Programación Lógica hacen referencia desde las primeras páginas al
+  hecho de que
+
+  "unas pocas reglas lógicas suelen ser suficientes para resumir
+   centenares o miles de páginas de código imperativo"
+
+  Para ello, como veremos, un Intérprete (o Motor) Lógico necesitará
+  determinar (probar) el caracter tautológico de un tipo de fórmula
+  lógica particular, que denominaremos Pregunta. Esto es, un
+  intérprete lógico no es otra cosa que un demostrador automático de
+  teoremas.
+
+  Tal tarea (determinar si una expresión lógica es una tautología)
+  puede abordarse de formas diversas, la más simple es el cálculo de
+  sus Tablas de Verdad (Tabla 3.2), pero que presenta un problema
+  mayor: su talla crece exponencialmente en relación al número de
+  variables manejadas, descartándolas como recurso operacional.
+
+  Una forma alternativa es la definición de un conjunto de axiomas (o
+  Leyes de Equivalencia) y de un conjunto de Reglas de Inferencia que
+  permitan derivar teoremas a partir de axiomas o de teoremas
+  previamente probados. Un ejemplo de Axiomas es el definido en 3.2.1
+  y uno de reglas de inferencia es el descrito en 3.2.2. En conjunto,
+  ello nos permitirá definir un sencillo intérprete lógico (de hecho,
+  un demostrador de teoremas por reducción al absurdo), asimilable al
+  que utilizaremos en las clases prácticas (SWI Prolog).
+
+4. Cálculo de Predicados    (pag 43)
+
+  Extiende el dominio de las variables en programación lógica, de
+  manera a permitir otros valores (arbitrarios), además de los simplemente
+  booleanos que se consideraban en Cálculo de Proposiciones.
+
+  Dado que ahora el rango de las variables no es solo booleano, es
+  necesario disponer de herramientas para su manipulación como
+  conjuntos. Hablamos de los cuantificadores, de los que nos fijaremos
+  en el universal (4.3.2) y el existencial (4.3.3), que se relacionan
+  de una forma simple (4.3.4). La cuantificación no tiene porque
+  producirse solo sobre rangos finitos, sino que también pueden
+  hacerlo sobre rangos infinitos (4.3.5).
+
+  Resulta en extremo interesante la equivalencia (4.3.4) entre
+  cuantificadores universales y existenciales ya que, intuitivamente,
+  siempre es más facil encontrar que un predicado es falso ... y no
+  tenr que demostrar que todo un rango de predicados es cierto. Es una
+  artimaña de la que echaremos mano a menudo en la descripción del
+  Motor Lógico.
+
+  Un rango de variables es asimilable al concepto de "tipo" utilizado
+  en programación imperativa. De hecho, en cualquier paradigma de
+  programación, no es sino un "conjunto de objetos" considerado como
+  tal por el programador en base a sus propias apreciaciones y/o
+  comportamiento (propiedades).
+
+Objetivos de la próxima clase
+=============================
+
+Entraremos en la relación entre Prolog y Cálculo de Predicados
+(Capítulo 5).
+
+Esto es, veremos como funciona nuestro pequeño motor lógico sobre un
+ejemplo muy simple. Ello nos permitirá luego introducir formalmente,
+sobre una base más intuitiva, la noción de Programa Lógico (6.1, 6.2)
+así como dos conceptos fundamentales en el Paradigma de Programación
+Lógico: Unificación (6.3) y Resolución (6.4).
+
+Todo ello definirá el estilo de programación en este paradigma,
+marcando la diferencia con los lenguajes imperativos de una manera
+drástica. Valga decir, por ejemplo, que en programación lógica no
+existen como tal los conceptos de asignación (de variables), las
+estructuras de control (IF, UNLESS, UNTIL, CASE, ...) ni los bucles
+(FOR, WHILE, ...). Es más, ni siquiera se diferencia una "zona de
+declaraciones", siempre presente en el caso imperativo ... sino que
+los tipos son inferidos y verificados de modo automático por el
+mecanismo de unificación y que también asume las funciones de lo que
+se entendería en programación procedural como asignación de variables
+y verificación de igualdades.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+
+El soporte didáctico introduce un número de conceptos mayor que el
+aquí referido (p.ej. los Cuantificadores Numéricos de 4.3.5) o el
+concepto de Estado (3.2.1 en proposiciones y 4.1 en predicados). La
+actual situación nos obliga, forzosamente, a abreviar contenidos.
+
+En este sentido, los conceptos comentados en esta guía se corresponden
+por tanto a los impartidos en clase, y proporcionarán una base
+suficiente para los contenidos que veremos en el resto del
+cuatrimestre. Los conceptos no explícitamente introducidos en clase, y
+por tanto no comentados aquí, se corresponden bien a nociones que son
+extrapolables de las nociones clásicas de programación y que el alumno
+ya ha manejado (como los ya comentados de Cuantificación Numérica o de
+Estado) o bien de importancia solo relativa como referencia
+comparativa a la lógica que hemos definido y nos servirá de base
+futura (Leyes de Equivalencia y Reglas de Inferencia). Es el caso de
+los operadores lógicos cand y cor, junto con las Leyes de Equivalencia
+alternativas definidas en 4.2.
+

@@ -1,0 +1,195 @@
+Objetivo
+========
+
+Introducir formalmente los conceptos de "sustitución", "instancia",
+"unificación" y "unificador más general" (UMG) ... situando su
+utilización sobre ejemplos prácticos de resolución de preguntas en
+programas lógicos.
+
+Aprovechamos también para ilustrar con un ejemplo concreto, las
+ventajas del uso de la construcción en profundidad (depth-first) del
+árbol de resolución.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+III. El Intérprete Lógico (pag. 79).
+
+6. Conceptos fundamentales (pag 81)
+
+   6.3 Concepto de unificación: sustituciones e instancias
+
+       SUSTITUCIONES
+       -------------
+
+       La noción de "sustitución" captura (en el paradigma de
+       programación lógica) el mecanismo de la "asignación de
+       variables" clásica en programación imperativa, pero va más
+       allá. En concreto y para ser exactos, usaremos las
+       sustituciones para, mediante su aplicación a las variables
+       contenidas en una cláusula, obtener la expresión de la
+       veracidad de una relación lógica particular a partir de la
+       veracidad de una relación lógica más general incluida en el
+       programa. De este modo pasaremos de un término dado a una
+       "instancia" de dicho término, por aplicación a éste de una
+       sustitución dada. 
+
+       En concreto, sobre el concepto de sustitución es posible
+       introducir una definición formal recursiva (penúltimo párrafo
+       pag. 85) de la semántica declarativa de las cláusulas de un
+       programa y, por tanto, de un programa (el significado/semántica
+       de un programa, en cualquier paradigma de programación, viene
+       dado por el conjunto de posibles respuestas a las
+       preguntas/entradas de dicho programa).
+
+       NOTA: Es importante subrayar que en programación lógica (como
+       en programación funcional) las variables son siempre punteros
+       ... cuando en el caso imperativo el uso de tales objetos es, en
+       el mejor de los casos, una simple opción del programador.
+
+       UNIFICACIÓN
+       -----------
+
+       A partir del concepto de sustitución, introducimos formalmente
+       el de "unificación" de dos términos, entendido como la
+       existencia de una sustitución (denominada "unificador") que
+       aplicada a ambos les hace iguales. De entre los posiblemente
+       infinitos unificadores entre dos términos lógicos (en esencia,
+       árboles), nos interesan siempre aquellos que suponen un menor
+       número de restricciones ... esto es, los "unificadores más
+       generales" (UMGs).
+
+       El papel de los UMGs en el proceso de resolución/interpretación
+       lógica es esencial y marcará el estilo de programación
+       Prolog. Se trata del mecanismo por el cuál, fijada una
+       pregunta/objetivo, localizamos en el programa la/s cláusula/s
+       susceptibles de ser aplicadas en su resolución. En concreto, se
+       aplicarán aquellas cláusulas cuya cabeza unifique con la
+       pregunta/objetivo en cuestión.  Además, se considerará un
+       unificador en concreto (el MGU) para "trasladar" la información
+       de la cabeza de la cláusula a su cola ... siguiendo exactamente
+       el mismo procedimiento considerado cuando aplicamos una fórmula
+       aritmética a la resolución de un problema numérico.
+
+       ALGORITMO DE UNIFICACIÓN DE ROBINSON
+       ------------------------------------
+
+       Es necesario, por tanto, definir un algoritmo de cálculo del
+       UMG entre dos términos cualesquiera. Entre las alternativas
+       disponibles, introducimos el "algoritmo de Robinson".
+
+       Grosso modo, el "algoritmo de Robinson" es un algoritmo de
+       "pattern matching" aplicable cuando los términos a unificar no
+       presentan ciclicidades, esto es, cuando ninguno de los dos
+       términos en juego forma parte de la estructura del otro. Si
+       tales ciclos estuvieran presentes, el algoritmo simplemente
+       devuelve "fail". Con ese objetivo, incluye de forma específica
+       lo que denominamos "occurrence check", más conocido en español
+       como el "test de ciclicidad" en unificación. 
+       
+       NOTA: Ello no quiere decir que no puedan unificarse términos, cuando
+             están en juego ciclicidades. Ver, por ejemplo,
+
+                  Manuel Vilares, Miguel A. Alonso and David Cabrero,
+                  An Operational Model for Parsing Definite Clause
+                  Grammars with Infinite Terms, in A. Lecomte,
+                  F. Lamarche and G. Perrier (eds.), Logical Aspects
+                  of Computational Linguistics, volume 1582 of Lecture
+                  Notes in Artificial Intelligence, pp. 212-230,
+                  Springer-Verlag, Berlin-Heidelberg-New York,
+                  1999. ISSN 0302-9743 / ISBN 3-540-65751-7.
+
+             simplemente quiere decir que Robinson opta por no
+             considerar estos casos, lo cuál le permite definir un
+             algoritmo de unificación que aunque limitado, resulta muy
+             ajustado en lo que al uso de recursos de memoria y (por
+             tanto) computacionalmente eficiente (veloz).
+
+       NOTA: El intérprete utilizado en prácticas (SWI Prolog) aplica
+             el "occur check", pero esto no siempre ha sido así. De
+             hecho, no todos los intérpretes lo aplican a día de
+             hoy. La razón no es tanto la complejidad de su
+             implementación, bien sencilla, sino el coste
+             computacional que representa su puesta en marcha en un
+             entorno en el que cada operación de unificación requiere
+             a menudo no una sino varias aplicaciones de este test de
+             ciclicidad. La complejidad temporal acumulada puede
+             llegar, en estas condiciones, a cuestionar el interés de
+             su consideración si no se cuenta con los recursos
+             computacionales apropiados.
+
+       VENTAJAS DE CONSTRUIR EN PROFUNDIDAD LOS ÁRBOLES DE RESOLUCIÓN
+       --------------------------------------------------------------
+
+       Finalmente, hemos comentado sobre la base del Ejemplo 6.6.1
+       (pag. 101) la utilidad y ventajas de la construcción en
+       profundidad (depth-first) de los árboles de resolución. En
+       concreto, este tipo de construcción permite una gestión óptima
+       de los recursos de memoria necesarios a la interpretación
+       lógica.
+
+       En la práctica, una vez hemos finalizado la exploración
+       de una rama (esto es, hemos alcanzado una hoja del árbol),
+       podemos liberar toda la memoria utilizada en dicha rama en el
+       intervalo que va desde la hoja que hemos alcanzado hasta el
+       primer nodo no totalmente explorado.
+
+       Ello se refleja claramente en el ejemplo, re-utilizando los
+       índices de renombramiento cuando manejamos variables situadas
+       al mismo nivel del árbol.
+
+       Observar que si, por ejemplo, hubiésemos considerado una
+       construcción del árbol de resolución en anchura (breadh-first)
+       tal re-utilización no hubiera sido posible. La razón es que en
+       este caso, la re-utilización de variables en un mismo nivel no
+       es posible porque podrían ser necesarias para construir nuevos
+       nodos en descendientes de los hermanos situados a la
+       izquierda del actual.
+
+       En términos de memoria, este tipo de consideraciones son de un
+       impacto brutal en un proceso de interpretación lógica. En
+       consecuencia, las estrategias de construcción en profundidad
+       (depth-first) se han hecho enormemente populares. Es el caso del
+       utilizado en nuestras clases de prácticas (SWI-Prolog).
+       
+
+Objetivos de la próxima clase
+=============================
+
+Formalizaremos el concepto de "retroceso" y "resolución" que hemos
+introducido y/o usado de forma natural en las últimas
+clases. Abordaremos además situaciones novedosas, como la construcción
+de árboles con resolventes conteniendo más de un objetivo.
+
+Podremos entonces determinar cuando un programa es "correcto" y/o
+"completo", algo determinante en un paradigma de programación en el
+que los programadores no avezados a menudo implementan programas con
+una capacidad de cálculo no prevista (por exceso o por defecto).
+
+Reseñas históricas
+==================
+
+John Alan Robinson (1930 – 2016) fue un filósofo y matemático inglés,
+cuyos trabajos han sido claves en el desarrollo de la "demostración
+automática de teoremas", objetivo básico para la consecución de los
+primeros intérpretes lógicos. Fundador y editor de la revista "Journal
+of Logic Programming", una de las más prestigiosas y veteranas en el
+ámbito de las Ciencias de la Computación, y acreedor de una
+interminable lista de honores científicos; una de sus aportaciones más
+conocidas es el del algoritmo de unificación que recibe su nombre.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

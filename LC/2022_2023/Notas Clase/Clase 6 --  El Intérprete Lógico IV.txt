@@ -1,0 +1,160 @@
+Objetivo
+========
+
+Introducir el predicado "corte" ("cut" en inglés) como estructura de
+control en programación lógica, tanto formalmente como en la
+práctica. Introducir el predicado "fail". 
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+III. El Intérprete Lógico (pag. 79).
+
+7. Control en Prolog: el Corte (pag. 111)
+
+   7.1 Semántica operacional
+
+       La notación utilizada para representarlo es el símbolo "!". El
+       corte es un predicado "no lógico" (o "extrá lógico"), un
+       término que se aplica a un conjunto de predicados cuyo interés
+       no está en su significado lógico sino en el efecto colateral
+       que su ejecución provoca en el árbol de resolución.
+
+       La Def. 7.1.1 introduce el corte desde el punto de vista
+       operacional, esto es, describe exactamente la forma en la que
+       actúa sobre el proceso de resolución, lo que permite su
+       implementación como mecanismo de control en el intérprete.
+
+       De una forma más simple, el corte es un predicado que poda
+       todas las ramas sin explorar entre el nodo de la resolvente en
+       el que aparece y aquél en el que se ejecuta.
+
+       En la práctica, un corte actúa como un semáforo cuyas
+       condiciones de control vienen dadas por los términos que lo
+       preceden en la cláusula en la que aparece. 
+
+       CORTE VERDE
+       -----------
+
+       Un corte se dice verde cuando su eliminación de un predicado NO
+       afecta a su corrección. Esto es, solo afecta al número de
+       respuestas a una potencial pregunta (siempre menos cuando se
+       incluye al corte).
+
+       Un ejemplo de corte verde es el incluido en la implementación
+       siguiente del predicado miembro/2:
+
+           miembro(Car, [Car|_]) :- !.
+	   miembro(Elem, [_|Cdr]) :- miembro(Elem, Cdr).
+
+       El corte introduce aquí determinismo en las respuestas. Así,
+       ante la pregunta
+
+           :- miembro(1,[1,2,1]).
+
+       obtendremos solo una respuesta (true), que serían dos (true's)
+       si eliminásemos el corte.
+
+       En este punto, hemos de tener en cuenta que el determinismo
+       introducido afecta a cualquier pregunta con más de una
+       respuesta ... y no solo a la eliminación de respuestas
+       duplicadas como ese el caso que venimos de comentar. Así, por
+       ejemplo, a la pregunta:
+
+           :- miembro(X,[1,2,3]).
+
+       solo obtendremos como respuesta X=1 si no eliminamos el corte
+       ... cuando quizás nos interesaría obtener las tres posibles:
+
+           X=1           X=2          X=3
+
+       algo que sí tendríamos una vez eliminado el corte.
+
+       ¿ qué hacer entonces ?
+
+       Pues dependerá del tipo de uso que pretendamos dar al programa
+       susceptible de inclusión de un corte verde.
+
+       CORTE ROJO
+       ----------
+
+       Un corte se dice verde cuando su eliminación de un predicado SI
+       afecta a su corrección. Esto es, cuando eliminamos el corte, el
+       conjunto de respuestas a una potencial pregunta puede incluir
+       incorrecciones.
+
+       Muestras ilustrativas de corte rojo son los ejemplos de la
+       unión de conjuntos 
+  
+           union(Conj,[],Conj).
+           union(Conj,[Car|Cdr],U_Cdr) :-member(Car,U_Cdr),
+	                                 !,
+                                         union(Conj,Cdr,U_Cdr),
+           union(Conj,[Car|Cdr],[Car|U_Cdr]) :- union(Conj,Cdr,U_Cdr).
+
+       y de la intersección de conjuntos:
+
+           inter([],Conj,[]).
+	   inter([Car|Cdr],Conj,[Car|I_Cdr]) :- member(Car,Conj),
+	                                        !,
+                                                inter(Cdr,Conj,I_Cdr).
+           inter([_|Cdr],Conj,I_Cdr) :- inter(Cdr,Conj,I_Cdr).
+
+       asumiendo como conjunto cualquier lista sin elementos repetidos.
+
+       NOTA: Los predicados incluídos en los apuntes para la unión/3
+             (10.3.2, pag. 161) e intersección/3 de conjuntos (10.3.4,
+             pag. 162) tienen el corte mal situado, y las cláusulas mal
+	     ordenadas.
+
+8. La Negación (pag. 127)
+
+   8.1 El predicado fail
+
+       Formalmente fail es un predicado que falla en cuanto se ejecuta
+       y, por tanto, en ese momento se fuerza un retroceso en el árbol
+       de resolución.
+
+       NOTA: El fail no debe entenderse como un "no", sino como un
+             fracaso en la búsqueda de una solución, como un callejón
+             sin salida que nos obliga a buscar (vía retroceso) una
+             salida alternativa a la pregunta formulada.
+
+       el interés del predicado fail, en uso aíslado, es limitado. Su
+       real interés será su utilización en combinación con el
+       corte. Es lo que se conoce como la "combinación !, fail", que
+       será fundamental en la definición de la "negación por fallo".
+
+Objetivos de la próxima clase
+=============================
+
+Abordaremos el concepto y definición de "negación por fallo", así como
+las condiciones de uso de forma a evitar incongruencias
+declarativo-procedurales.
+
+También introduciremos la noción de "evaluación perezosa" (lazy
+evaluation) como mecanismo para evitar incongruencias
+declarativo-procedurales ligadas a la matizaciones introducidas en el
+orden de tratamiento de las cláusulas en un programa y de los términos
+de una cláusula, en el proceso de resolución. En este punto, nos referiremos
+al texto PrologIA.pdf (Sección 6, pag. 21) de la carpeta
+
+   Documentos y Enlaces > Material de estudio > Prolog
+
+y no al Capítulo 9 (pag. 139) del texto habitual.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

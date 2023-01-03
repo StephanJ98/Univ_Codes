@@ -1,0 +1,168 @@
+Objetivo
+========
+
+Introducir la NEGACIÓN POR FALLO, identificando las condiciones de uso
+que garantizan su corrección y previenen la generación de
+incongruencias declarativo/procedurales.
+
+Introducir los principios básicos de la EVALUACIÓN PEREZOSA como
+mecanismo de prevención de incongruencias declarativo/procedurales, en
+concreto en los casos cuyo origen es un uso inadecuado de la
+recursividad izquierda y de la negación por fallo en implementaciones
+de la resolución SLD.
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+III. El Intérprete Lógico (pag. 79).
+
+8. La Negación (pag. 127)
+
+   8.2 La negación por fallo (pag. 130)
+
+       Es el ejemplo más popular de aplicación de la combinación "!,
+       fail" como medio de expresión del "descarte" de un procedimiento
+       inductivo.
+
+       NOTA: Por abuso del lenguaje, no pocas veces se identifica
+             "fallo" (o "fail") con "falso" (o "false"), cuando esto no es
+             así.
+
+             "Fallar" en un proceso inductivo no es otra cosa que
+	     agotarlo sin éxito. Esto es, la resolución "falla" en el
+	     tratamiento de una pregunta (devuelve "fail") cuando se
+	     muestra incapaz de encontrar una respuesta que la
+	     satisfaga.
+
+             Esto no quiere forzósamente decir que la pregunta se
+             corresponda a una afirmación "falsa", sino que simplemente
+             no tenemos la capacidad de probar su veracidad.
+
+             Así las cosas, un "fallo" equivale al reconocimiento de
+	     la "falsedad" de un término solo cuando estamos seguros
+	     de disponer de toda los recursos y mecanismos posibles
+	     para decidir tal "falsedad" en el proceso de resolución.
+
+      Como tal, la NEGACIÓN POR FALLO:
+
+             not(P) :- P, !, fail.
+	     not(_).
+
+      devuelve "fail" cuando la resolución no es capaz de probar la
+      veracidad de P, y "true" en otro caso.
+
+   8.3 Anomalías de la negación por fallo (pag. 132)
+
+      En el contexto descrito, una respuesta "fail" a una pregunta del
+      tipo
+
+             :- not(Objetivo).
+
+      tendrá un valor asimilable a "false" solo cuando en el momento
+      de resolverse la negación del Objetivo (esto es, cuando
+      "not(Objetivo)" es analizado en el proceso de resolución),
+      conocemos completamente la naturaleza de dicho Objetivo (o lo
+      que es lo mismo, cuando en ese momento Objetivo no incluye en su
+      estructura variables sin instanciar).
+
+      Esto es algo que se puede observar en los Ejemplos 8.3.1 y
+      8.3.2, dónde preguntas declarativamente equivalentes no solo dan
+      lugar a respuestas diferentes, sino incluso contradictorias con
+      la semántica declarativa del programa. En todos los casos, estos
+      resultados contradictorios se corresponden a procesos de
+      resolución en los que el término negado incluye en el momento de
+      su análisis en la resolvente a variables sin instanciar.
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto PrologIA.pdf, al que nos referiremos en la parte
+del texto:
+
+6. Evaluación perezosa 
+
+   En relación al tratamiento de incongruencias
+   declarativo/procedurales, el objetivo es asegurar las condiciones
+   que las evitan, mediante la gestión de los tiempos de evaluación
+   ("lazy evaluation") de los términos problemáticos. Abordamos dos
+   casos típicos:
+
+   i) Evitar ciclos de resolución derivados de la presencia de
+      recursividad izquierda en las cláusulas.
+
+   ii) Evitar la resolución de la negación por fallo mientras haya
+       variables sin instanciar en el término negado.
+
+   Para ello echaremos mano de dos predicados predefinidos: freeze/2,
+   y when/2.
+
+   Se trata de predicados extra-lógicos, siempre ciertos (true), cuyo
+   real interés es su efecto colateral sobre la estructura del árbol
+   de resolución. En concreto, su semántica operativa es la siguiente:
+
+   a) freeze(Variable, Objetivo) demora la evaluación de Objetivo
+      hasta que Variable está instanciada.
+
+   b) when(Condición, Objetivo) demora la evaluación de Objetivo
+      hasta que el término Condición se verifique.
+
+   Al respecto, el Ejemplo 62 (resp. 63 y 64) ilustran el ítem i)
+   (resp. ii) en detalle, resolviendo de forma sencilla el problema en
+   cada caso.
+
+Objetivos de la próxima clase
+=============================
+
+Introduciremos el concepto de "diferencia de listas", como estudio de
+caso del más genérico de "diferencia de estructuras". Se trata de una
+una estructura de datos que, basándose en la explotación del mecanismo
+de unificación, plantea una solución simple y efectiva a las
+operaciones más costosas sobre listas: concatenación e inserción de
+elementos en posiciones diferentes a la inicial.
+
+En la práctica ello nos permitirá reducir estas operaciones a una
+simple unificación, luego de complejidad constante y despreciable. En
+términos prácticos, esto supone una diferencia de magnitud frente a su
+tratamiento en listas clásicas, forzósamente asociada a una resolución
+recursiva.
+
+Notas históricas
+================
+
+El concepto de evaluación perezosa fue introducido por Christopher
+Wadsworth, y aplicado a los lenguajes de programación por James
+H. Morris, Daniel P. Friedman y David S. Wise.
+
+Morris obtuvo su doctorado en Ciencias de la Computación en el MIT,
+desarrollando luego sus trabajos en el ámbito de la evaluación
+perezosa cuando era Prof. en la Univ. de Berkeley. Como anécdota, es
+también co-autor del conocido algoritmo (KPM algorithm) de búsqueda de
+cadenas en texto. También formó parte del equipo original del centro
+de investigación de Xerox Palo Alto, dirigió el Information Technology
+Center de la Univ. de Carnegie Mellon y fundó el Human-Computer
+Interaction Institute en esa misma universidad. Ha sido decano del
+Carnegie Mellon School of Computer Science y del Carnegie Mellon
+Silicon Valley.
+
+Friedman es un pionero de la programación funcional, con
+contribuciones esenciales a los primeros intérpretes Lisp y, en el
+lado teórico al lambda-cálculo. En el ámbito concreto de la evaluación
+perezosa ha colaborado estrechamente con Wise, con especial impacto en
+el tratamiento de la computación (funcional) paralela.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+

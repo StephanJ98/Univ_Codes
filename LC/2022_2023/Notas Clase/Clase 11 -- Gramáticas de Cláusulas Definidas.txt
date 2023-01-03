@@ -1,0 +1,136 @@
+Objetivo
+========
+
+Introducir las Gramáticas de Cláusulas Definidas (en inglés Definite
+Clause Grammars, DCGs), como formalismo tanto descriptivo como
+operacional en lenguajes. Mostraremos además su capacidad para
+incorporar dependencis contextuales y el tratamiento de la ambigüedad,
+lo que proporciona una base adecuada para el análisis de lenguajes
+naturales (esto es, humanos). 
+
+Principales conceptos y localización en los recursos didácticos
+===============================================================
+
+En la entrada MOOVI de la asignatura, y en la carpeta
+
+Documentos y Enlaces > Material de estudio > Prolog
+
+recuperar el texto Prolog.pdf, al que nos referiremos en la parte del
+texto:
+
+IV. Programación Lógica (pag. 145).
+
+14. Lógica y Análisis Sintáctico (pag. 207)
+
+    Consideraremos primero una técnica en extremo simple pero muy poco
+    flexible, para luego extenderla mediante el uso de diferencias de
+    listas a una propuesta menos rígida. Echaremos mano para ello de un
+    lenguaje bien conocido, el de los palíndromos.
+
+    NOTA: El concepto de LENGUAGE es sinónimo del de CONJUNTO (de
+          ELEMENTOS que denominaremos PALABRAS), aunque por
+          identificación con los lenguajes humanos entendamos que se
+          trata de conjuntos cuya estructura responden a una dinámica
+          gramatical, esto es regida por un conjunto de reglas.
+
+    14.1 Un acercamiento intuitivo (pag. 208)
+
+         El apartado 14.1.1 plantea la construcción del analizador
+         sintáctico en dos pasos a partir de un "skeleton" gramatical
+	 independiente del contexto:
+
+                 P --> C P C
+		 P --> C
+		 P --> nil
+		 C --> carácter
+
+         simplemente traduciéndolo a forma de cláusulas que explotan
+	 la unificación para forzar que los carácteres en posición
+	 especular sean idénticos.
+
+         La propuesta prescinde del manejo directo de caracteres,
+         actuando directamente sobre sus posiciones en el palíndromo.
+         Ello permite capturar la dinámica concatenativa del lenguaje,
+         pero fuerza una BD extensiva en extremo rígida. Como
+         consecuencia, el analizador resultante ha de individualizarse
+         para cada palíndromo.
+
+         NOTA: BD EXTENSIVA es la que implementa el diccionario del
+               lenguaje.
+
+               BD INTENSIVA es la que implementa el conjunto de reglas
+               sintácticas del lenguaje.
+
+    14.1 Una técnica flexible (pag. 211)
+
+         Si bien la estrategi de traducir el "skeleton" gramatical
+	 independiente del contexto, es la misma que la descrita en el
+	 apartado anterior, aquí la dinámica concatenativa del
+	 lenguaje se regula de forma natural a partir de una
+	 interpretación de las posiciones de los caracteres en
+	 términos de diferencias de listas.
+
+         Ello permite abstraer la defnición de la BD extensiva de las
+	 posiciones de los caracteres en el palíndromo a analizar,
+	 permitiendo la generación de DCGs no limitadas al tratamiento
+	 de palíndromos concretos.
+
+    EJEMPLOS: Podéis encontrar el código referido a los palíndromos en
+              ambos casos en 
+     
+              Documentos y Enlaces > Material de prácticas > Prolog > DCGs
+
+              además de una pequeño ejemplo para un analizador de un
+	      pequeño conjunto del español, con atención a las congruencias
+	      de número y género.
+
+Notas históricas (https://es.qaz.wiki/wiki/Definite_clause_grammar#History)
+================
+
+La historia de los DCG está estrechamente relacionada con la historia
+de Prolog, y la historia de Prolog gira en torno a varios
+investigadores tanto en Marsella, Francia, como en Edimburgo,
+Escocia. Según Robert Kowalski , uno de los primeros desarrolladores
+de Prolog, el primer sistema Prolog fue desarrollado en 1972 por Alain
+Colmerauer y Phillipe Roussel. El primer programa Prolog fue además un
+sistema de procesamiento del lenguaje natural. Fernando Pereira y
+David Warren de la Universidad de Edimburgo también participaron en el
+desarrollo inicial de Prolog.
+
+Colmerauer había trabajado anteriormente en un sistema de
+procesamiento de idiomas llamado Q-systems que se usaba para traducir
+entre inglés y francés. En 1978, Colmerauer escribió un artículo sobre
+una forma de representar gramáticas llamadas "gramáticas de
+metamorfosis" que formaban parte de la primera versión de Prolog
+(Marseille Prolog). En este artículo, dio una descripción formal de
+las gramáticas de metamorfosis y algunos ejemplos de programación.
+
+Fernando Pereira y David Warren, otros dos arquitectos tempranos de
+Prolog, acuñaron el término "gramática de cláusula definida" y crearon
+la notación para DCG que se usa en Prolog hoy, señalando que las DCGs
+son un caso especial de las gramáticas de metamorfosis de
+Colmerauer.
+
+Pereira, Warren y otros pioneros de Prolog escribieron más tarde sobre
+varios otros aspectos de las DCGs ("Parsing as deduction"). Pereira
+también colaboró ​​con Stuart M. Shieber en un libro llamado "Prolog and
+Natural Language Analysis", que pretendía ser una introducción general
+a la lingüística computacional utilizando la programación lógica.
+
+Objetivos de la próxima clase
+=============================
+
+Abordarmos la utilización de los denominados PREDICADOS DE
+MEMORIZACIÓN, que permitirán a un programa la introducción de nuevas
+cláusulas o el borrado de otras. Esto es, nos permitirán gestionar el
+conocimiento de nuestro universo de form dinámica. Es lo que
+comunmente conocemos como APRENDIZAJE AUTOMÁTICO.
+
+Advertencia
+===========
+
+El presente documento no es sino una simple guía a los contenidos
+descritos en el soporte didáctico indicado, sin pretender entrar en el
+detalle que sí está considerado en áquel y al que ha de remitirse el
+alumno para una información completa.
+
