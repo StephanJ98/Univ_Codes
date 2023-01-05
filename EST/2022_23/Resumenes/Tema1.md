@@ -1,4 +1,4 @@
-# Estatística Descritiva con R 
+# Estatística Descritiva con R
 
 ## Índice
 
@@ -78,24 +78,24 @@ de la variable y el número total de observaciones $N$. $$\overline{X}=\frac{\su
 > Para datos agrupados se toman como $x_{i}$ las marcas de clase.
 
 ### *Propiedades*:
-1. $ \sum_{i=1}^k (x_{i} - \overline{x})n_{i} = 0 $.
-2. **Teorema de König:** $ min_{c}\sum_{i=1}^k (x_{i} - c)^2 n_{i} = \sum_{i=1}^k (x_{i}-\overline{x})^2 n_{i} $.
-3. Linealidad de la media: dados $a,b \in \real$ e $Y = a + bX$ se verifica $\overline{y}=a+b\overline{x}$.
-4. $min(x_{i})\leq \overline{X} \leq max(x_{i})$
+* $\sum_{i=1}^k (x_{i} - \overline{x})n_{i} = 0$.
+* **Teorema de König:** $min_{c}\sum_{i=1}^k (x_{i} - c)^2 n_{i} = \sum_{i=1}^k (x_{i}-\overline{x})^2 n_{i}$.
+* Linealidad de la media: dados $a,b \in \mathbb{R}$ e $Y = a + bX$ se verifica $\overline{y}=a+b\overline{x}$.
+* $min(x_{i})\leq \overline{X} \leq max(x_{i})$
 
 ### Ejemplos
 
 1. Calcula la media aritmética de los 10 primeros números naturales.
 
-> $ X=10 \\ x_{1}=1, x_{2}=2, x_{3}=3, ... ,x_{10}=10 \\  n_{i} = 1, i = 1,2,3,4,...,10 $
+> $X=10 \\ x_{1}=1, x_{2}=2, x_{3}=3, ... ,x_{10}=10 \\  n_{i} = 1, i = 1,2,3,4,...,10$
 
-$$ \overline{x} = \frac{1+2+3+...+10}{10} = \frac{55}{10} = 5.5 $$
+$$\overline{x} = \frac{1+2+3+...+10}{10} = \frac{55}{10} = 5.5$$
 
 2. Supón ahora que la ponderación de cada valor es inversamente proporcional a su valor.
 
-> $ X=10 \\ x_{1}=1, x_{2}=2, x_{3}=3, ... ,x_{10}=10 \\  w_{i} = 1, i = 1,\frac{1}{2},\frac{1}{3},\frac{1}{4},...,\frac{1}{10} $
+$X=10 \\ x_{1}=1, x_{2}=2, x_{3}=3, ... ,x_{10}=10 \\  w_{i} = 1, i = 1,\frac{1}{2},\frac{1}{3},\frac{1}{4},...,\frac{1}{10}$
 
-$$ \overline{x}_{w} = \frac{1+2*\frac{1}{2}+3*\frac{1}{3}+...+10*\frac{1}{10}}{1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+...+\frac{1}{10}} = \frac{10}{2.928968} =  3.414172 $$
+$$\overline{x}_{w} = \frac{1+2*\frac{1}{2}+3*\frac{1}{3}+...+10*\frac{1}{10}}{1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+...+\frac{1}{10}} = \frac{10}{2.928968} =  3.414172 $$
 
 ---
 
@@ -103,8 +103,8 @@ $$ \overline{x}_{w} = \frac{1+2*\frac{1}{2}+3*\frac{1}{3}+...+10*\frac{1}{10}}{1
 
 ***Cálculo de la mediana:*** 
 1. Distribuciones no agrupadas: Se observa cuál es la primera frecuencia absoluta acumulada $N_{i}$ que supera o iguala a $N/2$ distinguiéndose dos casos:
-    1. Si $ N_{i} > N/2 $ entonces $ Me = x_{i}$.
-    2. Si $ N_{i} = N/2 $ entonces $ Me = \frac{x_{i} + x_{i+1}}{2}$.
+    * Si $N_{i} > N/2$ entonces $Me = x_{i}$.
+    * Si $N_{i} = N/ $ entonces $Me = \frac{x_{i} + x_{i+1}}{2}$.
 2. Distribuciones agrupadas: `null`.
 
 ### Ejemplos
@@ -113,19 +113,19 @@ $$ \overline{x}_{w} = \frac{1+2*\frac{1}{2}+3*\frac{1}{3}+...+10*\frac{1}{10}}{1
 
 | $x_{i}$ | $n_{i}$ | $N_{i}$ |
 | :---: | :---: | :---: |
-| $1\\2\\3\\4$ | $1\\1\\1\\1$ | $1\\2\\3\\4$ |
+| $1$ <br> $2$ <br> $3$ <br> $4$ | $1$ <br> $1$ <br> $1$ <br> $1$ | $1$ <br> $2$ <br> $3$ <br> $4$ |
 |  | $N = 4$ |  |
 
-Variable discreta y como $N_{2} = \frac{4}{2}$, la mediana es $ \frac{x_{i}+x_{i+1}}{2} = 2.5$.
+Variable discreta y como $N_{2} = \frac{4}{2}$, la mediana es $\frac{x_{i}+x_{i+1}}{2} = 2.5$.
 
 2. Calcula la mediana de la siguiente tabla de frecuencias:
 
 | $x_{i}$ | $n_{i}$ | $N_{i}$ |
 | :---: | :---: | :---: |
-| $1\\2\\3\\4$ | $10\\5\\15\\10$ | $10\\15\\30\\40$ |
+| $1$ <br> $2$ <br> $3$ <br> $4$ | $10$ <br> $5$ <br> $15$ <br> $10$ | $10$ <br> $15$ <br> $30$ <br> $40$ |
 |  | $N = 40$ |  |
 
-Variable discreta y como $N_{3} > \frac{40}{2} = 20$, la mediana es $ 3 $.
+Variable discreta y como $N_{3} > \frac{40}{2} = 20$, la mediana es $3$.
 
 ---
 
@@ -138,7 +138,7 @@ Variable discreta y como $N_{3} > \frac{40}{2} = 20$, la mediana es $ 3 $.
 
 ### 2.4 - Medidas de posición no centrales: los Cuantiles
 
-Se define cuantil de orden $p$ con $ 0 < p < 1 (x_{p})$, como el valor que deja a lo sumo $pN$ observaciones a su izquierda y $(1 − p)N$ observaciones a su derecha.
+Se define cuantil de orden $p$ con $0 < p < 1 (x_{p})$, como el valor que deja a lo sumo $pN$ observaciones a su izquierda y $(1 − p)N$ observaciones a su derecha.
 
 ***Cálculo del cuantil de orden $p$ para distribuciones no agrupadas:*** Se observa cuál es la primera frecuencia absoluta acumulada $N_{i}$ que supera o iguala a $pN$ distinguiéndose dos casos:
 * Si $N_{i}>pN$ entonces $x_{p} = x_{i}$.
@@ -151,16 +151,16 @@ Se define cuantil de orden $p$ con $ 0 < p < 1 (x_{p})$, como el valor que deja 
 Son medidas que nos indican la desviación de los valores de la variable respecto de ciertas medidas de posición como la media aritmética o la mediana.
 
 * **Varianza**: De todas las medidas de dispersión absolutas respecto a la media aritmética, la varianza y su raíz cuadrada, la desviación típica son las más importantes.
-$$ s^2=\frac{\sum_{i=1}^k(x_{i}-\overline{x})^2n_{i}}{N} $$
+$$s^2=\frac{\sum_{i=1}^k(x_{i}-\overline{x})^2n_{i}}{N}$$
 
 * **Desviación típica**: Es la raíz cuadrada de la varianza:
 
-$$ s = \sqrt{s^2} = \sqrt{\sum_{i=1}^k(x_{i}-\overline{x})^2n_{i}} $$
+$$s = \sqrt{s^2} = \sqrt{\sum_{i=1}^k(x_{i}-\overline{x})^2n_{i}}$$
 
 **Propiedades de la varianza:**
-1. La varianza y la desviación típica **NUNCA** pueden ser negativas $ s^2 \geq 0, s^ \geq 0$.
+1. La varianza y la desviación típica **NUNCA** pueden ser negativas $s^2 \geq 0, s^ \geq 0$.
 2. La varianza es la medida cuadrática de dispersión óptima, ya que:
-$$ min_{c}\sum_{i=1}^k (x_{i} - c)^2 n_{i} = \sum_{i=1}^k (x_{i}-\overline{x})^2 n_{i}$$
+$$min_c\sum_{i=1}^k (x_{i} - c)^2 n_{i} = \sum_{i=1}^k (x_{i}-\overline{x})^2 n_{i}$$
 3. La varianza es igual al momento de segundo orden respecto al origen menos el de primer orden elevado al cuadrado.
 4. Si en la distribución de frecuencias sumamos a todos los valores de la variable una constante, la varianza no varía.
 5. Al multiplicar todos los valores de una distribución de frecuencias por una constante, la varianza queda multiplicada por el cuadrado de dicha constante.
@@ -169,8 +169,8 @@ $$ min_{c}\sum_{i=1}^k (x_{i} - c)^2 n_{i} = \sum_{i=1}^k (x_{i}-\overline{x})^2
 
 Si queremos comparar los promedios de dos distribuciones para saber cuál de los dos es más representativo debemos utilizar medidas adimensionales, es decir, que no vengan afectadas por las unidades de medida. Estas medidas de dispersión, llamadas relativas, siempre se concretan en forma de cociente. Las más utilizadas son:
 
-* **Recorrido relativo**: Se define como el cociente entre el recorrido y la media aritmética $ R_{t} = \frac{Re}{\overline{x}} $
-* **Coeficiente de variación de Pearson**: Se define como la relación por cociente entre la desviación típica y la media aritmética. Si $ \overline{x} \neq 0 $, $ v = \frac{s}{\overline{x}} $.
+* **Recorrido relativo**: Se define como el cociente entre el recorrido y la media aritmética $R_{t} = \frac{Re}{\overline{x}}$
+* **Coeficiente de variación de Pearson**: Se define como la relación por cociente entre la desviación típica y la media aritmética. Si $\overline{x} \neq 0 $, $ v = \frac{s}{\overline{x}}$.
 
 > Cuanto mayor sea $v$, menor es la representatividad de la media aritmética.
 
@@ -182,5 +182,4 @@ Están relacionadas con la representación gráfica de la distribución. Pueden 
     * *Asimetría positiva*: Si las frecuencias más altas se encuentran en el lado izquierdo de la media, mientras que en derecho hay frecuencias más pequeñas (cola).
     * *Asimetría negativa*: Cuando la cola está en el lado izquierdo.
 
-* **Tipificación**: Una variable estadística se dice tipificada o estandarizada si su media es cero y su varianza o su desviación típica es uno. Dada una variable $X$ con media $µ$, y varianza $σ^2$, la nueva variable $ Z = \frac{X - µ}{σ}$, es su tipificada.
-
+* **Tipificación**: Una variable estadística se dice tipificada o estandarizada si su media es cero y su varianza o su desviación típica es uno. Dada una variable $X$ con media $µ$, y varianza $σ^2$, la nueva variable $Z = \frac{X - µ}{σ}$, es su tipificada.
