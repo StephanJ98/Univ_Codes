@@ -44,7 +44,9 @@ Se distinguen dos tipos de experimentos:
 * **Diferencia**: Dados dos sucesos aleatorios $A$ y $B$, se llama suceso diferencia de $A$ y $B$, al suceso aleatorio formado por todos los sucesos elementales que pertenecen a $A$ pero no a $B$. $$A \setminus B = A-B = \{ w \in \Omega \text{ tal que } w \in A \text{ y } w \notin B\} = A \cap \overline{B}$$
 * **Diferencia simétrica**: : Dados dos sucesos aleatorios $A$ y $B$, se llama suceso diferencia simétrica de $A$ y $B$, aquel que ocurre cuando sucede sólo $A$ o sólo $B$. $$A \Delta B = (A \cup B) \setminus (A \cap B)$$
 
-![Examples](image url)
+<p align="center">
+   <img src="https://github.com/StephanJ98/Univ_Codes/blob/main/EST/2022_23/Resumenes/imagen_sucesos_aleatorios.png">
+</p>
 
 ## Probabilidad
 
