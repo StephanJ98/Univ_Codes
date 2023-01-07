@@ -6,11 +6,11 @@
     * [Ejemplo *v.a*](#ejemplo)
     * [Clasificación de variables aleatorias](#clasificación-de-variables-aleatorias)
 * [Principales distribuciones discretas](#principales-distribuciones-discretas)
-    * [Uniforme en n puntos $U\{x_1, ..., x_n\}$](#uniforme-en-n-puntos)
-    * [Bernoulli $Be(p)$](#bernoulli)
-    * [Binomial $B(n,p)$](#binomial)
-    * [Geométrica $Geom(p)$](#geométrica)
-    * [Distribución de Poisson $Pois(λ)$](#distribución-de-poisson)
+    * [Uniforme en n puntos U\{x_1, ..., x_n\}](#uniforme-en-n-puntos)
+    * [Bernoulli Be(p)](#bernoulli)
+    * [Binomial B(n,p)](#binomial)
+    * [Geométrica Geom(p)](#geométrica)
+    * [Distribución de Poisson Pois(λ)](#distribución-de-poisson)
     * [Aproximación de la binomial por la Poisson](#aproximación-de-la-binomial-por-la-poisson)
 * [Principales distribuciones continuas](#principales-distribuciones-continuas)
 
@@ -19,7 +19,7 @@
 ### Introducción de la definición de Variable Aleatoria a partir de un espacio probabilístico
 > El cálculo de probabilidades utiliza tanto variables estadísticas cualitativas y/o cuantitativas. 
 
-***Variable Aleatoria***: Dado un espacio probabilístico $(\Omega, \Alpha, P)$ se define una variable aleatoria $X$ como una función $X: \Omega \rightarrow \mathbb{R}$ tal que se asigna un número real a cada elemento de $\Omega$. $X(\omega) \in \mathbb{R}$ para todo $\omega \in \Omega$ y $X^{-1}(B)= \{\omega \text{ tal que }X(\omega \in B) \} \in A, \text{ para todo } B \in \mathbb{B}$.
+***Variable Aleatoria***: Dado un espacio probabilístico $(\Omega, A, P)$ se define una variable aleatoria $X$ como una función $X: \Omega \rightarrow \mathbb{R}$ tal que se asigna un número real a cada elemento de $\Omega$. $X(\omega) \in \mathbb{R}$ para todo $\omega \in \Omega$ y $X^{-1}(B)= \{\omega \text{ tal que }X(\omega \in B) \} \in A, \text{ para todo } B \in \mathbb{B}$.
 
 Es decir, una *v.a*. es una regla “bien definida” para asignar valores numéricos a todos los resultados posibles de un experimento.
 
@@ -56,7 +56,7 @@ El proceso de tipificación o estandarización de una v.a. consiste en su transf
 ## Principales distribuciones discretas
 
 Recordemos que una variable aleatoria X tiene una distribución de probabilidad discreta si:
-$$P(X = x_i) = \{^{p_i \quad \text{si} \quad x = x_i \quad (i = 1, 2, ...)}_{0 \quad \text{en el otro caso}} \quad \text{con } p_i \ge 0 \quad \text{y} \quad \sum_{i} p_i = 1$$
+$$P(X = x_i) = {p_i \quad \text{si} \quad x = x_i \quad (i = 1, 2, ...)}, {0 \quad \text{en el otro caso}} \quad \text{con } p_i \ge 0 \quad \text{y} \quad \sum_{i} p_i = 1$$
 
 ### Uniforme en n puntos
 $U\{x_1, ..., x_n\}$: Describe el comportamiento de una variable aleatoria que puede tomar n valores distintos con la misma probabilidad. $$X(\Omega) = \{x_1, ..., x_n\} \quad \text{donde} \quad x_1 < x_2 < ... < x_n$$
