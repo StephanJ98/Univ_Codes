@@ -44,6 +44,10 @@ $$S^2=\frac{1}{n}\sum_{i=1}^n(X_i-\overline{X})^2=\frac{1}{n}\sum_{i=1}^nX_i^2-\
 > 1. Cargar conjunto de datos.
 > 2. Estadisticos>Medias>Test t para una muestra
 
+> **R-Commander V2**
+> 1. Cargar conjunto de datos.
+> 2. Estadistica Basica>Inferencia Estadistica>Intervalos de Confianza>... para una muestra>{1a o 2a opcion}
+
 Para calcular el intervalo de confianza para una media poblacional con un nivel de confianza dado, necesitarás conocer la *media muestral*, la *desviación estándar* de la muestra y el *tamaño de la muestra*. Una vez que tengas estos valores, puedes calcular el intervalo de confianza de la siguiente manera:
 1. **Calcular el margen de error**. Este es el valor que se añadirá y restará del valor de la media muestral para obtener el intervalo de confianza. 
 > Para calcularlo, multiplica la *desviación estándar* de la muestra por el valor crítico $t$ del tamaño de la muestra que corresponda al nivel de confianza deseado.
