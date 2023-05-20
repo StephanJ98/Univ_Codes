@@ -1,0 +1,164 @@
+TEXTO DE REFERENCIA: 
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+INTRODUCCION
+============
+
+Como ya hemos señalado, en las dos últimas clases nuestro objetivo
+fundamental ha sido introducir una metodología que nos permita
+discernir cuando un conjunto (lenguaje) es o no regular. El interés
+práctico es evidente, dado que para elegir el modelo de máquina óptimo
+para resolver un problema, primero tenemos que identificar su
+tipología: detectar si (el conjunto de sus potenciales soluciones) es
+o no regular, si es o no independiente del contexto, si es o no
+sensible al contexto ... o si es o no un lenguaje sin restricciones.
+
+Así, si el lenguaje que define el conjunto de potenciales soluciones
+al problema fuera regular, sabremos que la máquina que ofrece las
+mejores prestaciones y menores costes de explotación será un autómata
+finito. En otro caso, tendríamos que explorar otro tipo de máquinas
+(p.ej. un autómata de pila, un autómata de dos pilas o incluso una
+Máquina de Turing).
+
+En este punto, el Teorema de Iteración en lenguajes regulares
+introduce una condición necesaria (pero no suficiente) para los
+lenguajes regulares. En otras palabras, si un conjunto (lenguaje) no
+verifica dicho Teorema, entonces no puede ser regular. En ninguna
+circunstancia (por no tratarse de una condición suficiente) podremos
+asegurar que si un conjunto verifica ese Teorema, entonces es regular.
+
+En este marco, la aplicación del Teorema de Iteración para lenguajes
+regulares puede simplificarse notablemente si (previamente) aplicamos
+alguna de las propiedades de cierre de este tipo de conjuntos
+(lenguajes). De forma genérica, la estrategia sería la siguiente:
+
+i) Se plantea la cuestión de determinar si un conjunto L es regular.
+
+ii) La aplicación directa del Teorema de Iteración para conjuntos
+    regulares (por las razones que sea) al lenguaje L, no resulta
+    determinante.
+
+iii) Localizamos una propiedad "f" de cierre en los conjuntos
+     regulares tal que resulta sencillo demostrar que f(L) es no
+     regular mediante el Teorema de Iteración para conjuntos regulares
+     (demostrando que no verifica dicho Teorema).
+
+iv) Inmediatamente deduciríamos (ahora si) que L es no regular, dado
+    que si lo fuera ... f(L) también lo sería (regular) y, por tanto,
+    f(L) verificaría el Teorema ... cosa que no ocurre. Por tanto, L
+    no puede ser regular.
+
+Sin embargo, veremos que el Teorema de Iteración en lenguajes
+regulares provee no solo un criterio formal para determinar cuando un
+conjunto no es regular, sino que permitirá también resolver problemas
+esenciales de decibilidad: la vacuacidad, finitud e infinitud de un
+lenguaje regular ... así como de la equivalencia de autómatas finitos.
+
+CONTEXTO
+========
+
+Una vez determinado el carácter regular de un lenguaje (el conjunto de
+soluciones del problema que estamos estudiando) existen otro tipo
+cuestiones a resolver que resultan fundamentales a nivel práctico. Una
+esencial es la gestión de versiones. En este contexto, podemos
+considerar dos situaciones típicas:
+
+Determinar si un autómata finito amplia las capacidades de otro
+---------------------------------------------------------------
+
+Supongamos un lenguaje regular, L1. Supongamos que, aplicando una
+técnica dada de entre las disponibles, hemos implementado un autómata
+finito A1 que lo reconoce.
+
+Supongamos ahora que (por las razones que sea) hemos ampliado el
+lenguaje L1 a un lenguaje L2 también regular ... esto es, hemos
+ampliado el abanico de problemas a tratar (dado que el conjunto de
+soluciones caracterizado es más amplio). En otras palabras,
+pretendemos ampliar el rango de soluciones a tratar.
+
+Implementamos para ello un autómata finito A2, que pretendemos (por
+tanto) extiende las funcionalidades de A1. En principio, si la
+extensión se formaliza mediante una ampliación de las expresiones
+regulares o de la gramática regular que define al lenguaje L1, no ha
+lugar ninguna verificación de tal extensión, puesto que estaría
+garantizada ... siempre y cuando la generación del autómata se realice
+mediante un procedimiento formal de generación (como los ya vistos) de
+autómatas finitos (a partir de expresiones regulares o de una
+gramática regular).
+
+El problema surge cuando, para obtener dicha extensión, hemos
+modificado las expresiones regulares o alguna de las reglas de la
+gramática regular de partida (asociadas a L1).
+
+En ese caso, tendremos que verificar si, efectivamente, T(A1) es un
+subconjunto propio de T(A2).
+
+Determinar si dos autómata finitos poseen las mismas capacidades 
+----------------------------------------------------------------
+
+Fijado un lenguaje L, y disponiendo ya de un autómata finito A1 que lo
+reconoce y que un distribuidor dado nos ha facilitado ... nos
+planteamos el uso de autómata finito A2 alternativo que (por las
+razones que sean) plantea unas condiciones que nos resultan más
+atractivas ... por ejemplo, porque otro distribuidor nos ofrece una
+solución más económica.
+
+La primera cuestión que se plantea es si A1 y A2 poseen idéntico
+comportamiento, esto es, si generan las mismas respuestas a las mismas
+interrogaciones.
+
+OBJETIVO DE LA CLASE
+====================
+
+En la clase de hoy nos centraremos en dos cuestiones de DECIDIBILIDAD
+en el ámbito de los lenguajes regulares, esenciales en el tratamiento
+de los problemas antes descritos: la vacuacidad, finitud e infinitud de un
+lenguaje regular ... así como de la equivalencia de autómatas finitos.
+
+Incluiremos además una primera serie de ejercicios totalmente
+resueltos, relativos no solo a esta clase sino también a las
+anteriores ... y que seguiremos ampliando en las semanas siguientes.
+
+CONCLUSION
+==========
+
+El Teorema de Iteración en lenguajes regulares provee no solo un
+criterio formal para determinar cuando un conjunto no es regular, sino
+que permite resolver problemas esenciales de decibilidad: la
+vacuacidad de un lenguaje regular y la equivalencia de autómatas
+finitos.
+
+NOTAS HISTORICAS
+================
+
+El estudio de los problemas de vacuacidad, finitud, infinitud ... así
+como de la equivalencia de autómatas finitos se debe a Edward
+F. Moore, matemático estadounidense especilizado en ciencias de la
+computación y autor del concepto de "máquina de estados finitos de
+Moore" ... o, lo que es lo mismo, de los autómatas finitos.
+
+Profesor (entre otros centros de prestigio) del MIT y de la Univ. de
+Wisconsin-Madison, trabajó durante 10 años en los Laboratorios Bell
+... una compañía que no solo detentó de facto el monopolio de
+investigación en el ámbito de las telecomunicaciones durante decenios,
+sino que ha sido la matriz de contribuciones fundamentales en el
+ámbito de la CCIA: telefonía móvil (actual dueña de Nokia), satélites
+de comunicaciones, lenguajes C y C++ o sistema operativo Unix
+(ancestro de Linux), por mencionar solo algunos. Sirva un dato para
+reflejar el prestigio de estos laboratorios, sus investigadores han
+ganado 9 Premios Nobel, 4 Premios Turing (los Nobel de las
+matemáticas) ... y hasta 2 Grammy, 1 Emmy y 1 Oscar de Hollywood.
+
+Como anécdota, introdujo (Scientific American, 1956) el concepto de
+"planta artificial viva". Se trataría de fábricas flotantes con
+capacidad de generar copias de sí mismas. El objetivo sería
+programarlas para realizar alguna función específica (se propuso la
+extracción de agua potable y la recolección de minerales del oceano),
+con una inversión que sería relativamente pequeña en comparación con
+los enormes beneficios generados. 

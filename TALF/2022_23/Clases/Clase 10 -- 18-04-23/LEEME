@@ -1,0 +1,65 @@
+TEXTO DE REFERENCIA: 
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+INTRODUCCION
+============
+
+El último día presentamos el Teorema de Iteración para lenguajes
+regulares (una condición necesaria, pero no suficiente de los
+conjuntos regulares), y comentamos su interés práctico cuando
+pretendemos demostrar que un conjunto NO es regular.
+
+También hicimos especial hincapié en el hecho de que, aún siendo no
+regular el conjunto objeto de nuestro interés, en ocasiones no es
+fácil demostrarlo mediante aplicación directa del Teorema de Iteración
+(poníamos, en concreto, el ejemplo del conjunto L = {a^n b^m c^n, tal
+que n,m >= 0}).
+
+En ese tipo de situaciones, las propiedades de cierre permiten
+"transformar" el conjunto original, de manera a facilitar una
+aplicación concluyente del Teorema de Iteración. La semana pasada
+vimos alguna de estas propiedades, hoy veremos alguna más. 
+
+CONTEXTO
+========
+
+El objetivo es, recordémoslo, formalizar el carácter NO regular de un
+conjunto cuando sospechemos que tal es su naturaleza.  Podéis seguir
+este tema, amén de por mis notas, en la Sección 4.2 del texto de
+referencia indicado en la cabecera.
+
+Tanto la clase de hoy, como la de la semana pasada tienen un carácter
+eminentemente aplicativo. Al respecto, tanto en un caso como en el
+otro, comentamos ejemplos puntuales para ilustrar los resultados
+teóricos descritos. A partir de la próxima semana nos centraremos más
+en la realización de ejercicios sobre conjuntos regulares, en
+particular los relativos al uso del Teorema de Iteración, sólo o en
+combinación con la aplicación de propiedades de cierre.
+
+OBJETIVO DE LA CLASE
+====================
+
+En la clase de hoy nos centraremos en dos tipos concretos de
+operaciones de cierre de los conjuntos regulares: las sustituciones y
+los cocientes.
+
+CONCLUSION (la misma de la clase anterior)
+==========================================
+
+El Teorema de Iteración en conjuntos regulares, es una condición
+necesaria para ser conjunto regular (no suficiente). Por tanto puede
+ser usado para detectar conjuntos NO regulares, basándonos en un
+simple razonamiento por reducción al absurdo como el expuesto en el
+ejemplo de hoy de los apuntes.
+
+En ocasiones, sin embargo, ocurre que la técnica descrita no permite
+obtener resultados concluyentes. En ese caso podemos echar mano de las
+propiedades de cierre de los conjuntos regulares para una mejor
+adaptación a la resolución del problema.
+

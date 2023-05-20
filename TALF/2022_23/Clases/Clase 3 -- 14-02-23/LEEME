@@ -1,0 +1,127 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Capítulo 1, subsección 1.5 (pag. 24)
+
+	Capítulo 5, subsección 5.1 (pag. 143)
+
+INTRODUCCION
+============
+
+Continuamos con la introducción del vocabulario y de las notaciones
+necesarias a la definición de conceptos básicos en teoría de autómatas
+y lenguajes formales, y que luego nos permitirán categorizar los
+algoritmos en función de su complejidad, facilitando de ese modo su
+resolución óptima en términos computacionales.
+
+CONTEXTO 
+========
+
+Partimos del concepto de "gramática", para introducir el de
+"lenguage". Pasamos pues de un enfoque estructural (las gramáticas) a
+otro generativo (los lenguages), como paso previo al computacional
+(los autómatas). En este sentido, el objetivo final será clasificar
+los autómatas en función de su potencia computacional, previa
+categorización de los niveles estructural y generativo.
+
+OBJETIVO DE LA CLASE
+====================
+
+Completar la Jerarquía de Chomsky, tras introducir las gramáticas
+regulares y las independientes del contexto, hacemos lo propio con las
+sensibles al contexto y sin restricciones (o con estructura de frase).
+
+Ponemos además en evidencia que esta jerarquía induce de forma natural
+una equivalente a nivel de lenguajes, si bien las inclusiones
+estrictas de la Jerarquía (gramatical) de Chomsky habrán de ser
+probadas en este caso.
+
+CONCLUSION:
+==========
+
+Para poner en evidencia la no trivialidad de la extensión de la
+Jerarquía (gramatical) de Chomsky a los lenguajes (y por tanto también
+a los artilugios que caracterizan su reconocimiento), abordamos
+brevemente el caso de los (lenguajes) regulares como subconjunto
+estricto de los independientes del contexo.
+
+En efecto, que las gramáticas regulares sean un subconjunto propio de
+las independientes del contexto, no quiere decir necesariamente que
+esa inclusión estricta se traslade de forma inmediata a nivel de
+lenguajes. Más concretamente, para que esto se pueda hacer, será
+necesario demostrar que hay lenguajes independientes del contexto que
+no pueden expresarse mediante gramáticas regulares.
+
+Lo mismo ocurrirá con el resto de niveles de la Jerarquía de
+Chomsky. Es algo que veremos más adelante, pero que los ejemplos
+presentados en clase permiten ya entrever:
+
+	    i) El lenguaje {a^n, n >= 1} es regular, ya que se puede
+               generar mediante la gramática:
+
+               S -> Sa    S-> epsilon
+
+	    ii) El lenguaje {a^n b^n, n >= 1} es independiente del
+               contexto, ya que se puede generar mediante
+               la gramática:
+
+               S -> a S b   S-> epsilon
+
+            iii) Hemos visto (ver apuntes) que el lenguaje
+	         {a^n b^n c^n, n >= 1} es sensible al contexto,
+		 ya que se puede generar mediante una gramática
+		 de ese tipo.
+
+            iii) Hemos visto (ver apuntes) que el lenguaje
+	         {a^n, n = 2^i, i >= 1} tiene estructura de frase,
+		 ya que se puede generar mediante una gramática
+		 de ese tipo.
+
+Ejemplos en los que se adivina que cuanto mayor es la complejidad en
+términos lingüísticos, mayor es la complejidad descriptiva a nivel
+gramatical que se requiere. En particular, observar que i) no requiere
+ningún tipo de memoria, pero ii) si (al menos una estructura de
+memoria para verificar que hay tantas a's como b's). En esa línea, en
+iii) necesitaremos al menos dos estructuras de memoria ... que en el
+caso iv) no serían suficientes.
+	            
+Subrayamos igualmente que es posible demostrar formalmente que las
+Máquinas de Turing son los artilugios asociados al renocimiento de
+lenguajes sin restricciones, esto es, generados por gramáticas con
+estructura de frase. Ello facilita intuitivamente la comprensión y
+origen de la Hipótesis de Church:
+
+"Los conceptos de algoritmo y Máquina de Turing son equivalentes"
+
+por cuanto la forma de las reglas en una gramática de este tipo
+describe un mecanismo de reescritura (en el sentido de la terminología
+usada en el mecanismo del mismo nombre usado en la interpretación del
+paradigma de programación funcional, técnicamente conocido como
+beta-reducción) sin restricciones, fácilmente asimilable al proceso de
+razonamiento humano. Entonces, grosso modo, podemos aceptar de forma
+natural que:
+
+"Si el proceso de razonamiento que aplicamos en nuestra vida ordinaria
+ parece reproducible por las reglas que describen un lenguaje sin
+ restricciones, y estos caracterizan los problemas resolubles por una
+ Máquina de Turing ... entonces es que una Máquina de Turing debiera
+ caracterizar el concepto de algortimo."
+
+En cualquier caso, obviamente el punto débil es el verbo "parece" que
+incluímos en el anterior párrafo, razón por la cuál hablamos de "Hipótesis
+de Church" y no de "Tesis de Church".
+
+NOTAS HISTORICAS: Hoy no tenemos.
+=================
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

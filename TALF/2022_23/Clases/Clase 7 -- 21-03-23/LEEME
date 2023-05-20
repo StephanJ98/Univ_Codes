@@ -1,0 +1,96 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+	Sección 2.2, (pag. 118)
+
+INTRODUCCION
+============
+
+Una vez hemos descrito como determinizar un AF (artilugios
+reconocedores de conjuntos regulares) y luego como minimizar el AFD
+resultante (eliminando estados inútiles e inaccesible, y unificando
+los indistinguibles). Abordaremos ahora la cuestión de quiénes son los
+generadores de conjuntos regulares. 
+
+CONTEXTO 
+========
+
+Hemos los lenguajes generados por gramáticas regulares como LENGUAJES
+REGULARES, y los conjuntos reconocidos por AFs como CONJUNTOS
+REGULARES. En ambos casos se usa el mismo calificativo, regular, lo
+que sugiere que pudiera haber una relación entre ambos conceptos, lo
+que consituirá el objetivo de esta clase. 
+
+OBJETIVO DE LA CLASE
+====================
+
+Demostraremos que los conjuntos reconocidos por los AFs son lenguajes
+regulares, y vicebersa (Th. de Chomsky-Miller). La demostración (ver
+apuntes) es constructiva, en el sentido de que propone un método
+práctica para pasar de un formalismo descriptivo (la gramática
+regular) a uno operativo (el AF), y vicebersa. 
+
+Intuitivamente, la idea de ambas construcciones es la misma y consiste
+en identificar el comportamiento del AF (esto es, el conjunto de
+cadenas que permiten llegar desde el estado inicial hasta alguno de
+los finales) con el de la gramática regular (esto es, el conjunto de
+cadenas que se derivan desde el axioma de la gramática).
+
+El resto de la construcción es, en este sentido, también muy natural y
+consecuencia de la identificación anterior. Así, asociamos el estado
+inicial (resp. los estados) en el AF con el axioma (resp. las
+variables) de la gramática regular correspondiente, y los estados
+finales (que siempre asocian, al menos, un camino vacío hasta el
+reconocimiento) a las hojas de los árboles (a partir de los cuales, no
+es posible ya efectuar más derivaciones) construidos a partir de la
+gramática. El alfabeto, obviamente, será el mismo en el AF que en la
+gramática regular equivalente.
+
+CONCLUSION:
+==========
+
+AFs y gramáticas regulares son dos visiones complementarias del mismo
+concepto: lenguaje regular. En este sentido los AFs son sus
+reconocedores, mientras que las gramáticas regulares son sus
+generadores (Th. de Chomsky-Miller).
+
+Desde un punto de vista práctico la lectura es muy simple. El diseño
+directo de AFs es una labor absolutamente inabarcable cuando se trata
+de manejar miles o cientos de miles de estados, y millones de
+transiciones, algo por otra parte habitual. Es aquí donde resulta de
+interés la utilización de gramáticas regulares como mecanismo
+descriptivo para la generación (automática) de AFs cuyo comportamiento
+se ajuste al requerido por el diseñador.
+
+NOTAS HISTORICAS  
+================
+
+La equivalencia entre AFs y gramáticas regulares fue demostrada por
+Chomsky y Miller en 1958. Ya hemos hablado antes del perfil de Chomsky.
+
+George Armitage Miller fue un psicólogo estadounidense, pionero de la
+psicología cognitiva. Se doctoró en Psicología en Harvard,
+coincidiendo con el apogeo de la II Guerra Mundial. Comienza entonces
+a trabajar en el Laboratorio Psicoacústico de Stanley Smith Stevens
+(Hardvard), empeñado en el diseño de sistemas para el bloqueo de las
+señales de radio enemigas. Finalizada la guerra, ingresa en el
+Instituto Tecnológico de Massachusetts (MIT) donde conoció a Chomsky,
+iniciando una colaboración que no se rompió tras su vuelta a Hardward
+... donde cofunda el Centro de Estados Cognitivos. También fue
+profesor de psicología en la Universidad Rockefeller (Nueva York) y en
+Princeton.
+
+Entre sus contribuciones más recientes, Miller dirigió el desarrollo
+de WordNet.
+
+ADVERTENCIA:
+============
+
+En los apuntes se han excluido algunos contenidos, razón por la cuál
+puede haber páginas discontínuas o espacios en blanco.

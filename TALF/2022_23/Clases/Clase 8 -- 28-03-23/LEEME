@@ -1,0 +1,110 @@
+TEXTO DE REFERENCIA:
+===================
+
+Teoría de Autómatas, Lenguajes y Computación
+
+Hopcroft, Motwani y Ullman
+
+Addison-Wesley
+
+Capítulo 3 (pag. 71)
+
+INTRODUCCION
+============
+
+La pasada semana demostramos que un conjunto regular (esto es, el
+lenguaje reconocido por un FA) no era otra cosa que un lenguaje
+regular (esto es, generado por una gramática regular), y viceversa.
+
+En otras palabras, un FA no es otra cosa que la máquina que implementa
+de forma natural el reconocimiento de un lenguaje regular. 
+
+Por tanto, si el conjunto de instrucciones que rigen el comportamiento
+del artefacto que pretendemos construir (ej. la máquina de café del
+pasillo) es analizable mediante una gramática regular, la forma
+óptima de implementarlo es en forma de FA.
+
+CONTEXTO
+========
+
+El problema que se nos plantéa entonces es como detectar si ese
+conjunto de instrucciones que describe el comportamiento del artefacto
+a implementer es o no un lenguaje regular.
+
+La forma obvia de hacerlo sería asegurarse de que son generables a
+partir de una gramática regular.
+
+Sin embargo, hay una forma sustancialmente más simple de abordar la
+cuestión. La idea es proporcionar un formalismo de descripción de
+lenguajes regulares más "condensado" y con un sentido más "operativo"
+... en el mismo sentido que una fórmula matemática condensa y dinamiza
+un razonamiento mucho más complejo. Denominaremos a estas fórmulas, 
+"expresiones regulares".
+
+De esta forma, si dicho formalismo fuera lo suficientemente potente
+como para satisfacer nuestras necesidades expresivas en relación al
+conjunto de instrucciones a implementar, automáticamente éste sería
+regular.
+
+OBJETIVO DE LA CLASE
+====================
+
+Amén de a través de los apuntes de la clase, podéis completar vuestros
+conocimientos en el Capítulo 3 del texto de referencia indicado en el
+encabezamiento, especialmente en lo que se refiere a las Secciones 3.1
+y 3.2.
+
+Introduciremos formalmente el concepto de "expresión regular". Al
+respecto, lo haremos en base a sus operadores esenciales: la
+concatenación (.), la unión (+) y el cierre transitivo (*).
+
+En este punto, se advierte al alumno de que herramientas como FLEX
+(usada en las clases prácticas) proporcionan un número mucho más
+amplio de operadores, pero todos ellos (salvo los contextuales) son
+implementables a partir de los tres usados en nuestra definición
+formal.
+
+Mostraremos como construir un FA a partir de una expresión regular, y
+viceversa. Esto es, que cualquier lenguaje expresado mediante una
+expresión regular es automáticamente regular y (por tanto)
+implementable mediante un FA (esto es, un conjunto regular). Para
+ello, echaremos mano de sendos teoremas.
+
+Se trata de teoremas totalmente constructivos, tal y como se ilustrará
+mediante ejemplos. Por tanto, si os doy una expresión regular y os
+pido que construyáis el FA correspondiente ... no tenéis más que
+seguir exactamente los pasos de la demostración que acompaña. Lo mismo
+en el caso inverso, si os proporciono un FA y os pido que me calculéis
+la expresión regular correspondiente.
+
+CONCLUSION
+==========
+
+Lenguajes regulares, conjuntos regulares y expresiones regulares son
+(exactamente) lo mismo. 
+
+NOTAS HISTORICAS:
+=================
+
+El concepto de expresión regular se debe fundamentalmente a Stephen
+Kleene (el mismo que da nombre al "cierre/clausura de Kleene",
+denotado por un "*")
+
+https://es.wikipedia.org/wiki/Stephen_Kleene
+
+un matemático USA, que desarrolló su tesis doctoral bajo la dirección
+de Alfonzo Church (el de la "Hipótesis de Church", que fue enunciada
+por el propio Kleene en su tesis).
+
+A él se le deben avances fundamentales en la teoría de las funciones
+recursivas (junto con Church, Gödel y Turing) un aspecto esencial en
+el desarrollo de los actuales sistemas computacionales.
+
+Durante la Segunda Guerra mundial fue Capitán de Corbeta en la US
+Navy, trabajando para el United States Naval Research Laboratory, un
+centro especializado en el desarrollo de la IA para sistemas autónomos
+y guerra electrónica.
+
+Presidió después las más prestigiosas sociedades científicas de
+matemáticas y, factor habitualmente desconocido, fue un defensor
+irredento de la causa ecologista desde los años 50.
