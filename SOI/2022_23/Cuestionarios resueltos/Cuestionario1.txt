@@ -1,0 +1,191 @@
+Una instrucción privilegiada (o peligrosa):
+
+ 
+
+
+
+	+Permite ejecutar una función del Sistema Operativo.
+	Se ejecuta más rápidamente que el resto de instrucciones.
+	Los programas las utilizan para realizar bucles.
+	Permite realizar los cálculos con mayor precisión.
+
+
+Para un entorno de oficinas, donde se van a editar muchas cartas al día, por varios secretarios, el sistema ideal sería:
+
+
+
+	Tiempo real.
+	Batch.
+	+Tiempo compartido.
+	Multiprocesador.
+
+En los Sistemas Operativos monoprogramados no existe el modo supervisor.
+
+
+
+	Verdadero, ya que al existir un solo programa, este tiene control total sobre el sistema.
+	Falso, va a depender del número de procesadores; si se tiene uno solo entonces no es necesario
+	    el modo supervisor, pero si se dispone de más de un procesador si que se requerirá el modo supervisor.
+	+Falso, es necesario para conseguir seguridad, es decir que la ejecución de un proceso no 
+		interfiera en la ejecución de otros procesos, aunque dichos procesos pertenezcan al único programa almacenado en memoria principal.
+	Verdadero, ya que al ser monoprogramado solo existe un programa y por lo tanto puede ser ejecutado completamente en modo usuario.
+
+¿Cuál de las siguientes sentencias es verdadera?
+
+
+
+	Un Sistema Operativo multiprocesador (o de multiprocesamiento) siempre es multiusuario
+	Los Sistemas Operativos monoprogramados deben tener una estructura jerárquica (en estratos).
+	+En un Sistema Operativo con estructura orientada al objeto, el núcleo se encarga de controlar los privilegios de acceso que tienen entre si los diferentes tipos de objetos.
+	Todo Sistema Operativo no interactivo debe tener una estructura monolítica.
+
+
+¿Cuál de las siguientes sentencias es falsa?
+
+
+
+	+Un Sistema Operativo nunca consume tiempo de CPU.
+	La abstracción proporcionada por el Sistema Operativo tiene la misión de ocultar los detalles del hardware.
+	La multiprogramación permite repartir el uso del procesador entre los programas.
+	En los Sistemas Operativos de estructura jerárquica cada nivel más interno es más privilegiado.
+
+¿Cuáles de las siguientes características identifica a un Sistema Operativo de tiempo compartido?
+
+
+
+
+	Multiprocesador, Monoprogramado e Interactivo.
+	+Multiprogramado, Multiusuario e Interactivo.
+	Multiprogramado, Monousuario e Interactivo.
+	Ninguna de las alternativas anteriores.
+
+¿Cuál de las siguientes sentencias es cierta?
+
+
+
+	En los Sistemas Operativos monoprogramados, la máquina extendida (virtual) siempre ofrece las mismas funciones que la máquina física.
+	Todo Sistema Operativo con estructura de máquina virtual debe ser multiprocesador.
+	+Todo Sistema Operativo con arquitectura cliente/servidor dispone de kernel.
+	Los Sistemas Operativos de estructura monolítica no pueden ofrecer la función de máquina extendida (virtual).
+
+
+¿Cuál de las siguientes sentencias es falsa?
+
+
+
+
+	+Un Sistema Operativo de procesamiento por lotes (batch) no puede ser multiusuario.
+	El primer Sistema Operativo que surgio es el Monitor residente.
+	Las llamadas al supervisor (llamadas al sistema, interrupciones o trap) son realizadas por los programas de usuario.
+	La máquina extendida corresponde a las funciones del ordenador que ve el usuario ampliadas gracias al Sistema Operativo.
+
+
+La estructura de los Sistemas Operativos monoprogramados debe ser:
+
+
+
+
+	Orientada al objeto.
+	Monolítico.
+	Cliente-Servidor.
+	+Cualquiera de las estructuras existentes.
+
+
+Relaciona los siguientes términos con sus definiciones:
+
+
+
+1. Grado de multiprogramación		A. Número de programas que residen simultánemente en Memoria Principal en un momento dado.
+2. Spooling				B. Técnica que permite solapar la Entrada/Salida de un programa con la ejecución de otros programas.
+3. Buffering				C. Técnica que permite solapar las operaciones de Entrada/Salida de un programa con la ejecución de este.
+4. Sesión de trabajo			D. Tiempo que transcurre desde que un usuario se conecta al ordenador hasta que se desconecta.
+
+
+¿Cuál de los siguientes ordenes de Sistemas Operativos es el que representa la exigencia de tiempo de respuesta de menor a mayor?
+
+
+
+
+	Tiempo real, batch y tiempo compartido.
+	+Batch, tiempo compartido y tiempo real.
+	Tiempo real, tempo compartido y batch.
+	Tiempo compartido, tiempo real y batch.
+
+
+¿Cuál de las siguientes implicaciones siempre se da?
+
+
+	Multiproceso implica multiprogramación.
+	+Multiprogramación implica multiproceso.
+	Monousuario implica monoprogramación.
+	Monoprogramación implica monoproceso.
+
+La multiprogramación es una técnica que permite:
+
+
+
+
+	Alcanzar un 100% de aprovechamiento de la CPU.
+	+Repartir el uso de la CPU entre los programas.
+	Programar con mayor facilidad.
+	Ofrecer una interfaz más amigable al usuario.
+
+¿Cuál de las siguientes sentencias es falsa?
+
+ 
+
+	El procesador ejecuta instrucciones que están cargadas en memoria principal.
+	Los programas de usuario no pueden ejecutar instrucciones privilegiadas (peligrosas).
+	Un Sistema Operativo de tiempo compartido puede ser monoprocesador.
+	+Cuanto mayor es el número de programas almacenados simultáneamente en Memoria Principal (grado de multiprogramación) 
+mayor será el tiempo en que la CPU esté ociosa durante la ejecución de dichos programas.
+
+
+¿Cuál de las siguientes sentencias es falsa?
+
+
+
+	Los Sistemas Operativos de red ofrecen la posibilidad de que un usuario acceda a otra máquina distinta.
+	El interprete de comandos (Shell) forma parte del Sistema Operativo.
+	Un Sistema Operativo batch puede ser multiprocesador.
+	+El modo dual de operación consigue que los programas de usuario se ejecuten más rápidamente.
+
+¿Cuáles de las siguientes definiciones consideras la más precisa para describir un Sistema Operativo de tiempo real?
+
+
+
+	Un S. O. de tiempo real es aquel que proporciona una respuesta en el menor tiempo posible.
+	Un S. O. de tiempo real es un Sistema Operativo de tiempo compartido monousuario.
+	Un S. O. de tiempo real es aquel que siempre está infrautilizado.
+	+Un S. O. de tiempo real se diseña con el objetivo de poder ejecutar satisfactoriamente tareas que han de completarse en unos intervalos de tiempo bien definidos a priori.		
+
+
+Cuál de las siguientes sentencias es cierta?
+
+Su elección	Elección esperada	Respuesta	Comentario
+( )	( )	En los Sistemas Operativos monoprogramados, la máquina extendida (virtual) siempre ofrece las mismas funciones que la máquina física.	 
+( )	( )	Todo Sistema Operativo con estructura de máquina virtual debe ser multiprocesador.	 
+( )	(X)	Todo Sistema Operativo con arquitectura cliente/servidor dispone de kernel.	
+(X)	( )	Los Sistemas Operativos de estructura monolítica no pueden ofrecer la función de máquina extendida (virtual).	
+
+
+¿Cuál de las siguientes sentencias es cierta?
+
+
+
+	Un Sistema Operativo de tiempo compartido nunca puede ser monoprocesador.
+	Una llamada al sistema (trap) produce un cambio a modo supervisor.
+	En los Sistemas Operativos con estructura de máquina virtual, cada máquina virtual actúa directamente sobre el hardware cuando le toca el turno.
+	Al no poderse predecir el orden ni las circunstancias por las que la ejecución de un programa es interrumpida, el Sistema Operativo no puede asegurar
+ que los resultados sean siempre los mismos para los mismos datos de entrada en cualquiera de las ejecuciones del citado programa.
+
+
+¿Cuál de las siguientes sentencias es falsa?
+
+
+
+
+	Un Sistema Operativo de procesamiento por lotes (batch) no puede ser multiusuario.
+	El primer Sistema Operativo que surgio es el Monitor residente.
+	Las llamadas al supervisor (llamadas al sistema, interrupciones o trap) son realizadas por los programas de usuario.
+	La máquina extendida corresponde a las funciones del ordenador que ve el usuario ampliadas gracias al Sistema Operativo.

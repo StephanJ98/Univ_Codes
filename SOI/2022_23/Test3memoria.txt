@@ -1,0 +1,211 @@
+1En un Sistema Operativo monoprogramado la protección de memoria se realiza por medio de:
+
+
+	ºUn registro de límites.
+	La longitud del trabajo y un registro de límites.
+	El tamaño de la memoria principal y dos registros de límites.
+	Al ser un sistema monoprogramado no se requiere protección.
+
+
+
+2Una tabla de segmentos:
+
+
+	refleja todas las partes ocupadas de la memoria principal,
+	contiene los segmentos de los programas que se están ejecutando,
+	refleja los segmentos utilizados por el proceso que esta activo,
+	ºindica los bloques de la memoria principal donde están cargados los segmentos del proceso asociado a la tabla.
+
+
+
+3De los siguientes esquemas de gestión de memoria, ¿cuál presenta mayor facilidad a la hora de realizar compartición por parte de los procesos?
+
+
+	Paginación.
+	ºSegmentación.
+	En los dos esquemas citados en las afirmaciones anteriores, la compartición se lleva a cabo con la misma facilidad.
+	Por seguridad no se permite que varios procesos compartan zonas de memoria.
+
+
+4Supongase que se dispone de un sistema paginado en donde la memoria principal tiene un tamaño de 5 Kbytes, y el tamaño de cada posición de memoria es de 1 byte.
+
+Cada dirección virtual ocupa 14 bits, siendo los 5 primeros los usados para denotar el número de página y los restantes el desplazamiento. ¿Se puede ejecutar en dicha máquina un trabajo cuyo tamaño es de 10 Kbytes?
+
+
+	No, ya que al tener el trabajo un tamaño mayor que el de la memoria principal, éste no se puede cargar en dicha memoria principal para ser ejecutado.
+	Si, puesto que al usar memoria virtual se puede ejecutar trabajos de cualquier tamaño.
+	ºSi, pues el tamaño del trabajo es menor que el tamaño del trabajo más grande que se puede ejecutar en esta máquina.
+	Ninguna de las opciones indicadas anteriormente es correcta.
+
+
+
+
+5Relaciona las siguientes estrategías de reposición de página con el criterio que aplica:
+
+1. LRU (página menos recientemente usada)		4A. se desplaza una página elegida aleatoriamente
+2. LFU (página menos frecuentemente usada)		1B. se desplaza la página que lleva más tiempo sin ser referenciada
+3. FIFO (primero en entrar, primero en salir)		2C. se desplaza la página cuyo contador de frecuencia es menor
+4. Reposición de página al azar				3D. se desplaza la página que lleva más tiempo en la memoria principal
+
+
+6¿Cuál de las siguientes sentencias es cierta?
+
+
+	En paginación, la tabla de páginas asociada a un trabajo tiene tantos elementos como el número de marcos ocupados por dicho trabajo en memoria principal.
+	Al usar memoria virtual, se puede ejecutar una instrucción de un trabajo sin tener que cargar dicha instrucción en memoria principal.
+	ºEn segmentación, se produce un fallo de desbordamiento de segmento si d > l, siendo d el desplazamiento y l la longitud del segmento.
+	En paginación/segmentación, la memoria principal se divide en segmentos y éstos a su vez en marcos de página.
+
+7De los siguientes esquemas de gestión de memoria, ¿cuál presenta el problema de fragmentación externa?
+
+
+	Multiprogramación con particiones fijas.
+	Segmentación paginada.
+	ºSegmentación.
+	Todos los esquemas de gestión mencionados en las afirmaciones anteriores presentan fragmentación externa.
+
+
+8¿Que contiene el registro origen de la tabla de bloques?
+
+	la dirección real donde comienza el bloque al que se referencia en la dirección virtual
+	el número del bloque que contiene la tabla de bloques
+	ºla dirección real donde comienza la tabla de bloques
+	la dirección, en memoria secundaria, donde se encuentra la tabla de bloques
+
+
+
+9¿Cuál de las siguientes sentencias es falsa?
+
+
+	Cuanto mayor sea el tamaño de la página mayor será la fragmentación interna.
+	Cuanto menor sea el tamaño de la página mayor será el número de marcos de página en los que se divide la memoria principal.
+	El tamaño de un segmento viene limitado por el número de bits usados para indicar el desplazamiento (segunda componente de una dirección virtual).
+	ºCuanto menor sea un segmento mayor será el tiempo necesario para transferirlo de memoria secundaria a memoria principal y viceversa.
+
+
+10¿Cuál de las siguientes sentencias es falsa?
+
+
+	El conjunto de trabajo del comportamiento de un programa puede variar durante la ejecución del proceso asociado a dicho programa.
+	Es más sencillo compartir un módulo reentrante (trozo de código utilizado por varios procesos de forma simultánea) si se usa segmentación en vez de paginación.
+	En memoria virtual cuanto mayor es el tamaño del bloque (página o segmento) menor es la fragmentación de tablas.
+	ºEn segmentación/paginación se gestiona el espacio libre manteniendo una lista de huecos.
+
+
+11De los siguientes esquemas de gestión de memoria, ¿cuál presenta mayor perdida de memoria principal por la estructura de las tablas (fragmentación de tablas)?
+
+
+	Paginación.
+	ºSegmentación paginada.
+	Segmentación.
+	En todos los esquemas, la fragmentación de tablas es la misma.
+
+12Supongase un sistema paginado dónde el tamaño de la página es de 2048 posiciones (o bytes).
+
+El tamaño que ocupa cada entrada (registro) de la tabla de páginas es de 32 bits. ¿Qué fragmentación interna, externa y de tablas se produce si se acepta un trabajo con un tamaño de 7553 bytes?
+
+
+	Fragmentación interna: 639 bytes; fragmentación externa: 767 bytes; fragmentación de tablas: 96 bits.
+	Fragmentación interna: No existe; fragmentación externa: 639 bytes; fragmentación de tablas: 128 bits.
+	ºFragmentación interna: 639 bytes; fragmentación externa: No existe; fragmentación de tablas: 128 bits.
+	Ninguna de las opciones anteriores es correcta.
+
+
+13De los siguientes esquemas de gestión de memoria, ¿cuál utiliza las estrategias de colocación: primer ajuste, siguiente ajuste, mejor ajuste y peor ajuste?
+
+	Multiprogramación con particiones fijas
+	ºSegmentación
+	Paginación segmentada
+	Ninguno de los esquemas citados anteriormente usa esas estrategias de colocación
+
+
+14Los registros límites ( i : límite inferior y s : límite superior) se utilizan para obtener la dirección absoluta (a) a partir de una dirección relativa (d) aplicando la siguiente fórmula:
+
+	ºa = i + d
+	d = s + a
+	a = s + i
+	a = s + d
+
+
+15Supongase que se dispone de un sistema segmentado en donde la memoria principal tiene un tamaño de 10 Kbytes, y el tamaño de cada posición de memoria es de 1 byte.
+
+Si la dirección virtual ocupa 13 bits repartidos como muestra la siguiente figura:
+
+		s (5 bits)	d (8 bits)
+¿se podría aceptar un trabajo con un segmento cuyo tamaño es 1 Kbyte?
+
+	Si, ya que el tamaño de la memoria principal es mayor que el tamaño de dicho segmento
+	Si, puesto que se usan 13 bits para expresar la dirección virtual, y 2 elevado a 13 es mayor que 1 Kbyte
+	No, ya que con 5 bits para designar el número del segmento no se puede direccionar 1 Kbyte
+	ºNinguna de las opciones anteriores es correcta
+
+
+16Supóngase que se dispone de un sistema paginado con 20 marcos de página de 256 bytes cada uno de ellos.
+
+¿Cuál es el tamaño de la memoria principal de dicho sistema?. ¿Cuántos bits se necesitan para el segundo componente de una dirección virtual (desplazamiento)?. En el caso de que se usen 6 bits para
+ la primera componente de las direcciones virtuales (número de página), ¿cuál sería el tamaño máximo de un trabajo?
+
+	ºEl tamaño de la memoria principal es de 5 Kbytes, se necesitan 8 bits para el desplazamiento, y el tamaño máximo de un trabajo es de 16 Kbytes.
+	El tamaño de la memoria principal es de 20 Kbytes, se necesitan 10 bits para el desplazamiento, y el tamaño máximo de un trabajo es de 6 Kbytes.
+	El tamaño de la memoria principal es de 10 Kbytes, se necesitan 10 bits para el desplazamiento, y el tamaño máximo de un trabajo es de 1,25 Kbytes.
+	Ninguna de las opciones indicadas anteriormente es correcta.
+
+
+17En los Sistemas Operativos con memoria virtual, los trabajos de usuario:
+
+	se ejecutan más rápidamente.	 
+	se cargan completos en memoria principal antes de ejecutarse.	 
+	ºse cargan por partes en memoria principal según se van ejecutando.	
+	siempre deben ser más grandes que la memoria principal existente en el sistema.	 
+
+18¿Cuáles de las siguientes definiciones expresa correctamente una dirección virtual en un sistema segmentado/paginado?
+
+	s: número del segmento dentro del trabajo; p: número de la página dentro del segmento; d: desplazamiento dentro del segmento
+	s: número del segmento dentro del trabajo; p: número de la página dentro del trabajo; d: desplazamiento dentro de la página
+	ºs: número del segmento dentro del trabajo; p: número de la página dentro del segmento; d: desplazamiento dentro de la página
+	Ninguna de las definiciones anteriores es correcta
+
+19Para que dos procesos puedan compartir una página es necesario que:
+
+
+	compartan la tabla de páginas,
+	no se ejecuten concurrentemente,
+	ºreferencien al marco de página que contiene dicha página,
+	ninguna de las afirmaciones anteriores es correcta ya que una página no se puede compartir.
+
+20El número de fallos de perdida de página indica:
+
+ 
+
+	el número de veces que un trabajo cambia de página durante su ejecución.
+	ºel número de veces que se hace referencia a páginas que no están en memoria principal.
+	el número de veces que se ha ejecutado el algoritmo de reposición (o sustitución) de páginas.
+	el número de marcos de página en los que se ha dividido la memoria principal.
+
+
+
+21Suponer que se dispone de un sistema segmentado/paginado en donde la memoria principal tiene un tamaño de 4 Mbytes. Cada dirección virtual ocupa 30 bits repartidos como muestra la siguiente figura:
+
+				Dirección Virtual
+ Número de segmento 	Número de página	 Desplazamiento
+
+  8 bits                12 bits                   10 bits
+
+El tamaño de cada posición de memoria es de 1 byte. ¿En cuantos marcos de página se divide la memoria principal y cuál sería el tamaño máximo de un segmento?
+
+ 
+
+	1024 marcos de página y 4096 Kbytes el tamaño máximo de un segmento.
+	º4096 marcos de página y 4096 Kbytes el tamaño máximo de un segmento.
+	4096 marcos de página y 1024 Kbytes el tamaño máximo de un segmento.
+	Ninguna de las opciones indicadas anteriormente es correcta.
+
+
+22De los siguientes esquemas de gestión de memoria, ¿cuál requiere para poder ejecutar un trabajo (programa más datos) que éste se almacene de forma completa y contigua en memoria principal?
+
+
+
+	Multiprogramación con particiones variables.	
+	ºSegmentación.	
+	Monoprogramación con overlays.	 
+	Todo esquema que gestione la memoria obliga a que el trabajo se almacene de forma completa en memoria principal para poderse ejecutar.	 

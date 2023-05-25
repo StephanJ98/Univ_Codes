@@ -1,0 +1,134 @@
+1Teniendo en cuenta el ejemplo con el que se vio el funcionamiento de los distintos niveles de E/S,
+
+¿quién desbloquea al proceso asociado al software de E/S a nivel de usuario una vez que este inicia la solicitud de una operación de E/S?
+
+	Software de Entrada/Salida independiente del dispositivo.
+	ºSoftware de Entrada/Salida dependiente del dispositivo.
+	Manejadores de interrupciones.
+	Este proceso nunca se bloquea durante la realización de una operación de E/S.
+
+
+
+2¿Cuál de las siguientes sentencias es cierta?
+
+	El IORB es creado por el manejador de dispositivo correspondiente.
+	ºEl IORB contiene la petición de E/S en términos abstractos.
+	El gestor de periférico se encarga de asignar el espacio en dispositivos de bloques.
+	La rutina de E/S se encarga de escribir en los puertos del controlador las acciones que éste debe realizar sobre el dispositivo.
+
+
+
+3¿Cuál de las siguientes sentencias es falsa?
+
+
+	ºSi se aumenta la velocidad de la CPU se disminuye el tiempo que los procesos requieren para completar las operaciones de E/S que solicitan.
+	Los manejadores de interrupciones son un conjunto de programas.
+	Al realizar una operación de E/S controlada por interrupción, la CPU se usa para comprobar si la operación se ha llevado a cabo con éxito o no.
+	El número de elementos de la lista de descriptores de streams de un proceso coincide con el número de periféricos asignados a dicho proceso.
+
+
+
+
+4¿Cuál de las siguientes sentencias es falsa?
+
+	No todos los dispositivos de E/S usan la misma unidad de transferencia.
+	ºTodos los dispositivos de E/S permiten realizar la operación de lectura de datos (entrada).
+	Para realizar la traducción del código interno de caracteres al código empleado por un dispositivo de E/S se usa el descriptor de dicho periférico.
+	Los controladores disponen de registros denominados puertos.
+
+
+
+
+5Si el final de una operación de E/S es controlada por programa, ¿qué componente del S.O. es el encargado de dicha tarea?
+
+
+	Manejadores de interrupciones.
+	Software de E/S independiente del dispositivo.
+	Administrador de procesos (dispatcher).
+	ºNinguno de los componentes citados anteriormente.
+
+
+
+
+6Señalar la afirmación verdadera.
+
+Al comparar la E/S controlada por programa con la E/S controlada por interrupciones se observa que:
+
+	Ambas ocasionan que la CPU este ociosa durante la realización de la operación de E/S por parte del dispositivo.
+	La E/S controlada por interrupción no requiere de los puertos disponibles en el controlador.
+	ºLa E/S controlada por interrupción permite solapar varias operaciones de E/S.
+	Son ciertas las dos afirmaciones anteriores.
+
+
+
+7Teniendo en cuenta el ejemplo con el que se vio el funcionamiento de los distintos niveles de E/S, ¿cuál de las siguientes afirmaciones es cierta?
+
+
+	El software de E/S independiente del dispositivo no participa si la E/S es controlada por programa.
+	ºEl gestor de periférico es un proceso cíclico que se ejecuta en modo usuario.
+	Si el final de la operación de E/S es controlada por programa, la rutina de interrupción desbloquea al gestor de periférico.
+	El software de E/S dependiente del dispositivo es el único que accede al descriptor del periférico, por lo tanto es el que se encarga de colocar el IORB en la cola de petición de dicho periférico.
+
+
+
+
+8¿Qué componente del S.O. realiza labores de intermediación entre el software de E/S independiente del dispositivo y la parte que controla al dispositivo (controlador)?
+
+
+	ºEl gestor de periférico (Device Driver).
+	La rutina de E/S.
+	Los manejadores de interrupciones (Rutinas de tratamiento de interrupciones).
+	Ninguno de los componentes citados en las afirmaciones anteriores.
+
+
+
+
+
+9Teniendo en cuenta el ejemplo con el que se vio el funcionamiento de los distintos niveles de E/S, ¿cuál de las siguientes afirmaciones es falsa?
+
+
+	La rutina de E/S se encarga de crear el IORB (bloque de petición de E/S).
+	Cada gestor de periférico atiende a su propia cola de petición de periférico.
+	Las características de cada periférico están almacenadas en su descriptor de periférico.
+	ºEl gestor de periférico se ejecuta en modo supervisor.
+
+
+
+
+10¿Cuál de las siguientes sentencias es falsa?
+
+
+	El software de E/S a nivel de usuario no pertenece al Sistema Operativo.
+	ºEl software de E/S dependiente del dispositivo es el encargado de proteger a los dispositivos por parte de los usuarios que no tienen permiso.
+	El código interno de los caracteres hace que el programador no tenga que conocer el código que cada dispositivo de E/S usa para representar la información.
+	Una cola de petición de periférico puede estar vacia.
+
+
+
+
+11¿Cuáles de las siguientes funciones no es una función del software de E/S independiente del dispositivo?
+
+	Gestión de los dispositivos no compartibles.
+	Gestión del almacenamiento temporal de los datos en las operaciones de E/S.
+	ºInterpretar la información que se recibe o se manda (formatear).
+	Proteger los dispositivos de E/S por parte de los usuarios que no tienen permiso para utilizarlos.
+
+
+
+
+12¿Cuál de las siguientes sentencias es cierta?
+
+
+	Todos los dispositivos de E/S usan el mismo código (denominado código interno de los caracteres) para representar la información.
+	ºEn una operación de E/S controlada por programa, la CPU comprueba el valor de un puerto del controlador para detectar que la operación ha finalizado.
+	En un sistema de tiempo real las operaciones de E/S deben ser controladas por programa.
+	El software de E/S independiente del dispositivo es el encargado de gestionar la cola de petición de periférico compuesta por IORBs.
+
+
+13¿Cuál de las siguientes sentencias es falsa?
+
+
+	Si el periférico es no compartible todos los IORBs de su cola de petición pertenecen al mismo proceso.
+	No todos los dispositivos de E/S usan la misma unidad de transferencia.
+	ºLa rutina de E/S almacena en el IORB los comandos que el gestor de periférico debe escribir en los puertos del controlador.
+	El software de E/S independiente del dispositivo se encarga de ocultar a los niveles superiores el hecho de que los discos tengan diferentes tamaños de sector.

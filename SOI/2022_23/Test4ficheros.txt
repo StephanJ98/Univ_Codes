@@ -1,0 +1,139 @@
+1La asignación encadenada de espacio en disco requiere necesariamente que el descriptor de un fichero contenga:
+
+
+	La dirección del primer bloque y la longitud del fichero.
+	ºLa dirección del primer bloque del fichero.
+	La longitud del fichero
+	Ninguna de las contestaciones propuestas.
+
+
+
+2¿Cuál de las siguientes sentencias es falsa?
+
+
+	ºEl tamaño de la FAT depende del número de bloques libres existentes en cada momento en el disco.
+	Si se usa una lista de procesos libres para gestionar los bloques libres del disco, basta con mantener en memoria principal la cabecera de dicha lista.
+	La estructura interna con la que se implementan los directorios se usa para comprobar si una ruta de acceso es o no correcta.
+	Si el fichero al que hace referencia un proceso no se encuentra en su directorio de trabajo, se busca en los directorios que especifica la lista de busqueda asignada al proceso.
+
+
+
+
+3¿Cuál de las siguientes sentencias es verdadera?
+
+
+	ºUna operación de escritura en un fichero de acceso secuencial provoca que se añada el registro al final del fichero.
+	En un fichero de acceso secuencial se puede usar el método de direccionamiento disperso para acceder a un registro a partir de su clave.
+	El Sistema de Ficheros no se encarga de proporcionar métodos para asegurar la seguridad y la privacidad sobre la información contenida en los ficheros.
+	Ninguna de las sentencias anteriores es verdadera.
+
+
+
+
+
+4La asignación contigua de espacio en disco se caracteriza por:
+
+
+	Asignar espacio contiguo a todos los ficheros de un directorio de usuario.
+	Asignar el espacio de un fichero a continuación de otro indicado por el usuario.
+	ºAsignar bloques adyacentes entre sí al espacio de un fichero.
+	Aprovechar mejor el espacio disponible en el disco.
+
+
+
+
+
+5¿Cuál de los siguientes métodos de asignación de espacio en disco puede dar lugar a una situación en la que haya espacio suficiente para un nuevo fichero pero éste no pueda crearse?
+
+
+	ºAsignación contigua.
+	Asignación encadenada.
+	Asignación indexada.
+	Es independiente del método de asignación de espacio.
+
+
+
+
+6Indica cuál de las siguientes afirmaciones es correcta:
+
+
+	La asignación indexada exige predefinir el tamaño del fichero.
+	La asignación contigua es la que mejor aprovecha el espacio del disco.
+	Mediante un fichero enlace no se puede modificar el contenido del fichero original.
+	ºLa ruta de acceso (pathname) de un fichero es el camino de directorios que debe seguir el sistema de ficheros para localizar el fichero.
+
+
+
+
+7Con la técnica de asignación encadenada de espacio en disco, ¿cuántos accesos hay que realizar al disco para leer el segundo bloque físico de un fichero abierto?
+
+
+	º2
+	3
+	4
+	1
+
+
+
+
+8Si la dirección de cada bloque requiere D bists, y un disco tiene un total de B bloques de los que F están libres ¿en qué caso ocupa menos espacio la lista de bloques libres que el mapa de bits?
+
+
+	ºB > D*F
+	F < B/2
+	Siempre
+	Nunca
+
+
+
+
+9¿Con qué técnica de asignación ocupará menos espacio en disco un fichero?
+
+
+	Asignación indexada.
+	Asignación encadenada.
+	ºAsignación contigua.
+	Todas las técnicas ocuparían el mismo espacio en disco.
+
+
+
+
+10Con bloques físicos de disco de 512 bytes en los que caben 512 direcciones a otros tantos bloques y usando asignación indexada con dos niveles de índices, ¿cuál será el tamaño máximo del fichero?
+
+
+	512 bloques
+	512 x 2 bloques
+	º512 x 512 bloques
+	512 x 512 x 512 bloques
+
+
+
+11El directorio de trabajo o activo es:
+
+
+	En Linux siempre coincide con el directorio de recepción.
+	ºEn el que está situado el usuario.
+	El directorio donde reside el Sistema Operativo.
+	En el que reside el último fichero creado por el usuario.	
+
+
+
+12¿Cuales de las siguientes funciones no es una función que debe ofrecer el Sistema de Ficheros de un Sistema Operativo?
+
+
+	Permitir que los usuarios compartan de forma controlada sus ficheros con otros usuarios.
+	Permitir que los usuarios estructuren sus ficheros de la forma más apropiada a cada aplicación.
+	Asignar espacio de la memoria secundaria a los ficheros.
+	ºGestionar la memoria principal.
+
+
+13¿Cuál de las siguientes sentencias es verdadera?
+
+
+	El proceso de recuperación del sistema es más lento si se usan copias globales frente al uso de copias incrementales.
+	Las utilidades que comprueban la consistencia de la estructura de datos que soporta el sistema de ficheros también permiten controlar la consistencia del contenido de los ficheros.
+	ºCada elemento del sistema de ficheros posee su propia Lista de Control de Acceso (ACL).
+	Si se usan contraseñas no se puede hacer copias globales ya que no existe ningún usuario con acceso a todo el sistema de ficheros.
+
+
+
